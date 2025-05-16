@@ -137,6 +137,18 @@ body::before {
     filter: hue-rotate(0deg);
     transform: scale(1);
   }
+.confidence-high {
+  color: green;
+  font-weight: bold;
+}
+.confidence-medium {
+  color: orange;
+  font-weight: bold;
+}
+.confidence-low {
+  color: red;
+  font-weight: bold;
+}
 
   </style>
 </head>
@@ -158,6 +170,33 @@ body::before {
       <label for="away">Away:</label>
       <input type="number" id="away" step="0.01" placeholder="e.g. 2.8" />
     </div>
+    <h3>Home Team Last 3 Results</h3>
+<div>
+  <label>Result 1:</label>
+  <input type="text" id="homeLast1" placeholder="e.g. 2-0" />
+</div>
+<div>
+  <label>Result 2:</label>
+  <input type="text" id="homeLast2" placeholder="e.g. 1-1" />
+</div>
+<div>
+  <label>Result 3:</label>
+  <input type="text" id="homeLast3" placeholder="e.g. 2-2" />
+</div>
+
+<h3>Away Team Last 3 Results</h3>
+<div>
+  <label>Result 1:</label>
+  <input type="text" id="awayLast1" placeholder="e.g. 1-0" />
+</div>
+<div>
+  <label>Result 2:</label>
+  <input type="text" id="awayLast2" placeholder="e.g. 0-0" />
+</div>
+<div>
+  <label>Result 3:</label>
+  <input type="text" id="awayLast3" placeholder="e.g. 0-2" />
+</div>
     
     <button type="button" onclick="predict()">Predict</button>
 
@@ -174,51 +213,95 @@ body::before {
 
   <script>
     function predict() {
-      const home = parseFloat(document.getElementById('home').value);
-      const draw = parseFloat(document.getElementById('draw').value);
-      const away = parseFloat(document.getElementById('away').value);
+  const home = parseFloat(document.getElementById('home').value);
+  const draw = parseFloat(document.getElementById('draw').value);
+  const away = parseFloat(document.getElementById('away').value);
 
-      if (isNaN(home) || isNaN(draw) || isNaN(away)) {
-        alert("Please enter valid odds for Home, Draw, and Away.");
-        return;
-      }
+  if (isNaN(home) || isNaN(draw) || isNaN(away)) {
+    alert("Please enter valid odds for Home, Draw, and Away.");
+    return;
+  }
 
-      let pred1x2 = "1";
-      const diff = Math.abs(home - away);
-      if (
-        diff <= 0.3 &&
-        Math.abs(draw - home) <= 0.3 &&
-        Math.abs(draw - away) <= 0.3
-      ) {
-        pred1x2 = "X";
-      } else if (away < home && away < draw) {
-        pred1x2 = "2";
-      }
+  let pred1x2 = "1";
+  if (
+    Math.abs(home - away) <= 0.3 &&
+    Math.abs(draw - home) <= 0.3 &&
+    Math.abs(draw - away) <= 0.3
+  ) {
+    pred1x2 = "X";
+  } else if (away < home && away < draw) {
+    pred1x2 = "2";
+  }
 
-      // GG prediction
-      let gg = "No GG";
-      if (home > 2.4 && home < 3.1 && away > 2.4 && away < 3.1) {
-        gg = "GG";
-      }
+  // Double Chance
+  let doubleChance = "";
+  if (pred1x2 === "1" && draw - home < 0.5) doubleChance = "1X";
+  else if (pred1x2 === "2" && draw - away < 0.5) doubleChance = "X2";
 
-      // Over/Under 2.5 goals
-      let over25 = "Under 2.5";
-      if ((home + away) / 2 > 2.5) {
-        over25 = "Over 2.5";
-      }
+  // GG prediction (smarter logic)
+  let gg = "No GG";
+  if (home < 2.9 && away < 2.9 && draw > 3.0) {
+    gg = "GG";
+  }
 
-      const prediction = `${gg} | ${over25} | ${pred1x2}`;
+  // Over/Under 2.5 goals
+  let over25 = "Under 2.5";
+  if ((home + away) / 2 > 2.5) {
+    over25 = "Over 2.5";
+  }
 
-      document.getElementById("prediction").innerText = prediction;
-      document.getElementById("predictionBox").style.display = "block";
+  // Confidence level + color class
+  let confidenceText = "Low";
+  let confidenceClass = "confidence-low";
+  const spread = Math.abs(home - away);
+  if (spread > 1.0) {
+    confidenceText = "High";
+    confidenceClass = "confidence-high";
+  } else if (spread > 0.5) {
+    confidenceText = "Medium";
+    confidenceClass = "confidence-medium";
+  }
 
-      const key = `${home}-${draw}-${away}`;
-      const storedResult = localStorage.getItem(key);
-      document.getElementById("prevResult").innerText = storedResult || "None";
+  const predictionHTML = `
+    ${gg} | ${over25} | ${pred1x2} (${doubleChance}) | 
+    <span class="${confidenceClass}">Confidence: ${confidenceText}</span>
+  `;
 
-      localStorage.setItem("lastKey", key);
-    }
+  document.getElementById("prediction").innerHTML = predictionHTML;
+  document.getElementById("predictionBox").style.display = "block";
 
+  const key = `${home}-${draw}-${away}`;
+  const storedResult = localStorage.getItem(key);
+  document.getElementById("prevResult").innerText = storedResult || "None";
+
+  localStorage.setItem("lastKey", key);
+}
+
+const homeLastResults = [
+  document.getElementById("homeLast1").value,
+  document.getElementById("homeLast2").value,
+  document.getElementById("homeLast3").value,
+];
+
+const awayLastResults = [
+  document.getElementById("awayLast1").value,
+  document.getElementById("awayLast2").value,
+  document.getElementById("awayLast3").value,
+];
+
+const homeStats = analyzeLastResults(homeLastResults);
+const awayStats = analyzeLastResults(awayLastResults);
+
+// Use homeStats and awayStats to adjust prediction
+if (homeStats && awayStats) {
+  if (homeStats.homeWins > awayStats.homeWins) {
+    pred1x2 = "1"; // Home team stronger recently
+  } else if (awayStats.awayWins > homeStats.awayWins) {
+    pred1x2 = "2"; // Away team stronger recently
+  } else if (homeStats.draws >= 2 && awayStats.draws >= 2) {
+    pred1x2 = "X"; // Both teams have many draws
+  }
+}
     function saveResult() {
       const finalResult = document.getElementById("finalResult").value.trim();
       const key = localStorage.getItem("lastKey");
@@ -235,4 +318,4 @@ body::before {
     }
   </script>
 </body>
-</html>
+  </html>
