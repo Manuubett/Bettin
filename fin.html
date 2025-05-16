@@ -170,33 +170,33 @@ body::before {
       <label for="away">Away:</label>
       <input type="number" id="away" step="0.01" placeholder="e.g. 2.8" />
     </div>
-    <h3>Home Team Last 3 Results</h3>
+    <h3>Home Team Last 3 Matches</h3>
 <div>
-  <label>Result 1:</label>
-  <input type="text" id="homeLast1" placeholder="e.g. 2-0" />
+  <label>Match 1:</label>
+  <input type="text" id="homeMatch1" placeholder="e.g. H 2-0" />
 </div>
 <div>
-  <label>Result 2:</label>
-  <input type="text" id="homeLast2" placeholder="e.g. 1-1" />
+  <label>Match 2:</label>
+  <input type="text" id="homeMatch2" placeholder="e.g. A 1-1" />
 </div>
 <div>
-  <label>Result 3:</label>
-  <input type="text" id="homeLast3" placeholder="e.g. 2-2" />
+  <label>Match 3:</label>
+  <input type="text" id="homeMatch3" placeholder="e.g. H 3-1" />
+</div>
+<h3>Away Team Last 3 Matches</h3>
+<div>
+  <label>Match 1:</label>
+  <input type="text" id="awayMatch1" placeholder="e.g. A 0-2" />
+</div>
+<div>
+  <label>Match 2:</label>
+  <input type="text" id="awayMatch2" placeholder="e.g. H 1-0" />
+</div>
+<div>
+  <label>Match 3:</label>
+  <input type="text" id="awayMatch3" placeholder="e.g. A 1-1" />
 </div>
 
-<h3>Away Team Last 3 Results</h3>
-<div>
-  <label>Result 1:</label>
-  <input type="text" id="awayLast1" placeholder="e.g. 1-0" />
-</div>
-<div>
-  <label>Result 2:</label>
-  <input type="text" id="awayLast2" placeholder="e.g. 0-0" />
-</div>
-<div>
-  <label>Result 3:</label>
-  <input type="text" id="awayLast3" placeholder="e.g. 0-2" />
-</div>
     
     <button type="button" onclick="predict()">Predict</button>
 
@@ -212,6 +212,25 @@ body::before {
   </div>
 
   <script>
+    function analyzeLastResults(results) {
+  let homeWins = 0, awayWins = 0, draws = 0;
+
+  for (let score of results) {
+    const parts = score.split("-");
+    if (parts.length !== 2) continue;
+
+    const homeGoals = parseInt(parts[0].trim());
+    const awayGoals = parseInt(parts[1].trim());
+
+    if (isNaN(homeGoals) || isNaN(awayGoals)) continue;
+
+    if (homeGoals > awayGoals) homeWins++;
+    else if (homeGoals < awayGoals) awayWins++;
+    else draws++;
+  }
+
+  return { homeWins, awayWins, draws };
+}
     function predict() {
   const home = parseFloat(document.getElementById('home').value);
   const draw = parseFloat(document.getElementById('draw').value);
@@ -260,6 +279,32 @@ body::before {
   } else if (spread > 0.5) {
     confidenceText = "Medium";
     confidenceClass = "confidence-medium";
+  }
+  // Get last results
+  const homeLastResults = [
+    document.getElementById("homeLast1").value,
+    document.getElementById("homeLast2").value,
+    document.getElementById("homeLast3").value
+  ];
+
+  const awayLastResults = [
+    document.getElementById("awayLast1").value,
+    document.getElementById("awayLast2").value,
+    document.getElementById("awayLast3").value
+  ];
+
+  const homeStats = analyzeLastResults(homeLastResults);
+  const awayStats = analyzeLastResults(awayLastResults);
+
+  // Adjust prediction based on recent form
+  if (homeStats && awayStats) {
+    if (homeStats.homeWins > awayStats.awayWins) {
+      pred1x2 = "1"; // Home team looks stronger
+    } else if (awayStats.awayWins > homeStats.homeWins) {
+      pred1x2 = "2"; // Away team looks stronger
+    } else if (homeStats.draws >= 2 && awayStats.draws >= 2) {
+      pred1x2 = "X"; // Draw likely
+    }
   }
 
   const predictionHTML = `
@@ -318,4 +363,4 @@ if (homeStats && awayStats) {
     }
   </script>
 </body>
-  </html>
+    </html>
