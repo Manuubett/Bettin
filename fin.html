@@ -2,193 +2,237 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Football Match Predictor</title>
+
+  <!-- ===== CSS ===== -->
   <style>
+    :root {
+      --primary: #0d6efd;
+      --primary-hover: #0b5ed7;
+      --bg: #f8f9fa;
+      --text: #212529;
+      --card-bg: #ffffff;
+      --border: #dee2e6;
+      --accent: #ffc107;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color:green;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background: var(--bg);
+      color: var(--text);
       margin: 0;
-      padding: 20px;
-      max-width: 600px;
-      margin-left: auto;
-      margin-right: auto;
-      color: #333;
+      padding: 1rem;
+      display: flex;
+      justify-content: center;
     }
-    h2, h3 {
-      color: yellow;
-      margin-bottom: 12px;
+
+    /* ---- Layout ---- */
+    .container {
+      width: 100%;
+      max-width: 640px;
     }
-    .instructions {
-      background-color: #e9ec;
-      padding: 15px;
-      border-radius: 8px;
-      margin-bottom: 20px;
-      font-size: 0.95rem;
-      line-height: 1.4;
-      border: 1px solid #ced4da;
+
+    h1 {
+      font-size: clamp(1.75rem, 5vw, 2.5rem);
+      font-weight: 700;
+      text-align: center;
+      background: linear-gradient(270deg, #ff9cf3, #ff006e, #3a86ff);
+      background-size: 600% 600%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: gradientShift 8s ease infinite;
+      margin-bottom: 0.5rem;
     }
+
+    @keyframes gradientShift {
+      0%   { background-position: 0% 50%; }
+      50%  { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .subtitle {
+      text-align: center;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+    }
+
+    section {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 0.75rem;
+      padding: 1rem 1.25rem;
+      margin-bottom: 1rem;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+    }
+
+    h2 {
+      font-size: 1.25rem;
+      margin-bottom: 0.75rem;
+      color: var(--primary);
+    }
+
+    /* ---- Form elements ---- */
     label {
       display: block;
-      margin-bottom: 5px;
       font-weight: 600;
-      margin-top: 15px;
+      margin-top: 0.75rem;
+      margin-bottom: 0.25rem;
     }
+
     input[type="number"],
     input[type="text"] {
       width: 100%;
-      padding: 8px 10px;
-      margin-bottom: 10px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
+      padding: 0.55rem 0.75rem;
       font-size: 1rem;
-      box-sizing: border-box;
-      transition: border-color 0.3s ease;
+      border: 1px solid var(--border);
+      border-radius: 0.5rem;
+      transition: border-color 0.25s;
     }
-    input[type="number"]:focus,
-    input[type="text"]:focus {
-      border-color: #007bff;
+
+    input:focus {
       outline: none;
+      border-color: var(--primary);
     }
+
+    /* ---- Buttons ---- */
     button {
-      background-color: #007bff;
-      border: none;
-      color: white;
-      padding: 12px 25px;
+      display: inline-block;
+      background: var(--primary);
+      color: #fff;
       font-size: 1rem;
-      border-radius: 5px;
+      font-weight: 600;
+      padding: 0.6rem 1.5rem;
+      border: none;
+      border-radius: 0.5rem;
+      margin-top: 0.75rem;
       cursor: pointer;
-      margin-top: 10px;
-      transition: background-color 0.3s ease;
+      transition: background 0.25s;
     }
+
     button:hover {
-      background-color: #0056b3;
+      background: var(--primary-hover);
     }
+
+    /* ---- Info areas ---- */
+    .instructions {
+      background: #e9ecef;
+      border-left: 4px solid var(--primary);
+      padding: 0.75rem 1rem;
+      font-size: 0.9375rem;
+      border-radius: 0.5rem;
+      line-height: 1.45;
+    }
+
     #output {
-      margin-top: 15px;
-      font-weight: 700;
-      background-color: #fff;
-      border: 1px solid #ddd;
-      padding: 15px;
-      border-radius: 6px;
-      min-height: 80px;
-      color: #444;
+      background: var(--bg);
+      border: 1px dashed var(--primary);
+      border-radius: 0.5rem;
+      padding: 0.85rem;
+      min-height: 4rem;
+      line-height: 1.5;
     }
+
     #allPredictions {
-      background: white;
-      border: 1px solid #ddd;
-      padding: 15px;
-      border-radius: 6px;
-      max-height: 250px;
+      max-height: 260px;
       overflow-y: auto;
       font-size: 0.9rem;
-      margin-top: 15px;
     }
+
     .prediction-entry {
-      border-bottom: 1px solid #e1e1e1;
-      padding-bottom: 10px;
-      margin-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+      padding: 0.5rem 0;
     }
-    .prediction-entry:last-child {
-      border-bottom: none;
-      margin-bottom: 0;
-      padding-bottom: 0;
-    }
+    .prediction-entry:last-child { border-bottom: none; }
+
     code {
-      background-color: #e9ecef;
-      padding: 2px 6px;
+      background: #f1f3f5;
+      padding: 0 4px;
       border-radius: 4px;
-      font-family: monospace;
-      font-size: 0.9rem;
     }
-    h2 {
-  font-size: 2.5em;
-  font-weight: bold;
-  text-align: center;
-  background: linear-gradient(270deg, pink, red, blue);
-  background-size: 600% 600%;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: gradientShift 10s ease infinite;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
 
-@keyframes gradientShift {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-
-.bett {
-  font-weight: bold; /* Optional styling */
-}
+    /* Touch devices: keep hover color stable */
+    @media (hover: none) {
+      button:hover { background: var(--primary); }
+    }
   </style>
 </head>
 <body>
+  <main class="container">
+    <h1>Premium Membership</h1>
+    <p class="subtitle">Odi Bet</p>
 
-  <h2>Premium Membership</h2><div style="text-align: center;">
-  <p class="bett" style="color: pink; display: inline-block;">Odi bet</p>
-</div>
+    <!-- Instructions -->
+    <section>
+      <div class="instructions">
+        <strong>How to Enter Previous Results:</strong><br />
+        Enter scores from the team’s perspective (<em>goals scored - goals conceded</em>).<br />
+        Example: won&nbsp;2‒1 → <code>2-1</code>, lost&nbsp;1‒3 → <code>1-3</code>.<br />
+        Ignore home/away status.
+      </div>
+    </section>
 
+    <!-- Odds -->
+    <section id="odds">
+      <h2>Odds</h2>
+      <label for="homeOdd">Home Odd</label>
+      <input type="number" id="homeOdd" placeholder="e.g. 1.50" step="0.01" onchange="checkExistingPrediction()"/>
 
-  <div class="instructions">
-    <strong>How to Enter Previous Results:</strong><br>
-    Enter scores from the team’s perspective (goals scored - goals conceded).<br>
-    Example: won 2-1 → <code>2-1</code>, lost 1-3 → <code>1-3</code><br>
-    Ignore home/away status.
-  </div>
+      <label for="drawOdd">Draw Odd</label>
+      <input type="number" id="drawOdd" placeholder="e.g. 3.20" step="0.01" onchange="checkExistingPrediction()"/>
 
-  <section>
-    <h3>Odds</h3>
-    <label for="homeOdd">Home Odd</label>
-    <input type="number" id="homeOdd" placeholder="e.g. 1.50" step="0.01" onchange="checkExistingPrediction()" />
-    
-    <label for="drawOdd">Draw Odd</label>
-    <input type="number" id="drawOdd" placeholder="e.g. 3.20" step="0.01" onchange="checkExistingPrediction()" />
-    
-    <label for="awayOdd">Away Odd</label>
-    <input type="number" id="awayOdd" placeholder="e.g. 5.00" step="0.01" onchange="checkExistingPrediction()" />
-  </section>
+      <label for="awayOdd">Away Odd</label>
+      <input type="number" id="awayOdd" placeholder="e.g. 5.00" step="0.01" onchange="checkExistingPrediction()"/>
+    </section>
 
-  <section>
-    <h3>Home Team Last 3 Matches</h3>
-    <input type="text" id="home1" placeholder="e.g. 2-1" />
-    <input type="text" id="home2" placeholder="e.g. 1-0" />
-    <input type="text" id="home3" placeholder="e.g. 0-1" />
-  </section>
+    <!-- Home matches -->
+    <section>
+      <h2>Home Team Last 3 Matches</h2>
+      <input type="text" id="home1" placeholder="e.g. 2-1"/>
+      <input type="text" id="home2" placeholder="e.g. 1-0"/>
+      <input type="text" id="home3" placeholder="e.g. 0-1"/>
+    </section>
 
-  <section>
-    <h3>Away Team Last 3 Matches</h3>
-    <input type="text" id="away1" placeholder="e.g. 1-2" />
-    <input type="text" id="away2" placeholder="e.g. 2-2" />
-    <input type="text" id="away3" placeholder="e.g. 0-0" />
-  </section>
+    <!-- Away matches -->
+    <section>
+      <h2>Away Team Last 3 Matches</h2>
+      <input type="text" id="away1" placeholder="e.g. 1-2"/>
+      <input type="text" id="away2" placeholder="e.g. 2-2"/>
+      <input type="text" id="away3" placeholder="e.g. 0-0"/>
+    </section>
 
-  <button onclick="predict()">Predict</button>
+    <button onclick="predict()">Predict</button>
 
-  <section>
-    <h3>Prediction Result:</h3>
-    <div id="output"><em>No prediction yet.</em></div>
-  </section>
+    <!-- Prediction -->
+    <section>
+      <h2>Prediction Result</h2>
+      <div id="output"><em>No prediction yet.</em></div>
+    </section>
 
-  <section>
-    <h3>Enter Final Score (optional):</h3>
-    <input type="text" id="finalResult" placeholder="e.g. 2-1" />
-    <button onclick="savePrediction()">Save Prediction</button>
-  </section>
+    <!-- Final score -->
+    <section>
+      <h2>Enter Final Score (optional)</h2>
+      <input type="text" id="finalResult" placeholder="e.g. 2-1"/>
+      <button onclick="savePrediction()">Save Prediction</button>
+    </section>
 
-  <section>
-    <h3>All Saved Predictions:</h3>
-    <div id="allPredictions"><em>No saved predictions yet.</em></div>
-  </section>
+    <!-- Saved predictions -->
+    <section>
+      <h2>All Saved Predictions</h2>
+      <div id="allPredictions"><em>No saved predictions yet.</em></div>
+    </section>
+  </main>
 
+  <!-- ===== JavaScript (unchanged from your original) ===== -->
   <script>
-    let lastPrediction = {};
-
+    /* -------- Helper functions -------- */
     function parseScore(score) {
       if (!score) return { scored: 0, conceded: 0 };
       const parts = score.split('-');
-      if(parts.length !== 2) return { scored: 0, conceded: 0 };
+      if (parts.length !== 2) return { scored: 0, conceded: 0 };
       const [a, b] = parts.map(Number);
       return { scored: isNaN(a) ? 0 : a, conceded: isNaN(b) ? 0 : b };
     }
@@ -196,66 +240,66 @@
     function getStats(matches) {
       let wins = 0, draws = 0, losses = 0, totalGoals = 0, goalsFor = 0, goalsAgainst = 0;
       matches.forEach(m => {
-        goalsFor += m.scored;
+        goalsFor     += m.scored;
         goalsAgainst += m.conceded;
-        totalGoals += m.scored + m.conceded;
-        if (m.scored > m.conceded) wins++;
+        totalGoals   += m.scored + m.conceded;
+        if      (m.scored > m.conceded) wins++;
         else if (m.scored === m.conceded) draws++;
         else losses++;
       });
       return { wins, draws, losses, totalGoals, goalsFor, goalsAgainst };
     }
 
+    /* -------- Core logic -------- */
+    let lastPrediction = {};
+
     function predict() {
-      const homeOdd = parseFloat(document.getElementById("homeOdd").value);
-      const drawOdd = parseFloat(document.getElementById("drawOdd").value);
-      const awayOdd = parseFloat(document.getElementById("awayOdd").value);
+      const homeOdd = parseFloat(document.getElementById('homeOdd').value);
+      const drawOdd = parseFloat(document.getElementById('drawOdd').value);
+      const awayOdd = parseFloat(document.getElementById('awayOdd').value);
 
       if (isNaN(homeOdd) || isNaN(drawOdd) || isNaN(awayOdd)) {
-        alert("Please enter valid odds for Home, Draw, and Away.");
+        alert('Please enter valid odds for Home, Draw, and Away.');
         return;
       }
 
       const homeMatches = [
-        parseScore(document.getElementById("home1").value),
-        parseScore(document.getElementById("home2").value),
-        parseScore(document.getElementById("home3").value)
+        parseScore(document.getElementById('home1').value),
+        parseScore(document.getElementById('home2').value),
+        parseScore(document.getElementById('home3').value)
       ];
-
       const awayMatches = [
-        parseScore(document.getElementById("away1").value),
-        parseScore(document.getElementById("away2").value),
-        parseScore(document.getElementById("away3").value)
+        parseScore(document.getElementById('away1').value),
+        parseScore(document.getElementById('away2').value),
+        parseScore(document.getElementById('away3').value)
       ];
 
       const homeStats = getStats(homeMatches);
       const awayStats = getStats(awayMatches);
 
-      let result = "X"; // Draw default
-      if (homeStats.wins > awayStats.wins) result = "1";
-      else if (awayStats.wins > homeStats.wins) result = "2";
+      let result = 'X'; // draw
+      if      (homeStats.wins > awayStats.wins) result = '1';
+      else if (awayStats.wins > homeStats.wins) result = '2';
 
-      const gg = (homeStats.goalsAgainst > 2 || awayStats.goalsAgainst > 2) ? "GG" : "No GG";
+      const gg = (homeStats.goalsAgainst > 2 || awayStats.goalsAgainst > 2) ? 'GG' : 'No GG';
       const avgGoals = (homeStats.totalGoals + awayStats.totalGoals) / 6;
-      const over25 = avgGoals > 2.5 ? "Over 2.5" : "Under 2.5";
+      const over25 = avgGoals > 2.5 ? 'Over 2.5' : 'Under 2.5';
 
-      let confidence = "Medium";
-      if (Math.abs(homeStats.wins - awayStats.wins) >= 2 || avgGoals > 3) confidence = "High";
-      else if (avgGoals < 1.5) confidence = "Low";
+      let confidence = 'Medium';
+      if (Math.abs(homeStats.wins - awayStats.wins) >= 2 || avgGoals > 3) confidence = 'High';
+      else if (avgGoals < 1.5) confidence = 'Low';
 
-      const summary = `
+      document.getElementById('output').innerHTML = `
         Result: ${result}<br>
         GG: ${gg}<br>
         Goals: ${over25}<br>
         Confidence: ${confidence}
       `;
-      document.getElementById("output").innerHTML = summary;
 
       lastPrediction = {
         date: new Date().toLocaleString(),
         homeOdd, drawOdd, awayOdd,
-        result, gg, over25,
-        confidence,
+        result, gg, over25, confidence,
         final: ''
       };
       saveInputs();
@@ -263,99 +307,95 @@
 
     function savePrediction() {
       if (!lastPrediction || !lastPrediction.result) {
-        alert("No prediction to save!");
+        alert('No prediction to save!');
+        return;
+      }
+      const finalScore = document.getElementById('finalResult').value.trim();
+      if (finalScore) lastPrediction.final = finalScore;
+
+      const saved = JSON.parse(localStorage.getItem('predictions') || '[]');
+      saved.push(lastPrediction);
+      localStorage.setItem('predictions', JSON.stringify(saved));
+
+      alert('Prediction saved!');
+      saveInputs();
+      checkExistingPrediction();
+    }
+
+    function checkExistingPrediction() {
+      const homeOdd = parseFloat(document.getElementById('homeOdd').value);
+      const drawOdd = parseFloat(document.getElementById('drawOdd').value);
+      const awayOdd = parseFloat(document.getElementById('awayOdd').value);
+
+      if (isNaN(homeOdd) || isNaN(drawOdd) || isNaN(awayOdd)) {
+        document.getElementById('output').innerHTML = '<em>Please enter all odds to check for existing predictions.</em>';
+        document.getElementById('allPredictions').innerHTML = '';
         return;
       }
 
-      const finalScore = document.getElementById("finalResult").value.trim();
-      if (finalScore) lastPrediction.final = finalScore;
+      const saved = JSON.parse(localStorage.getItem('predictions') || '[]');
+      const match = saved.find(p =>
+        p.homeOdd === homeOdd &&
+        p.drawOdd === drawOdd &&
+        p.awayOdd === awayOdd
+      );
 
-      let saved = JSON.parse(localStorage.getItem("predictions") || "[]");
-      saved.push(lastPrediction);
-      localStorage.setItem("predictions", JSON.stringify(saved));
-
-      alert("Prediction saved!");
-      saveInputs();
-      checkExistingPrediction();
-    }function checkExistingPrediction() {
-  const homeOdd = parseFloat(document.getElementById("homeOdd").value);
-  const drawOdd = parseFloat(document.getElementById("drawOdd").value);
-  const awayOdd = parseFloat(document.getElementById("awayOdd").value);
-
-  if (isNaN(homeOdd) || isNaN(drawOdd) || isNaN(awayOdd)) {
-    document.getElementById("output").innerHTML = `<em>Please enter all odds to check for existing predictions.</em>`;
-    document.getElementById("allPredictions").innerHTML = "";
-    return;
-  }
-
-  const saved = JSON.parse(localStorage.getItem("predictions") || "[]");
-
-  const match = saved.find(p =>
-    p.homeOdd === homeOdd &&
-    p.drawOdd === drawOdd &&
-    p.awayOdd === awayOdd
-  );
-
-  if (match) {
-    document.getElementById("output").innerHTML =
-      `<strong>Previous Prediction Found:</strong><br>
-      Result: ${match.result}<br>
-      GG: ${match.gg}<br>
-      Goals: ${match.over25}<br>
-      Confidence: ${match.confidence}<br>
-      Final Result: ${match.final || 'Not entered'}`;
-
-    const matchHtml = `
-      <div class="prediction-entry">
-        <strong>${match.date}</strong><br>
-        Odds: ${match.homeOdd} - ${match.drawOdd} - ${match.awayOdd}<br>
-        Result: ${match.result}<br>
-        GG: ${match.gg}<br>
-        Goals: ${match.over25}<br>
-        Confidence: ${match.confidence}<br>
-        Final Score: ${match.final || 'Not entered'}
-      </div>
-    `;
-    document.getElementById("allPredictions").innerHTML = matchHtml;
-  } else {
-    document.getElementById("output").innerHTML = `<em>No previous prediction found for these odds.</em>`;
-    document.getElementById("allPredictions").innerHTML = "<em>No matching saved prediction.</em>";
-  }
-}
-
-
-    function saveInputs() {
-      const inputs = {
-        homeOdd: document.getElementById("homeOdd").value,
-        drawOdd: document.getElementById("drawOdd").value,
-        awayOdd: document.getElementById("awayOdd").value,
-        home1: document.getElementById("home1").value,
-        home2: document.getElementById("home2").value,
-        home3: document.getElementById("home3").value,
-        away1: document.getElementById("away1").value,
-        away2: document.getElementById("away2").value,
-        away3: document.getElementById("away3").value,
-        finalResult: document.getElementById("finalResult").value
-      };
-      localStorage.setItem("inputs", JSON.stringify(inputs));
-    }
-
-    function loadInputs() {
-      const inputs = JSON.parse(localStorage.getItem("inputs") || "{}");
-      if (!inputs) return;
-      for (const key in inputs) {
-        if (inputs[key]) {
-          const el = document.getElementById(key);
-          if(el) el.value = inputs[key];
-        }
+      if (match) {
+        document.getElementById('output').innerHTML = `
+          <strong>Previous Prediction Found:</strong><br>
+          Result: ${match.result}<br>
+          GG: ${match.gg}<br>
+          Goals: ${match.over25}<br>
+          Confidence: ${match.confidence}<br>
+          Final Result: ${match.final || 'Not entered'}
+        `;
+        document.getElementById('allPredictions').innerHTML = `
+          <div class="prediction-entry">
+            <strong>${match.date}</strong><br>
+            Odds: ${match.homeOdd} - ${match.drawOdd} - ${match.awayOdd}<br>
+            Result: ${match.result}<br>
+            GG: ${match.gg}<br>
+            Goals: ${match.over25}<br>
+            Confidence: ${match.confidence}<br>
+            Final Score: ${match.final || 'Not entered'}
+          </div>
+        `;
+      } else {
+        document.getElementById('output').innerHTML = '<em>No previous prediction found for these odds.</em>';
+        document.getElementById('allPredictions').innerHTML = '<em>No matching saved prediction.</em>';
       }
     }
 
-    window.onload = function () {
+    /* -------- Remember form inputs across reloads -------- */
+    function saveInputs() {
+      const inputs = {
+        homeOdd: document.getElementById('homeOdd').value,
+        drawOdd: document.getElementById('drawOdd').value,
+        awayOdd: document.getElementById('awayOdd').value,
+        home1: document.getElementById('home1').value,
+        home2: document.getElementById('home2').value,
+        home3: document.getElementById('home3').value,
+        away1: document.getElementById('away1').value,
+        away2: document.getElementById('away2').value,
+        away3: document.getElementById('away3').value,
+        finalResult: document.getElementById('finalResult').value
+      };
+      localStorage.setItem('inputs', JSON.stringify(inputs));
+    }
+
+    function loadInputs() {
+      const inputs = JSON.parse(localStorage.getItem('inputs') || '{}');
+      Object.keys(inputs).forEach(key => {
+        if (inputs[key] !== undefined && document.getElementById(key)) {
+          document.getElementById(key).value = inputs[key];
+        }
+      });
+    }
+
+    window.onload = () => {
       loadInputs();
       checkExistingPrediction();
     };
   </script>
-
 </body>
-      </html>
+        </html>
