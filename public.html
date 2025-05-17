@@ -64,8 +64,8 @@ modal .modal-content {
   animation:fadeIn .3s ease-in-out;
   max-height:90vh;
   overflow-y:auto;
-  width:80%;
-  max-width:400px;
+  width:90%;
+  max-width:600px;
 }  /* <-- make sure this is the only closing brace */
 
     }
@@ -209,7 +209,13 @@ modal .modal-content {
       <hr>
       <div class="payment-info"><!-- inside .payment-info -->
 <p><strong>Go to M-Pesa › Lipa na M-Pesa › Buy Goods and Services</strong></p>
-<p><strong>Till Number:</strong> <span style="color:green;">4585402</span></p>
+<p>
+  <strong>Till&nbsp;Number:</strong>
+  <span style="color:green;">4585402</span><br>
+  <small style="color:#555;">
+    (Copy the Till number, then paste it into your SIM-Toolkit for easy payment)
+  </small>
+</p>
 <p><strong>Recipient Name:</strong> Emanuel</p>
       
       <textarea id="mpesaMessage" rows="5" placeholder="Paste your full M-Pesa message here..."></textarea>
@@ -369,4 +375,4 @@ initLoginForm();
   </script>
 
 </body>
-        </html>
+  </html>
