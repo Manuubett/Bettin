@@ -200,166 +200,64 @@
   </div>
 
   <script>
-   
-  function openModal(id) {
-    document.getElementById(id).style.display = 'block';
-  }
-
-  function closeModal(id) {
-    document.getElementById(id).style.display = 'none';
-  }
-
-  function generateLogCode() {
-    return 'PREM-' + Math.floor(100000 + Math.random() * 900000);
-  }function verifyMpesaMessage() {
-  const message = document.getElementById("mpesaMessage").value.trim().toLowerCase();
-  const logCodeElem = document.getElementById("logCode");
-  const loginForm = document.getElementById("loginForm");
-
-  // Match transaction code: usually 10+ uppercase letters/numbers
-  const trxMatch = message.match(/\b([A-Z0-9]{8,})\b/); 
-  const trxCode = trxMatch ? trxMatch[1] : null;
-
-  // Check for Ksh 99 and name
-  const amountCheck = message.includes("ksh99") || message.includes("ksh 99") || message.includes("99.00");
-  const nameCheck = message.includes("emanuel kipkirui bett");
-
-  // Check if transaction code already used
-  const usedTrx = JSON.parse(localStorage.getItem("usedTrxCodes") || "[]");
-
-  if (trxCode && amountCheck && nameCheck && !usedTrx.includes(trxCode)) {
-    const code = generateLogCode();
-    logCodeElem.innerHTML = "Your Log Code: <br><span style='font-size: 18px;'>" + code + "</span>";
-    document.getElementById("password").value = code;
-    loginForm.style.display = "block";
-
-    // Save used trx code
-    usedTrx.push(trxCode);
-    localStorage.setItem("usedTrxCodes", JSON.stringify(usedTrx));
-  } else if (usedTrx.includes(trxCode)) {
-    logCodeElem.innerHTML = "<span style='color:red;'>This M-Pesa transaction has already been used.</span>";
-    loginForm.style.display = "none";
-  } else {
-    logCodeElem.innerHTML = "<span style='color:red;'>Invalid M-Pesa message. Make sure you've sent Ksh 99 to Emanuel Kipkirui Bett.</span>";
-    loginForm.style.display = "none";
-  }
+   function openModal(id) {
+  document.getElementById(id).style.display = 'block';
 }
 
-
-  function login() {
-    const username = document.getElementById("username").value.trim();
-    const password = document.getElementById("password").value.trim();
-    const expectedCode = document.getElementById("password").value;
-
-    if (username && password === expectedCode) {
-      alert("Login successful! Redirecting to dashboard...");
-      window.location.href = "fin.html";
-    } else {
-      alert("Invalid login details. Please try again.");
-    }
-  }
-
-  window.onclick = function(event) {
-    const modal = document.getElementById('premiumModal');
-    if (event.target === modal) {
-      modal.style.display = "none";
-    }
-  };
-
-    function verifyMpesaMessage() {
-  const message = document.getElementById("mpesaMessage").value.trim().toLowerCase();
-  const logCodeElem = document.getElementById("logCode");
-  const loginForm = document.getElementById("loginForm");
-
-  // Check if message contains Ksh199 and the correct name
-  const amountCheck = message.includes("ksh99") || message.includes("ksh 99") || message.includes("99.00");
-  const nameCheck = message.includes("emanuel kipkirui bett");
-
-  if (amountCheck && nameCheck) {
-    const code = generateLogCode();
-    logCodeElem.innerHTML = "Your Log Code: <br><span style='font-size: 18px;'>" + code + "</span>";
-    document.getElementById("password").value = code;
-    loginForm.style.display = "block";
-  } else {
-    logCodeElem.innerHTML = "<span style='color:red;'>Invalid M-Pesa message. Make sure you've sent Ksh 99 to Emanuel Kipkirui Bett.</span>";
-    loginForm.style.display = "none";
-  }
+function closeModal(id) {
+  document.getElementById(id).style.display = 'none';
 }
-window.onload = function () {
-  const savedCode = localStorage.getItem('mchangoLogCode');
-  const savedTime = localStorage.getItem('mchangoLogTime');
-  const now = Date.now();
-
-  const logCodeElem = document.getElementById("logCode");
-  const loginForm = document.getElementById("loginForm");
-  const passwordInput = document.getElementById("password");
-
-  if (savedCode && savedTime) {
-    const age = now - parseInt(savedTime, 10);
-    const sixDays = 6 * 24 * 60 * 60 * 1000;
-
-    if (age < sixDays) {
-      logCodeElem.innerHTML = "Your Log Code: <br><span style='font-size: 18px;'>" + savedCode + "</span>";
-      passwordInput.value = savedCode;
-      loginForm.style.display = "block";
-    } else {
-      // Expired
-      localStorage.removeItem('mchangoLogCode');
-      localStorage.removeItem('mchangoLogTime');
-      logCodeElem.innerHTML = "<span style='color:red;'>Your log code has expired. Please verify M-Pesa message again.</span>";
-      loginForm.style.display = "none";
-    }
-  }
-};
 
 function generateLogCode() {
   return 'PREM-' + Math.floor(100000 + Math.random() * 900000);
 }
+
 function verifyMpesaMessage() {
   const raw = document.getElementById("mpesaMessage").value.trim();
   const logCodeElem = document.getElementById("logCode");
-  const loginForm   = document.getElementById("loginForm");
+  const loginForm = document.getElementById("loginForm");
 
-  // 1. Extract trxCode: 10 uppercase alphanumeric
+  // Extract transaction code: 10 uppercase alphanumeric characters
   const trxMatch = raw.match(/\b([A-Z0-9]{10})\b/);
-  const trxCode  = trxMatch ? trxMatch[1] : null;
+  const trxCode = trxMatch ? trxMatch[1] : null;
 
-  // 2. Validate amount: exactly "Ksh99.00"
+  // Validate exact amount: "Ksh99.00" (case insensitive)
   const amtMatch = raw.match(/\bKsh\s*99\.00\b/i);
 
-  // 3. Validate name + phone
+  // Validate name and phone number appear in the message
   const namePhoneMatch = /Emanuel\s+Bett\s+0797612155/i.test(raw);
 
-  // 4. Load used codes safely
-  let used = [];
+  // Load used transaction codes safely from localStorage
+  let usedTrxCodes = [];
   try {
-    used = JSON.parse(localStorage.getItem("usedTrxCodes")) || [];
+    usedTrxCodes = JSON.parse(localStorage.getItem("usedTrxCodes")) || [];
   } catch {
-    used = [];
+    usedTrxCodes = [];
   }
 
-  if (trxCode && amtMatch && namePhoneMatch && !used.includes(trxCode)) {
-    // success
-    const log = generateLogCode();
-    logCodeElem.innerHTML = `Your Log Code:<br><span style="font-size:18px">${log}</span>`;
-    document.getElementById("password").value = log;
+  if (trxCode && amtMatch && namePhoneMatch && !usedTrxCodes.includes(trxCode)) {
+    // Generate and display log code
+    const logCode = generateLogCode();
+    logCodeElem.innerHTML = `Your Log Code:<br><span style="font-size:18px">${logCode}</span>`;
+    document.getElementById("password").value = logCode;
     loginForm.style.display = "block";
 
-    used.push(trxCode);
-    localStorage.setItem("usedTrxCodes", JSON.stringify(used));
-  }
-  else if (trxCode && used.includes(trxCode)) {
-    logCodeElem.innerHTML = `<span style="color:red">This transaction has already been used.</span>`;
+    // Save used trx code and log code with timestamp
+    usedTrxCodes.push(trxCode);
+    localStorage.setItem("usedTrxCodes", JSON.stringify(usedTrxCodes));
+    localStorage.setItem("mchangoLogCode", logCode);
+    localStorage.setItem("mchangoLogTime", Date.now().toString());
+  } else if (trxCode && usedTrxCodes.includes(trxCode)) {
+    logCodeElem.innerHTML = `<span style="color:red">This M-Pesa transaction has already been used.</span>`;
     loginForm.style.display = "none";
-  }
-  else {
-    logCodeElem.innerHTML = `<span style="color:red">Invalid message. Ensure it matches exactly “TEH643P5AY Confirmed. Ksh99.00 sent  0797612155 on DD/MM/YY at HH:MM AM/PM…”.</span>`;
+  } else {
+    logCodeElem.innerHTML = `<span style="color:red">Invalid message. Make sure you sent Ksh 99 to Emanuel Bett 0797612155 and paste the full M-Pesa message here.</span>`;
     loginForm.style.display = "none";
   }
 }
 
-
 function validatePhoneNumber(phone) {
+  // Kenyan phone number validation: starts with 07 and 10 digits total
   const phoneRegex = /^07\d{8}$/;
   return phoneRegex.test(phone);
 }
@@ -367,8 +265,8 @@ function validatePhoneNumber(phone) {
 function login() {
   const username = document.getElementById("username").value.trim();
   const password = document.getElementById("password").value.trim();
-  const expectedCode = localStorage.getItem('mchangoLogCode');
-  const savedTime = localStorage.getItem('mchangoLogTime');
+  const expectedCode = localStorage.getItem("mchangoLogCode");
+  const savedTime = localStorage.getItem("mchangoLogTime");
   const now = Date.now();
 
   if (!username) {
@@ -380,23 +278,18 @@ function login() {
     alert("Please enter a valid phone number starting with 07 and 10 digits long.");
     return;
   }
-  document.addEventListener("DOMContentLoaded", () => {
-  const input = document.getElementById("mpesaMessage");
 
-  input.addEventListener("paste", function (e) {
-    setTimeout(() => {
-      input.readOnly = true;
-    }, 50);
-  });
+  if (!expectedCode || !savedTime) {
+    alert("Your log code has expired or not found. Please verify your M-Pesa message again.");
+    return;
+  }
 
-  window.resetInput = function () {
-    input.value = "";
-    input.readOnly = false;
-  };
-});
-
-  if (!expectedCode || !savedTime || now - savedTime > 6 * 24 * 60 * 60 * 1000) {
+  // Check if log code is older than 6 days (in ms)
+  const sixDaysMs = 6 * 24 * 60 * 60 * 1000;
+  if (now - parseInt(savedTime, 10) > sixDaysMs) {
     alert("Your log code has expired. Please verify your M-Pesa message again.");
+    localStorage.removeItem("mchangoLogCode");
+    localStorage.removeItem("mchangoLogTime");
     return;
   }
 
@@ -407,7 +300,17 @@ function login() {
     alert("Invalid login details. Please make sure your log code is correct.");
   }
 }
+
+// Close modal if clicking outside content
+window.onclick = function(event) {
+  const modal = document.getElementById('premiumModal');
+  if (event.target === modal) {
+    modal.style.display = "none";
+  }
+};
+
+  
   </script>
 
 </body>
-    </html>
+  </html>
