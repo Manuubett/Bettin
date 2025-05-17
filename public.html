@@ -315,48 +315,49 @@ window.onload = function () {
 function generateLogCode() {
   return 'PREM-' + Math.floor(100000 + Math.random() * 900000);
 }
-
 function verifyMpesaMessage() {
-  const message = document.getElementById("mpesaMessage").value.trim();
+  const raw = document.getElementById("mpesaMessage").value.trim();
   const logCodeElem = document.getElementById("logCode");
-  const loginForm = document.getElementById("loginForm");
+  const loginForm   = document.getElementById("loginForm");
 
-  // Extract trx code (10+ alphanumeric, case-insensitive)
-  const trxMatch = message.match(/\b([A-Z0-9]{10,})\b/i);
-  const trxCode  = trxMatch ? trxMatch[1].toUpperCase() : null;
+  // 1. Extract trxCode: 10 uppercase alphanumeric
+  const trxMatch = raw.match(/\b([A-Z0-9]{10})\b/);
+  const trxCode  = trxMatch ? trxMatch[1] : null;
 
-  // Verify amount & name
-  const lower = message.toLowerCase();
-  const amountOK = /\bksh\s?99(\.00)?\b/.test(lower);
-  const nameOK   = lower.includes("emanuel kipkirui bett");
+  // 2. Validate amount: exactly "Ksh99.00"
+  const amtMatch = raw.match(/\bKsh\s*99\.00\b/i);
 
-  // Load previously used codes
-  let usedTrx = [];
+  // 3. Validate name + phone
+  const namePhoneMatch = /Emanuel\s+Bett\s+0797612155/i.test(raw);
+
+  // 4. Load used codes safely
+  let used = [];
   try {
-    usedTrx = JSON.parse(localStorage.getItem("usedTrxCodes")) || [];
+    used = JSON.parse(localStorage.getItem("usedTrxCodes")) || [];
   } catch {
-    usedTrx = [];
+    used = [];
   }
 
-  if (trxCode && amountOK && nameOK && !usedTrx.includes(trxCode)) {
-    // Success
-    const code = generateLogCode();
-    logCodeElem.innerHTML = `Your Log Code:<br><span style="font-size:18px">${code}</span>`;
-    document.getElementById("password").value = code;
+  if (trxCode && amtMatch && namePhoneMatch && !used.includes(trxCode)) {
+    // success
+    const log = generateLogCode();
+    logCodeElem.innerHTML = `Your Log Code:<br><span style="font-size:18px">${log}</span>`;
+    document.getElementById("password").value = log;
     loginForm.style.display = "block";
 
-    usedTrx.push(trxCode);
-    localStorage.setItem("usedTrxCodes", JSON.stringify(usedTrx));
+    used.push(trxCode);
+    localStorage.setItem("usedTrxCodes", JSON.stringify(used));
   }
-  else if (trxCode && usedTrx.includes(trxCode)) {
-    logCodeElem.innerHTML = `<span style="color:red">This M-Pesa transaction has already been used.</span>`;
+  else if (trxCode && used.includes(trxCode)) {
+    logCodeElem.innerHTML = `<span style="color:red">This transaction has already been used.</span>`;
     loginForm.style.display = "none";
   }
   else {
-    logCodeElem.innerHTML = `<span style="color:red">Invalid M-Pesa message. Make sure you've sent exactly Ksh 99 to 0797612155 and pasted the full message.</span>`;
+    logCodeElem.innerHTML = `<span style="color:red">Invalid message. Ensure it matches exactly “TEH643P5AY Confirmed. Ksh99.00 sent  0797612155 on DD/MM/YY at HH:MM AM/PM…”.</span>`;
     loginForm.style.display = "none";
   }
 }
+
 
 function validatePhoneNumber(phone) {
   const phoneRegex = /^07\d{8}$/;
@@ -379,6 +380,20 @@ function login() {
     alert("Please enter a valid phone number starting with 07 and 10 digits long.");
     return;
   }
+  document.addEventListener("DOMContentLoaded", () => {
+  const input = document.getElementById("mpesaMessage");
+
+  input.addEventListener("paste", function (e) {
+    setTimeout(() => {
+      input.readOnly = true;
+    }, 50);
+  });
+
+  window.resetInput = function () {
+    input.value = "";
+    input.readOnly = false;
+  };
+});
 
   if (!expectedCode || !savedTime || now - savedTime > 6 * 24 * 60 * 60 * 1000) {
     alert("Your log code has expired. Please verify your M-Pesa message again.");
@@ -395,4 +410,4 @@ function login() {
   </script>
 
 </body>
-  </html>
+    </html>
