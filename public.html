@@ -29,33 +29,45 @@
       font-size: 16px;
       cursor: pointer;
     }
-
     .modal {
-      display: none;
-      position: fixed;
-      z-index: 999;
-      padding-top: 60px;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      overflow: auto;
-      background-color: green;
-    }
-
-    .modal-content {
-      background: #fff;
-      margin: auto;
-      padding: 30px;
-      border-radius: 12px;
-      position: relative;
-      text-align: center;
-      animation: fadeIn 0.3s ease-in-out;
-      max-height: 70vh;
-  overflow-y: auto;
-  width: 80%;
-  max-width: 400px;
+  display: none;
+  position: fixed;
+  inset: 0;            /* shorthand for top:0 right:0 bottom:0 left:0          */
+  z-index: 999;
+  /* remove the padding-top that created a gap */
+  /* padding-top: 60px;       <-- delete this   */
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background: rgba(0,128,0,.9);  /* keep green but add transparency if you like */
 }
+
+
+/* content inside the modal */
+modal .modal-content {
+  /* pick a size that feels right for your UI */
+  font-size: 1.25rem;   /* ≈ 20 px */
+  /* optional readability tweaks */
+  line-height: 1.6;
+  color: #fff;
+  padding: 1.5rem;
+}
+/* clean block—delete the extra brace that’s after this rule */
+.modal-content{
+  position: relative;
+  background:#fff;
+  margin:auto;
+  margin-top: 30px;
+  padding:30px;
+  border-radius:12px;
+  text-align:center;
+  animation:fadeIn .3s ease-in-out;
+  max-height:90vh;
+  overflow-y:auto;
+  width:80%;
+  max-width:400px;
+}  /* <-- make sure this is the only closing brace */
+
     }
 
     @keyframes fadeIn {
@@ -155,37 +167,51 @@
   </style>
 </head>
 <body>
+<div class="container"
+     style="max-width:350px;margin:3rem auto;padding:2rem 2.5rem;text-align:center;
+            border-radius:1.25rem;box-shadow:0 8px 20px rgba(0,0,0,.08);
+            background:green;font-family:system-ui,sans-serif;">
+  <h1 style="margin:0 0 .85rem;font-size:1.99rem;font-weight:700;color:#111827;">
+    👑 Upgrade to Premium
+  </h1>
+  <p style="margin:0 0 1.56rem;font-size:1rem;color:yellow;">
+    Unlock advanced tools for better prediction &amp; analysis
+  </p>
 
-  <div class="container">
-    <h1>Upgrade to Premium</h1>
-    <p>Unlock advanced tools for better prediction & analysis</p>
-    <button class="open-modal-btn" onclick="openModal('premiumModal')">See Premium Features</button>
-  </div>
+  <button class="open-modal-btn"
+          onclick="openModal('premiumModal')"
+          style="padding:.75rem 1.5rem;font-size:1rem;font-weight:600;border:none;
+                 border-radius:.75rem;cursor:pointer;transition:background .2s ease;
+                 background:#3b82f6;color:#ffffff;">
+    ✨ See Premium Features
+  </button>
+</div>
 
   <!-- Premium Modal -->
   <div id="premiumModal" class="modal">
     <div class="modal-content">
       <span class="close-btn" onclick="closeModal('premiumModal')">&times;</span>
-      <h2>Upgrade to Premium – Only Ksh 99</h2>
-      <p class="animated-text">Unlock these exclusive features:</p>
-<ul>
-  <li>Predicts match results: 1 for Home win, X for Draw, 2 for Away win based on odds. ✅&nbsp;</li>
-  <li>Predicts Both Teams to Score (GG) when odds are in a certain range. ✅&nbsp;</li>
-  <li>Predicts Over or Under 2.5 goals using the average of home and away odds. ✅&nbsp;</li>
-  <li>Shows prediction results in a clean and easy-to-read dashboard. ✅&nbsp;</li>
-  <li>Allows users to enter and save the final match result manually. ✅&nbsp;</li>
-  <li>Saves the final result in localStorage to keep it for later. ✅&nbsp;</li>
-  <li>Shows saved results automatically when the same odds appear again. ✅&nbsp;</li>
-</ul>
-      <hr>
-      <div class="payment-info">
-        <h3>How to Pay</h3>
-        <p><strong>Go to M-Pesa > Lipa na M-Pesa > Send Money</strong></p>
-        <p><strong>Phone Number:</strong> <span style="color:green;">0797612155</span></p>
-        <p><strong>Recipient Name:</strong> Emanuel</p>
-        <p><em>Send Ksh 99 and paste the message below to verify.</em></p>
-      </div>
+      <h2 style="margin:0 0 8px; line-height:1.2;">
+  Upgrade to Premium – Only Ksh 99
+</h2>
 
+<p class="animated-text" style="margin:0 0 6px; line-height:1.25;">
+  Unlock these exclusive features:
+</p>
+<ul>
+        <li>Predict match results based on odds.</li>
+        <li>Predict Both Teams to Score (GG).</li>
+        <li>Predict Over/Under 2.5 goals.</li>
+        <li>View results in a clean dashboard.</li>
+        <li>Enter and save final match results.</li>
+        <li>Persist results via localStorage.</li>
+      </ul>
+      <hr>
+      <div class="payment-info"><!-- inside .payment-info -->
+<p><strong>Go to M-Pesa › Lipa na M-Pesa › Buy Goods and Services</strong></p>
+<p><strong>Till Number:</strong> <span style="color:green;">4585402</span></p>
+<p><strong>Recipient Name:</strong> Emanuel</p>
+      
       <textarea id="mpesaMessage" rows="5" placeholder="Paste your full M-Pesa message here..."></textarea>
       <button onclick="verifyMpesaMessage()" class="btn-verify">Verify Now</button>
 
@@ -211,8 +237,8 @@ function closeModal(id) {
 function generateLogCode() {
   return 'PREM-' + Math.floor(100000 + Math.random() * 900000);
 }
-
 function verifyMpesaMessage() {
+  document.getElementById("mpesaMessage").readOnly = true;
   const raw = document.getElementById("mpesaMessage").value.trim();
   const logCodeElem = document.getElementById("logCode");
   const loginForm = document.getElementById("loginForm");
@@ -221,11 +247,19 @@ function verifyMpesaMessage() {
   const trxMatch = raw.match(/\b([A-Z0-9]{10})\b/);
   const trxCode = trxMatch ? trxMatch[1] : null;
 
-  // Validate exact amount: "Ksh99.00" (case insensitive)
-  const amtMatch = raw.match(/\bKsh\s*99\.00\b/i);
+  // Validate exact amount: "Ksh 99.00"
+  const amtMatch = /\bKsh\s*99\.00\b/i.test(raw);
 
-  // Validate name and phone number appear in the message
-  const namePhoneMatch = /Emanuel\s+Bett\s+0797612155/i.test(raw);
+  /*  Validate that the SMS references Till 4585402 and recipient Emanuel.
+      Typical M-Pesa messages for Buy Goods include either:
+      "...Buy Goods and Services Ksh99.00 to Emanuel 4585402..." OR
+      "...Till Number 4585402 Emanuel..."
+   */// Validate that the SMS references Till 4585402 and recipient Emanuel
+// Accept messages that include:
+//  - the paybill/till 4585402 anywhere
+//  - and the recipient name "Emanuel" (case-insensitive)
+const tillMatch = /4585402/.test(raw) && /Emanuel/i.test(raw);
+
 
   // Load used transaction codes safely from localStorage
   let usedTrxCodes = [];
@@ -235,7 +269,7 @@ function verifyMpesaMessage() {
     usedTrxCodes = [];
   }
 
-  if (trxCode && amtMatch && namePhoneMatch && !usedTrxCodes.includes(trxCode)) {
+  if (trxCode && amtMatch && tillMatch && !usedTrxCodes.includes(trxCode)) {
     // Generate and display log code
     const logCode = generateLogCode();
     logCodeElem.innerHTML = `Your Log Code:<br><span style="font-size:18px">${logCode}</span>`;
@@ -248,13 +282,16 @@ function verifyMpesaMessage() {
     localStorage.setItem("mchangoLogCode", logCode);
     localStorage.setItem("mchangoLogTime", Date.now().toString());
   } else if (trxCode && usedTrxCodes.includes(trxCode)) {
-    logCodeElem.innerHTML = `<span style="color:red">This M-Pesa transaction has already been used.</span>`;
+    logCodeElem.innerHTML =
+      `<span style="color:red">This M-Pesa transaction has already been used.</span>`;
     loginForm.style.display = "none";
   } else {
-    logCodeElem.innerHTML = `<span style="color:red">Invalid message. Make sure you sent Ksh 99 to Emanuel Bett 0797612155 and paste the full M-Pesa message here.</span>`;
+    logCodeElem.innerHTML =
+      `<span style="color:red">Invalid message. Make sure you sent Ksh 99 to Till 4585402 (Emanuel) and paste the full M-Pesa message here.</span>`;
     loginForm.style.display = "none";
   }
 }
+
 
 function validatePhoneNumber(phone) {
   // Kenyan phone number validation: starts with 07 and 10 digits total
@@ -300,17 +337,36 @@ function login() {
     alert("Invalid login details. Please make sure your log code is correct.");
   }
 }
+function initLoginForm() {
+  const loginForm   = document.getElementById("loginForm");
+  const savedCode   = localStorage.getItem("mchangoLogCode");
+  const savedTime   = localStorage.getItem("mchangoLogTime");
+  const now         = Date.now();
+  const sixDaysMs   = 6 * 24 * 60 * 60 * 1000;
 
+  if (savedCode && savedTime && (now - parseInt(savedTime, 10) <= sixDaysMs)) {
+    // still valid → show form & pre-fill code
+    loginForm.style.display = "block";
+    document.getElementById("password").value = savedCode;
+  } else {
+    // expired / missing → clean up & keep form hidden
+    localStorage.removeItem("mchangoLogCode");
+    localStorage.removeItem("mchangoLogTime");
+    loginForm.style.display = "none";
+  }
+}
 // Close modal if clicking outside content
 window.onclick = function(event) {
   const modal = document.getElementById('premiumModal');
   if (event.target === modal) {
     modal.style.display = "none";
   }
+  // Run the init check when the page loads
+initLoginForm();
 };
 
   
   </script>
 
 </body>
-  </html>
+        </html>
