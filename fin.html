@@ -6,9 +6,10 @@
     body {
       font-family: Arial, sans-serif;
       background-color: #f4f4f9;
-      padding: 20px;
-      max-width: 900px;
+      padding: 5px;
+      max-width: 100%;
       margin: auto;
+      max-height: 100%;
     }
 
     h2, h3 {
@@ -22,6 +23,7 @@
       margin-bottom: 20px;
       background-color: #fff;
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      height: 100vh;
     }
 
     th, td {
@@ -46,7 +48,7 @@
     }
 
     input[type="text"] {
-      width: 70%;
+      width: 90%;
     }
 
     select {
@@ -82,7 +84,7 @@
     }
 
     #output {
-      background-color: #f8f9fa;
+      background-color: #yellow;
       padding: 15px;
       border: 1px solid #ddd;
       margin-top: 15px;
@@ -119,6 +121,12 @@ h2 {
 
 h2:hover {
   animation: colorCycle 4s linear infinite;
+  keyframes colorCycle {
+  0%   { color: red; }
+  25%  { color: blue; }
+  50%  { color: green; }
+  75%  { color: orange; }
+  100% { color: red; }
 }
 }
   </style>
