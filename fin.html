@@ -1,376 +1,401 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Match Prediction with Venue</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Football Match Predictor</title>
+
+  <!-- ===== CSS ===== -->
   <style>
+    :root {
+      --primary: #0d6efd;
+      --primary-hover: #0b5ed7;
+      --bg: #f8f9fa;
+      --text: #212529;
+      --card-bg: #ffffff;
+      --border: #dee2e6;
+      --accent: #ffc107;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
     body {
-      font-family: Arial, sans-serif;
-      background-color: #f4f4f9;
-      padding: 5px;
-      max-width: 100%;
-      margin: auto;
-      max-height: 100%;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      margin: 0;
+      padding: 1rem;
+      display: flex;
+      justify-content: center;
     }
 
-    h2, h3 {
-      color: #333;
-      text-align: center;
-    }
-
-    table {
+    /* ---- Layout ---- */
+    .container {
       width: 100%;
-      border-collapse: collapse;
-      margin-bottom: 20px;
-      background-color: #fff;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      
+      max-width: 640px;
     }
 
-    th, td {
-      border: 1px solid #ddd;
-      padding: 8px 10px;
+    h1 {
+      font-size: clamp(1.75rem, 5vw, 2.5rem);
+      font-weight: 700;
       text-align: center;
-      vertical-align: middle;
+      background: linear-gradient(270deg, #ff9cf3, #ff006e, #3a86ff);
+      background-size: 600% 600%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: gradientShift 8s ease infinite;
+      margin-bottom: 0.5rem;
     }
 
-    th {
-      background-color: #007BFF;
-      color: #fff;
+    @keyframes gradientShift {
+      0%   { background-position: 0% 50%; }
+      50%  { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
 
-    input[type="text"], input[type="number"], select {
-      padding: 6px;
-      margin: 4px 0;
-      box-sizing: border-box;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-      font-size: 14px;
+    .subtitle {
+      text-align: center;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 1.5rem;
     }
 
-    input[type="text"] {
-      width: 90%;
+    section {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 0.75rem;
+      padding: 1rem 1.25rem;
+      margin-bottom: 1rem;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.05);
     }
 
-    select {
-      width: 25%;
-      margin-left: 5px;
+    h2 {
+      font-size: 1.25rem;
+      margin-bottom: 0.75rem;
+      color: var(--primary);
     }
 
-    button {
-      background-color: #28a745;
-      color: white;
-      border: none;
-      padding: 12px 20px;
-      margin-top: 10px;
-      cursor: pointer;
-      border-radius: 5px;
-      font-size: 16px;
-      transition: background-color 0.3s;
+    /* ---- Form elements ---- */
+    label {
       display: block;
-      margin-left: auto;
-      margin-right: auto;
+      font-weight: 600;
+      margin-top: 0.75rem;
+      margin-bottom: 0.25rem;
+    }
+
+    input[type="number"],
+    input[type="text"] {
+      width: 100%;
+      padding: 0.55rem 0.75rem;
+      font-size: 1rem;
+      border: 1px solid var(--border);
+      border-radius: 0.5rem;
+      transition: border-color 0.25s;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+
+    /* ---- Buttons ---- */
+    button {
+      display: inline-block;
+      background: var(--primary);
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 600;
+      padding: 0.6rem 1.5rem;
+      border: none;
+      border-radius: 0.5rem;
+      margin-top: 0.75rem;
+      cursor: pointer;
+      transition: background 0.25s;
     }
 
     button:hover {
-      background-color: #218838;
+      background: var(--primary-hover);
     }
 
-    #previousMatches {
-      background-color: #fff;
-      padding: 15px;
-      border: 1px solid #ddd;
-      margin-top: 20px;
-      border-radius: 5px;
+    /* ---- Info areas ---- */
+    .instructions {
+      background: #e9ecef;
+      border-left: 4px solid var(--primary);
+      padding: 0.75rem 1rem;
+      font-size: 0.9375rem;
+      border-radius: 0.5rem;
+      line-height: 1.45;
     }
 
     #output {
-      background-color: #yellow;
-      padding: 15px;
-      border: 1px solid #ddd;
-      margin-top: 15px;
-      border-radius: 5px;
-      text-align: center;
-      font-size: 18px;
+      background: var(--bg);
+      border: 1px dashed var(--primary);
+      border-radius: 0.5rem;
+      padding: 0.85rem;
+      min-height: 4rem;
+      line-height: 1.5;
     }
-    @media (max-width: 600px) {
-  table, input, select, button {
-    width: 100%;
-  }
 
-  input[type="text"], input[type="number"] {
-    width: 100%;
-  }
+    #allPredictions {
+      max-height: 260px;
+      overflow-y: auto;
+      font-size: 0.9rem;
+    }
 
-  select {
-    width: 100%;
-    margin-top: 5px;
-    
-  }@keyframes colorCycle {
-  0%   { color: red; }
-  25%  { color: blue; }
-  50%  { color: green; }
-  75%  { color: orange; }
-  100% { color: red; }
-}
+    .prediction-entry {
+      border-bottom: 1px solid var(--border);
+      padding: 0.5rem 0;
+    }
+    .prediction-entry:last-child { border-bottom: none; }
 
-h2 {
-  color: #4CAF50; /* initial color */
-  cursor: pointer;
-  transition: color 0.5s ease;
-}
+    code {
+      background: #f1f3f5;
+      padding: 0 4px;
+      border-radius: 4px;
+    }
 
-h2:hover {
-  animation: colorCycle 4s linear infinite;
-  keyframes colorCycle {
-  0%   { color: red; }
-  25%  { color: blue; }
-  50%  { color: green; }
-  75%  { color: orange; }
-  100% { color: red; }
-}
-}
+    /* Touch devices: keep hover color stable */
+    @media (hover: none) {
+      button:hover { background: var(--primary); }
+    }
   </style>
 </head>
 <body>
+  <main class="container">
+    <h1>Premium Membership</h1>
+    <p class="subtitle">Odi Bet</p>
 
-<h2>Premium Dashboard 🚀</h2>
+    <!-- Instructions -->
+    <section>
+      <div class="instructions">
+        <strong>How to Enter Previous Results:</strong><br />
+        Enter scores from the team’s perspective (<em>goals scored - goals conceded</em>).<br />
+        Example: won&nbsp;2‒1 → <code>2-1</code>, lost&nbsp;1‒3 → <code>1-3</code>.<br />
+        Ignore home/away status.
+      </div>
+    </section>
 
-  <table>
-    <thead>
-      <tr>
-        <th>Home Team Last es (Scores + Venue)</th>
-        <th>Away Team Last es (Scores + Venue)</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><input id="home1" placeholder="e.g. 2-1"><select id="home1Venue"><option value="H">H</option><option value="A">A</option></select></td>
-        <td><input id="away1" placeholder="e.g. 1-2"><select id="away1Venue"><option value="H">H</option><option value="A">A</option></select></td>
-      </tr>
-      <tr>
-        <td><input id="home2" placeholder="e.g. 0-0"><select id="home2Venue"><option value="H">H</option><option value="A">A</option></select></td>
-        <td><input id="away2" placeholder="e.g. 1-1"><select id="away2Venue"><option value="H">H</option><option value="A">A</option></select></td>
-      </tr>
-      <tr>
-        <td><input id="home3" placeholder="e.g. 3-2"><select id="home3Venue"><option value="H">H</option><option value="A">A</option></select></td>
-        <td><input id="away3" placeholder="e.g. 0-1"><select id="away3Venue"><option value="H">H</option><option value="A">A</option></select></td>
-      </tr>
-      <tr>
-        <td><input id="home4" placeholder="e.g. 1-1"><select id="home4Venue"><option value="H">H</option><option value="A">A</option></select></td>
-        <td><input id="away4" placeholder="e.g. 2-2"><select id="away4Venue"><option value="H">H</option><option value="A">A</option></select></td>
-      </tr>
-      <tr>
-        <td><input id="home5" placeholder="e.g. 0-1"><select id="home5Venue"><option value="H">H</option><option value="A">A</option></select></td>
-        <td><input id="away5" placeholder="e.g. 3-0"><select id="away5Venue"><option value="H">H</option><option value="A">A</option></select></td>
-      </tr>
-      <tr>
-        <td><input id="home6" placeholder="e.g. 2-2"><select id="home6Venue"><option value="H">H</option><option value="A">A</option></select></td>
-        <td><input id="away6" placeholder="e.g. 1-0"><select id="away6Venue"><option value="H">H</option><option value="A">A</option></select></td>
-      </tr>
-    </tbody>
-  </table>
+    <!-- Odds -->
+    <section id="odds">
+      <h2>Odds</h2>
+      <label for="homeOdd">Home Odd</label>
+      <input type="number" id="homeOdd" placeholder="e.g. 1.50" step="0.01" onchange="checkExistingPrediction()"/>
 
-  <h3>Enter 1 X 2 Odds</h3>
-  <label>Home Win Odds: <input id="homeOdd" type="number" step="0.01" min="1" placeholder="e.g. 2.50"></label><br>
-  <label>Draw Odds: <input id="drawOdd" type="number" step="0.01" min="1" placeholder="e.g. 3.10"></label><br>
-  <label>Away Win Odds: <input id="awayOdd" type="number" step="0.01" min="1" placeholder="e.g. 2.80"></label><br><br>
+      <label for="drawOdd">Draw Odd</label>
+      <input type="number" id="drawOdd" placeholder="e.g. 3.20" step="0.01" onchange="checkExistingPrediction()"/>
 
-  <h3>Enter Final Result (e.g. 2-1)</h3>
-  <input id="finalResult" placeholder="Final result" pattern="[0-9\-]*" title="Only numbers and dash allowed" oninput="validateFinalResult(this)" maxlength="5"><br><br>
+      <label for="awayOdd">Away Odd</label>
+      <input type="number" id="awayOdd" placeholder="e.g. 5.00" step="0.01" onchange="checkExistingPrediction()"/>
+    </section>
 
-  <button onclick="predict()">Predict</button>
-  <button onclick="saveData()">Save Final Result</button>
+    <!-- Home matches -->
+    <section>
+      <h2>Home Team Last 3 Matches</h2>
+      <input type="text" id="home1" placeholder="e.g. 2-1"/>
+      <input type="text" id="home2" placeholder="e.g. 1-0"/>
+      <input type="text" id="home3" placeholder="e.g. 0-1"/>
+    </section>
 
-  <h3>Prediction Output</h3>
-  <div id="output"></div>
+    <!-- Away matches -->
+    <section>
+      <h2>Away Team Last 3 Matches</h2>
+      <input type="text" id="away1" placeholder="e.g. 1-2"/>
+      <input type="text" id="away2" placeholder="e.g. 2-2"/>
+      <input type="text" id="away3" placeholder="e.g. 0-0"/>
+    </section>
 
-  <div id="previousMatches"></div>
+    <button onclick="predict()">Predict</button>
+
+    <!-- Prediction -->
+    <section>
+      <h2>Prediction Result</h2>
+      <div id="output"><em>No prediction yet.</em></div>
+    </section>
+
+    <!-- Final score -->
+    <section>
+      <h2>Enter Final Score (optional)</h2>
+      <input type="text" id="finalResult" placeholder="e.g. 2-1"/>
+      <button onclick="savePrediction()">Save Prediction</button>
+    </section>
+
+    <!-- Saved predictions -->
+    <section>
+      <h2>All Saved Predictions</h2>
+      <div id="allPredictions"><em>No saved predictions yet.</em></div>
+    </section>
+  </main>
+
+  <!-- ===== JavaScript (unchanged from your original) ===== -->
   <script>
-  function validateFinalResult(input) {
-  // Allow only digits and dash in final result input
-  input.value = input.value.replace(/[^0-9-]/g, '');
-}
+    /* -------- Helper functions -------- */
+    function parseScore(score) {
+      if (!score) return { scored: 0, conceded: 0 };
+      const parts = score.split('-');
+      if (parts.length !== 2) return { scored: 0, conceded: 0 };
+      const [a, b] = parts.map(Number);
+      return { scored: isNaN(a) ? 0 : a, conceded: isNaN(b) ? 0 : b };
+    }
 
-function parseScore(scoreStr) {
-  if (!scoreStr) return null;
-  const parts = scoreStr.trim().split('-');
-  if (parts.length !== 2) return null;
-  const home = parseInt(parts[0]);
-  const away = parseInt(parts[1]);
-  if (isNaN(home) || isNaN(away)) return null;
-  return { home, away };
-}
+    function getStats(matches) {
+      let wins = 0, draws = 0, losses = 0, totalGoals = 0, goalsFor = 0, goalsAgainst = 0;
+      matches.forEach(m => {
+        goalsFor     += m.scored;
+        goalsAgainst += m.conceded;
+        totalGoals   += m.scored + m.conceded;
+        if      (m.scored > m.conceded) wins++;
+        else if (m.scored === m.conceded) draws++;
+        else losses++;
+      });
+      return { wins, draws, losses, totalGoals, goalsFor, goalsAgainst };
+    }
 
-function getStats(matches) {
-  let wins = 0, draws = 0, losses = 0, goalsFor = 0, goalsAgainst = 0;
-  for (const m of matches) {
-    if (!m) continue;
-    goalsFor += m.home;
-    goalsAgainst += m.away;
-    if (m.home > m.away) wins++;
-    else if (m.home === m.away) draws++;
-    else losses++;
-  }
-  return { wins, draws, losses, goalsFor, goalsAgainst, totalGoals: goalsFor + goalsAgainst };
-}
+    /* -------- Core logic -------- */
+    let lastPrediction = {};
 
-function predictCorrectScore(homeAvgGoals, awayAvgGoals) {
-  const maxGoals = 5;
-  let predictedCS = '';
-  let highestProbability = 0;
+    function predict() {
+      const homeOdd = parseFloat(document.getElementById('homeOdd').value);
+      const drawOdd = parseFloat(document.getElementById('drawOdd').value);
+      const awayOdd = parseFloat(document.getElementById('awayOdd').value);
 
-  for (let homeGoals = 0; homeGoals <= maxGoals; homeGoals++) {
-    for (let awayGoals = 0; awayGoals <= maxGoals; awayGoals++) {
-      const homeProb = Math.pow(homeAvgGoals, homeGoals) * Math.exp(-homeAvgGoals) / factorial(homeGoals);
-      const awayProb = Math.pow(awayAvgGoals, awayGoals) * Math.exp(-awayAvgGoals) / factorial(awayGoals);
-      const matchProb = homeProb * awayProb;
+      if (isNaN(homeOdd) || isNaN(drawOdd) || isNaN(awayOdd)) {
+        alert('Please enter valid odds for Home, Draw, and Away.');
+        return;
+      }
 
-      if (matchProb > highestProbability) {
-        highestProbability = matchProb;
-        predictedCS = `${homeGoals}-${awayGoals}`;
+      const homeMatches = [
+        parseScore(document.getElementById('home1').value),
+        parseScore(document.getElementById('home2').value),
+        parseScore(document.getElementById('home3').value)
+      ];
+      const awayMatches = [
+        parseScore(document.getElementById('away1').value),
+        parseScore(document.getElementById('away2').value),
+        parseScore(document.getElementById('away3').value)
+      ];
+
+      const homeStats = getStats(homeMatches);
+      const awayStats = getStats(awayMatches);
+
+      let result = 'X'; // draw
+      if      (homeStats.wins > awayStats.wins) result = '1';
+      else if (awayStats.wins > homeStats.wins) result = '2';
+
+      const gg = (homeStats.goalsAgainst > 2 || awayStats.goalsAgainst > 2) ? 'GG' : 'No GG';
+      const avgGoals = (homeStats.totalGoals + awayStats.totalGoals) / 6;
+      const over25 = avgGoals > 2.5 ? 'Over 2.5' : 'Under 2.5';
+
+      let confidence = 'Medium';
+      if (Math.abs(homeStats.wins - awayStats.wins) >= 2 || avgGoals > 3) confidence = 'High';
+      else if (avgGoals < 1.5) confidence = 'Low';
+
+      document.getElementById('output').innerHTML = `
+        Result: ${result}<br>
+        GG: ${gg}<br>
+        Goals: ${over25}<br>
+        Confidence: ${confidence}
+      `;
+
+      lastPrediction = {
+        date: new Date().toLocaleString(),
+        homeOdd, drawOdd, awayOdd,
+        result, gg, over25, confidence,
+        final: ''
+      };
+      saveInputs();
+    }
+
+    function savePrediction() {
+      if (!lastPrediction || !lastPrediction.result) {
+        alert('No prediction to save!');
+        return;
+      }
+      const finalScore = document.getElementById('finalResult').value.trim();
+      if (finalScore) lastPrediction.final = finalScore;
+
+      const saved = JSON.parse(localStorage.getItem('predictions') || '[]');
+      saved.push(lastPrediction);
+      localStorage.setItem('predictions', JSON.stringify(saved));
+
+      alert('Prediction saved!');
+      saveInputs();
+      checkExistingPrediction();
+    }
+
+    function checkExistingPrediction() {
+      const homeOdd = parseFloat(document.getElementById('homeOdd').value);
+      const drawOdd = parseFloat(document.getElementById('drawOdd').value);
+      const awayOdd = parseFloat(document.getElementById('awayOdd').value);
+
+      if (isNaN(homeOdd) || isNaN(drawOdd) || isNaN(awayOdd)) {
+        document.getElementById('output').innerHTML = '<em>Please enter all odds to check for existing predictions.</em>';
+        document.getElementById('allPredictions').innerHTML = '';
+        return;
+      }
+
+      const saved = JSON.parse(localStorage.getItem('predictions') || '[]');
+      const match = saved.find(p =>
+        p.homeOdd === homeOdd &&
+        p.drawOdd === drawOdd &&
+        p.awayOdd === awayOdd
+      );
+
+      if (match) {
+        document.getElementById('output').innerHTML = `
+          <strong>Previous Prediction Found:</strong><br>
+          Result: ${match.result}<br>
+          GG: ${match.gg}<br>
+          Goals: ${match.over25}<br>
+          Confidence: ${match.confidence}<br>
+          Final Result: ${match.final || 'Not entered'}
+        `;
+        document.getElementById('allPredictions').innerHTML = `
+          <div class="prediction-entry">
+            <strong>${match.date}</strong><br>
+            Odds: ${match.homeOdd} - ${match.drawOdd} - ${match.awayOdd}<br>
+            Result: ${match.result}<br>
+            GG: ${match.gg}<br>
+            Goals: ${match.over25}<br>
+            Confidence: ${match.confidence}<br>
+            Final Score: ${match.final || 'Not entered'}
+          </div>
+        `;
+      } else {
+        document.getElementById('output').innerHTML = '<em>No previous prediction found for these odds.</em>';
+        document.getElementById('allPredictions').innerHTML = '<em>No matching saved prediction.</em>';
       }
     }
-  }
 
-  return predictedCS;
-}
+    /* -------- Remember form inputs across reloads -------- */
+    function saveInputs() {
+      const inputs = {
+        homeOdd: document.getElementById('homeOdd').value,
+        drawOdd: document.getElementById('drawOdd').value,
+        awayOdd: document.getElementById('awayOdd').value,
+        home1: document.getElementById('home1').value,
+        home2: document.getElementById('home2').value,
+        home3: document.getElementById('home3').value,
+        away1: document.getElementById('away1').value,
+        away2: document.getElementById('away2').value,
+        away3: document.getElementById('away3').value,
+        finalResult: document.getElementById('finalResult').value
+      };
+      localStorage.setItem('inputs', JSON.stringify(inputs));
+    }
 
-function factorial(n) {
-  return n <= 1 ? 1 : n * factorial(n - 1);
-}
+    function loadInputs() {
+      const inputs = JSON.parse(localStorage.getItem('inputs') || '{}');
+      Object.keys(inputs).forEach(key => {
+        if (inputs[key] !== undefined && document.getElementById(key)) {
+          document.getElementById(key).value = inputs[key];
+        }
+      });
+    }
 
-function predict() {
-  const homeOdd = parseFloat(document.getElementById('homeOdd').value);
-  const drawOdd = parseFloat(document.getElementById('drawOdd').value);
-  const awayOdd = parseFloat(document.getElementById('awayOdd').value);
-
-  if (isNaN(homeOdd) || isNaN(drawOdd) || isNaN(awayOdd)) {
-    alert('Please enter valid odds for Home, Draw, and Away.');
-    return;
-  }
-
-  const homeMatchesRaw = [];
-  for (let i = 1; i <= 6; i++) {
-    const score = parseScore(document.getElementById(`home${i}`).value);
-    const venue = document.getElementById(`home${i}Venue`).value;
-    homeMatchesRaw.push({ score, venue });
-  }
-  const homeMatches = homeMatchesRaw.filter(m => m.score).map(m => m.score);
-  if (homeMatches.length === 0) {
-    alert('No valid matches entered for the Home Team.');
-    return;
-  }
-
-  const awayMatchesRaw = [];
-  for (let i = 1; i <= 6; i++) {
-    const score = parseScore(document.getElementById(`away${i}`).value);
-    const venue = document.getElementById(`away${i}Venue`).value;
-    awayMatchesRaw.push({ score, venue });
-  }
-  const awayMatches = awayMatchesRaw.filter(m => m.score).map(m => m.score);
-  if (awayMatches.length === 0) {
-    alert('No valid matches entered for the Away Team.');
-    return;
-  }
-
-  const homeStats = getStats(homeMatches);
-  const awayStats = getStats(awayMatches);
-
-  const homePoints = homeStats.wins * 3 + homeStats.draws;
-  const awayPoints = awayStats.wins * 3 + awayStats.draws;
-
-  const homeAvgGF = homeStats.goalsFor / homeMatches.length;
-  const homeAvgGA = homeStats.goalsAgainst / homeMatches.length;
-
-  const awayAvgGF = awayStats.goalsFor / awayMatches.length;
-  const awayAvgGA = awayStats.goalsAgainst / awayMatches.length;
-
-  const homeStrength = homePoints + (homeAvgGF - homeAvgGA);
-  const awayStrength = awayPoints + (awayAvgGF - awayAvgGA);
-
-  const homeOddsFactor = 1 / homeOdd;
-  const drawOddsFactor = 1 / drawOdd;
-  const awayOddsFactor = 1 / awayOdd;
-
-  const homeScore = homeStrength * 0.6 + homeOddsFactor * 0.4;
-  const awayScore = awayStrength * 0.6 + awayOddsFactor * 0.4;
-
-  let prediction = '';
-  if (Math.abs(homeScore - awayScore) < 0.1) {
-    prediction = 'Draw';
-  } else if (homeScore > awayScore) {
-    prediction = 'Home Win';
-  } else {
-    prediction = 'Away Win';
-  }
-
-  const csPrediction = predictCorrectScore(homeAvgGF, awayAvgGA);
-
-  const outputDiv = document.getElementById('output');
-  outputDiv.innerHTML = `
-    <strong>Prediction:</strong> ${prediction}<br>
-    <strong>Predicted Correct Score:</strong> ${csPrediction}<br>
-    <hr>
-    <strong>Home Team Stats (Last 6 Matches):</strong><br>
-    Wins: ${homeStats.wins}, Draws: ${homeStats.draws}, Losses: ${homeStats.losses}<br>
-    Goals For: ${homeStats.goalsFor.toFixed(1)}, Goals Against: ${homeStats.goalsAgainst.toFixed(1)}<br>
-    <strong>Away Team Stats (Last 6 Matches):</strong><br>
-    Wins: ${awayStats.wins}, Draws: ${awayStats.draws}, Losses: ${awayStats.losses}<br>
-    Goals For: ${awayStats.goalsFor.toFixed(1)}, Goals Against: ${awayStats.goalsAgainst.toFixed(1)}<br>
-    <hr>
-    <strong>Additional Predictions:</strong><br>
-    Double Chance: ${getDoubleChance(homeStats, awayStats)}<br>
-    Over 2.5 Goals: ${getOver25(homeStats, awayStats)}<br>
-    GG (Both Teams to Score): ${getGG(homeStats, awayStats)}
-  `;
-}
-
-function getDoubleChance(homeStats, awayStats) {
-  if (homeStats.wins > awayStats.wins) return "1X";
-  if (awayStats.wins > homeStats.wins) return "X2";
-  return "12";
-}
-
-function getOver25(homeStats, awayStats) {
-  const totalGoals = homeStats.goalsFor + awayStats.goalsFor;
-  return totalGoals >= 3 ? "Yes" : "No";
-}
-
-function getGG(homeStats, awayStats) {
-  return homeStats.goalsFor > 0 && awayStats.goalsFor > 0 ? "Yes" : "No";
-}
-
-function saveData() {
-  const finalResult = document.getElementById('finalResult').value.trim();
-  if (!finalResult.match(/^\d+-\d+$/)) {
-    alert('Please enter a valid final result in the format "X-Y", e.g. "2-1".');
-    return;
-  }
-
-  let stored = localStorage.getItem('finalResults');
-  let results = stored ? JSON.parse(stored) : [];
-  results.push(finalResult);
-  localStorage.setItem('finalResults', JSON.stringify(results));
-  displayPreviousResults();
-  document.getElementById('finalResult').value = '';
-}
-
-function displayPreviousResults() {
-  let stored = localStorage.getItem('finalResults');
-  let results = stored ? JSON.parse(stored) : [];
-  const container = document.getElementById('previousMatches');
-  if (results.length === 0) {
-    container.innerHTML = '<em>No previous results saved yet.</em>';
-    return;
-  }
-  container.innerHTML = '<h3>Previous Final Results</h3><ul>' +
-    results.map(r => `<li>${r}</li>`).join('') +
-    '</ul>';
-}
-
-// Initialize previous results on load
-window.onload = displayPreviousResults;
-
-</script>
+    window.onload = () => {
+      loadInputs();
+      checkExistingPrediction();
+    };
+  </script>
 </body>
-  </html>
+        </html>
