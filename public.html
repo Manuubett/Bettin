@@ -250,52 +250,45 @@ function verifyMpesaMessage() {
   const loginForm = document.getElementById("loginForm");
 
   // Extract transaction code: 10 uppercase alphanumeric characters
-  const trxMatch = raw.match(/\b([A-Z0-9]{10})\b/);
-  const trxCode = trxMatch ? trxMatch[1] : null;
+// Extract transaction code: 10 uppercase alphanumeric characters
+const trxMatch = raw.match(/\b([A-Z0-9]{10})\b/);
+const trxCode  = trxMatch ? trxMatch[1] : null;
 
-  // Validate exact amount: "Ksh 99.00"
-  const amtMatch = /\bKsh\s*99\.00\b/i.test(raw);
+// Validate exact amount: "Ksh 99.00"
+const amtMatch = /\bKsh\s*99\.00\b/i.test(raw);
 
-  /*  Validate that the SMS references Till 4585402 and recipient Emanuel.
-      Typical M-Pesa messages for Buy Goods include either:
-      "...Buy Goods and Services Ksh99.00 to Emanuel 4585402..." OR
-      "...Till Number 4585402 Emanuel..."
-   */// Validate that the SMS references Till 4585402 and recipient Emanuel
-// Accept messages that include:
-//  - the paybill/till 4585402 anywhere
-//  - and the recipient name "Emanuel" (case-insensitive)
-const tillMatch = /4585402/.test(raw) && /Emanuel/i.test(raw);
+// Validate recipient name: must contain "Emanuel"
+const nameMatch = /Emanuel/i.test(raw);
 
+// Load used transaction codes safely from localStorage
+let usedTrxCodes = [];
+try { usedTrxCodes = JSON.parse(localStorage.getItem("usedTrxCodes")) || []; }
+catch { usedTrxCodes = []; }
 
-  // Load used transaction codes safely from localStorage
-  let usedTrxCodes = [];
-  try {
-    usedTrxCodes = JSON.parse(localStorage.getItem("usedTrxCodes")) || [];
-  } catch {
-    usedTrxCodes = [];
-  }
+if (trxCode && amtMatch && nameMatch && !usedTrxCodes.includes(trxCode)) {
+  // Generate and display log code
+  const logCode = generateLogCode();
+  logCodeElem.innerHTML =
+    `Your Log Code:<br><span style="font-size:18px">${logCode}</span>`;
+  document.getElementById("password").value = logCode;
+  loginForm.style.display = "block";
 
-  if (trxCode && amtMatch && tillMatch && !usedTrxCodes.includes(trxCode)) {
-    // Generate and display log code
-    const logCode = generateLogCode();
-    logCodeElem.innerHTML = `Your Log Code:<br><span style="font-size:18px">${logCode}</span>`;
-    document.getElementById("password").value = logCode;
-    loginForm.style.display = "block";
+  // Save used trx code and log code with timestamp
+  usedTrxCodes.push(trxCode);
+  localStorage.setItem("usedTrxCodes", JSON.stringify(usedTrxCodes));
+  localStorage.setItem("mchangoLogCode", logCode);
+  localStorage.setItem("mchangoLogTime", Date.now().toString());
 
-    // Save used trx code and log code with timestamp
-    usedTrxCodes.push(trxCode);
-    localStorage.setItem("usedTrxCodes", JSON.stringify(usedTrxCodes));
-    localStorage.setItem("mchangoLogCode", logCode);
-    localStorage.setItem("mchangoLogTime", Date.now().toString());
-  } else if (trxCode && usedTrxCodes.includes(trxCode)) {
-    logCodeElem.innerHTML =
-      `<span style="color:red">This M-Pesa transaction has already been used.</span>`;
-    loginForm.style.display = "none";
-  } else {
-    logCodeElem.innerHTML =
-      `<span style="color:red">Invalid message. Make sure you sent Ksh 99 to Till 4585402 (Emanuel) and paste the full M-Pesa message here.</span>`;
-    loginForm.style.display = "none";
-  }
+} else if (trxCode && usedTrxCodes.includes(trxCode)) {
+  logCodeElem.innerHTML =
+    `<span style="color:red">This M-Pesa transaction has already been used.</span>`;
+  loginForm.style.display = "none";
+
+} else {
+  logCodeElem.innerHTML =
+    `<span style="color:red">Invalid message. Make sure it includes Ksh 99.00 and the name Emanuel, then paste the full M-Pesa message here.</span>`;
+  loginForm.style.display = "none";
+}
 }
 
 
