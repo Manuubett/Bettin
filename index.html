@@ -1,192 +1,252 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Loading Splash + Predictor</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>This simple site pays you for sharing your opinion</title>
+  <meta name="description" content="Earn $5–$50 instantly just for typing your opinion. Real payouts every week – see proof from our 10 viral influencers!">
+  <link rel="canonical" href="https://bett.website">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
   <style>
-    /* Splash screen styles */
-    #splash {
-      position: fixed;
+    * { box-sizing: border-box; }
+    body {
+      font-family: "Poppins", sans-serif;
+      background: #f8fafc;
+      color: #1e293b;
+      margin: 0;
+      padding: 20px 0;
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+    .container {
+      max-width: 420px;
+      margin: 0 auto;
+      padding: 0 15px;
+    }
+    .card {
+      background: #ffffff;
+      padding: 32px 24px;
+      border-radius: 20px;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+    h1 {
+      font-size: 24px;
+      margin-bottom: 12px;
+      line-height: 1.3;
+    }
+    h1 span {
+      color: #2563eb;
+    }
+    p {
+      color: #64748b;
+      font-size: 15px;
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+    .button {
+      display: inline-block;
+      background: #2563eb;
+      color: #fff;
+      text-decoration: none;
+      padding: 14px 28px;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 16px;
+      transition: all 0.3s ease;
+      margin-bottom: 24px;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+    }
+    .button:hover {
+      background: #1d4ed8;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(37, 99, 235, 0.35);
+    }
+
+    /* Earnings Banner */
+    .earnings {
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: white;
+      padding: 14px 16px;
+      border-radius: 12px;
+      margin: 20px 0;
+      font-weight: 600;
+      font-size: 15px;
+      position: relative;
+      overflow: hidden;
+    }
+    .earnings::before {
+      content: '';
+      position: absolute;
       top: 0; left: 0; right: 0; bottom: 0;
-      background: green;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+      animation: shimmer 3s infinite;
+    }
+    @keyframes shimmer {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+
+    /* Influencer Grid */
+    .influencers {
+      margin-top: 32px;
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+    }
+    .influencer {
+      position: relative;
+      cursor: pointer;
+    }
+    .influencer img {
+      width: 100%;
+      height: 80px;
+      border-radius: 16px;
+      object-fit: cover;
+      border: 3px solid #e2e8f0;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+    }
+    .influencer:hover img {
+      transform: scale(1.05);
+      border-color: #2563eb;
+      box-shadow: 0 8px 16px rgba(37,99,235,0.2);
+    }
+    .badge {
+      position: absolute;
+      bottom: 6px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #10b981;
+      color: white;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 3px 7px;
+      border-radius: 8px;
+      white-space: nowrap;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+      letter-spacing: 0.5px;
+    }
+    .platform {
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      font-size: 10px;
+      background: rgba(0,0,0,0.6);
+      color: white;
+      padding: 2px 5px;
+      border-radius: 6px;
+    }
+
+    /* Proof Section */
+    .proof {
+      margin-top: 28px;
+      font-size: 14px;
+      color: #475569;
+      padding-top: 20px;
+      border-top: 1px dashed #cbd5e1;
+    }
+    .proof a {
+      color: #2563eb;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .proof a:hover {
+      text-decoration: underline;
+    }
+
+    /* Trust Badges */
+    .trust {
+      margin-top: 24px;
       display: flex;
       justify-content: center;
-      align-items: center;
-      color: white;
-      font-size: 1.8rem;
-      font-weight: 700;
-      text-align: center;
-      z-index: 9999;
-      animation: zoomInText 3s forwards;
+      gap: 16px;
+      flex-wrap: wrap;
+      font-size: 12px;
+      color: #64748b;
+    }
+    .trust img {
+      height: 20px;
+      opacity: 0.7;
     }
 
-    @keyframes zoomInText {
-      0% {
-        transform: scale(0);
-        opacity: 0;
-      }
-      100% {
-        transform: scale(1);
-        opacity: 1;
-      }
+    /* Responsive */
+    @media (max-width: 480px) {
+      .card { padding: 28px 20px; }
+      h1 { font-size: 22px; }
+      .influencers { gap: 8px; }
+      .influencer img { height: 70px; }
     }
-
-    /* Main content initially hidden */
-    #mainContent {
-      display: none;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      padding: 30px;
-      background: #eef3f7;
-      min-height: 100vh;
-      box-sizing: border-box;
-    }
-
-    /* Main container */
-    .container {
-      background: white;
-      padding: 25px 35px;
-      border-radius: 8px;
-      max-width: 400px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      margin: 40px auto;
-    }
-    h2 {
-      color: #263238;
-      margin-bottom: 20px;
-      text-align: center;
-    }
-    label {
-      display: inline-block;
-      margin: 10px 0 5px;
-      font-weight: 600;
-      color: #37474f;
-    }
-    input[type=number], input[type=text] {
-      width: 100%;
-      padding: 8px;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-      font-size: 1rem;
-      margin-bottom: 10px;
-    }
-    button {
-      width: 100%;
-      background: #00796b;
-      border: none;
-      color: white;
-      padding: 12px;
-      font-size: 1rem;
-      margin-top: 10px;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: background 0.3s ease;
-    }
-    button:hover {
-      background: #004d40;
-    }
-    .result-box {
-      margin-top: 20px;
-      background: #e0f2f1;
-      padding: 15px;
-      border-left: 5px solid #00796b;
-      border-radius: 5px;
-      font-weight: 600;
-      color: #004d40;
-    }
-    .splash-logo {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  margin-bottom: 15px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-}
   </style>
 </head>
 <body>
-  <!-- Splash screen --><!-- Splash screen -->
-<div id="splash">
-  <div style="text-align:center;">
-    <img src="https://i.ibb.co/s9FhqwST/download.png" alt="Logo" class="splash-logo" />
-    <div>ODI LEAGUE PREDICTOR</div>
-  </div>
-</div>
-  
-
-  <!-- Main predictor content --><div id="mainContent">
   <div class="container">
-    <p style="font-size: 12px; color: red; font-style: italic; margin-bottom: 10px;">
-      ⚠️ Disclaimer: This prediction might not be accurate. Consider upgrading to a premium membership for better accuracy.
-    </p>
-    <h2>1X2 Predictor</h2>
+    <div class="card">
 
-      <label for="home">Home Win Odds (1)</label>
-      <input type="number" id="home" step="0.01" min="1" placeholder="e.g. 2.50" />
+      <h1>This simple site pays you for sharing your opinion <span>(see proof)</span></h1>
+      
+      <p>Join <strong>10 real influencers</strong> already earning <strong>$100–$1,200/week</strong> just by typing their honest thoughts. Instant payouts via PayPal, Venmo, Cash App, or Crypto.</p>
 
-      <label for="draw">Draw Odds (X)</label>
-      <input type="number" id="draw" step="0.01" min="1" placeholder="e.g. 3.10" />
-
-      <label for="away">Away Win Odds (2)</label>
-      <input type="number" id="away" step="0.01" min="1" placeholder="e.g. 2.80" />
-
-      <button onclick="predict1X2()">Predict</button>
-
-      <div class="result-box" id="predictionResult" style="display:none;">
-        <p><strong>Prediction:</strong> <span id="predictedOutcome"></span></p>
-
-        <label for="finalResult" style="margin-top:10px;">Enter Final Result (optional)</label>
-        <input type="text" id="finalResult" placeholder="Final score e.g. 1-0" />
-        <button onclick="showFinalResult()">Submit Final Result</button>
-
-        <p id="finalResultDisplay" style="margin-top:10px; font-weight:normal; color:#00796b;"></p>
-        <button onclick="goToPremium()" style="background:#ff6f00;">Go to Premium Features</button>
+      <div class="earnings">
+        <span style="font-size:18px;">Live</span> Last 24h: <strong>$4,872</strong> paid to 312 users
       </div>
+
+      <a class="button" href="https://bett.website" target="_blank" rel="noopener">
+        Start Earning in 60 Seconds
+      </a>
+
+      <!-- REALISTIC INFLUENCER GRID with ACTUAL DIVERSE FACES -->
+      <div class="influencers">
+        <!-- 1. @CashOpinionQueen -->
+        <div class="influencer">
+          <img src="https://i.ibb.co/nsK6cZrs/1762150166448.jpg" alt="Sarah M. earned $487 this week">
+          <div class="badge">$487/wk</div>
+          <div class="platform">TikTok</div>
+        </div>
+
+        <!-- 2. @BrokeToPaid -->
+        <div class="influencer">
+          <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop&crop=face" alt="Mike T. earned $312 in 7 days">
+          <div class="badge">$312/wk</div>
+          <div class="platform">X</div>
+        </div>
+
+        <!-- 3. @RedditSideHustle -->
+        <div class="influencer">
+          <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80&h=80&fit=crop&crop=face" alt="Emily R. earned $178 this month">
+          <div class="badge">$178/mo</div>
+          <div class="platform">Reddit</div>
+        </div>
+
+        <!-- 4. @MommyMakesMoney -->
+        <div class="influencer">
+          <img src="https://images.unsplash.com/photo-1554151228-14d9def656e4?w=80&h=80&fit=crop&crop=face" alt="Jessica L. earned $200 while kids nap">
+          <div class="badge">$200/wk</div>
+          <div class="platform">FB</div>
+        </div>
+
+        <!-- 5. @CryptoOpinionBro -->
+        <div class="influencer">
+          <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=80&h=80&fit=crop&crop=face" alt="Alex K. earned $1,200 in crypto">
+          <div class="badge">$1.2K/wk</div>
+          <div class="platform">Discord</div>
+        </div>
+      </div>
+
+      <div class="proof">
+        <p><strong>Real payments shared weekly!</strong></p>
+        <p>See TikTok & Instagram proof: <a href="https://bett.website" target="_blank">bett.website/proof</a></p>
+      </div>
+
+      <!-- Trust Badges -->
+      <div class="trust">
+        <div><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Trusted by 10K+ users" style="height:18px;"></div>
+        <div>SSL Secured</div>
+        <div>No Card Needed</div>
+      </div>
+
     </div>
   </div>
-  
-
-  <script>
-    // Show main content after splash screen
-    setTimeout(() => {
-      document.getElementById('splash').style.display = 'none';
-      document.getElementById('mainContent').style.display = 'block';
-    }, 7000);
-
-    function predict1X2() {
-      const home = parseFloat(document.getElementById('home').value);
-      const draw = parseFloat(document.getElementById('draw').value);
-      const away = parseFloat(document.getElementById('away').value);
-
-      if (isNaN(home) || isNaN(draw) || isNaN(away)) {
-        alert('Please enter all three odds.');
-        return;
-      }
-
-      let prediction = '';
-      if (home < draw && home < away) {
-        prediction = '1 (Home Win)';
-      } else if (draw < home && draw < away) {
-        prediction = 'X (Draw)';
-      } else {
-        prediction = '2 (Away Win)';
-      }
-
-      document.getElementById('predictedOutcome').textContent = prediction;
-      document.getElementById('predictionResult').style.display = 'block';
-      document.getElementById('finalResultDisplay').textContent = '';
-      document.getElementById('finalResult').value = '';
-    }
-
-    function showFinalResult() {
-      const finalResult = document.getElementById('finalResult').value.trim();
-      if (finalResult === '') {
-        alert('Please enter the final result or leave blank.');
-        return;
-      }
-      document.getElementById('finalResultDisplay').textContent = `Final result entered: ${finalResult} (Not saved in this version)`;
-    }
-    function goToPremium() {
-  window.location.href = "public.html"; // Replace with your premium page path
-}
-  </script>
 </body>
-</html>
+  </html>
