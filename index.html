@@ -54,12 +54,21 @@ body{font-family:var(--font-body);background:var(--cream);color:var(--ink);min-h
 /* ── LAYOUT ── */
 .layout{display:grid;grid-template-columns:var(--sw) 1fr;margin-top:var(--hh);min-height:calc(100vh - var(--hh))}
 
-/* ── SIDEBAR ── */
-.sidebar{background:var(--paper);border-right:1px solid var(--border);position:sticky;top:var(--hh);height:calc(100vh - var(--hh));overflow-y:auto;display:flex;flex-direction:column;box-shadow:2px 0 12px rgba(15,26,14,.05)}
-.sb-head{padding:16px 16px 12px;border-bottom:1px solid var(--border)}
-.sb-section-label{font-size:9px;font-weight:700;letter-spacing:1.2px;color:var(--ink3);text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:6px}
-.sb-section-label::after{content:'';flex:1;height:1px;background:var(--border)}
-.sj-list{display:flex;flex-direction:column;gap:2px}
+/* ── SIDEBAR (two-panel toggle) ── */
+.sidebar{background:var(--paper);border-right:1px solid var(--border);position:sticky;top:var(--hh);height:calc(100vh - var(--hh));display:flex;flex-direction:column;box-shadow:2px 0 12px rgba(15,26,14,.05);overflow:hidden}
+
+/* Panel A — subjects list */
+.sb-panel-a{display:flex;flex-direction:column;border-bottom:1px solid var(--border);flex-shrink:0;transition:max-height .28s cubic-bezier(.4,0,.2,1),opacity .2s;overflow:hidden;max-height:600px;opacity:1}
+.sb-panel-a.collapsed{max-height:0;opacity:0;border-bottom:none}
+
+.sb-panel-header{display:flex;align-items:center;padding:12px 14px 8px;gap:6px;cursor:pointer;user-select:none;flex-shrink:0}
+.sb-panel-header:hover .sb-toggle-icon{color:var(--leaf)}
+.sb-ph-label{font-size:9px;font-weight:700;letter-spacing:1.2px;color:var(--ink3);text-transform:uppercase;flex:1}
+.sb-active-sub{font-size:10.5px;font-weight:600;color:var(--leaf);max-width:120px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sb-toggle-icon{font-size:12px;color:var(--ink3);transition:transform .25s,color .15s;flex-shrink:0}
+.sb-toggle-icon.open{transform:rotate(180deg)}
+
+.sj-list{display:flex;flex-direction:column;gap:2px;padding:0 10px 10px;overflow-y:auto;max-height:300px}
 .sj-btn{display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:8px;border:none;background:transparent;cursor:pointer;text-align:left;width:100%;font-family:var(--font-body);font-size:12px;color:var(--ink3);transition:all .13s}
 .sj-btn:hover{background:var(--cream);color:var(--ink)}
 .sj-btn.on{background:var(--leaf3);color:var(--leaf);font-weight:600}
@@ -68,11 +77,20 @@ body{font-family:var(--font-body);background:var(--cream);color:var(--ink);min-h
 .sj-cnt{font-size:10px;background:var(--cream);color:var(--ink3);padding:1px 6px;border-radius:10px;font-weight:600;flex-shrink:0}
 .sj-btn.on .sj-cnt{background:var(--leaf4);color:var(--leaf)}
 
-.cards-wrap{flex:1;overflow-y:auto;display:flex;flex-direction:column}
-.cards-search{padding:10px 12px 6px}
+/* Panel B — competencies */
+.sb-panel-b{flex:1;display:flex;flex-direction:column;overflow:hidden;min-height:0}
+
+.sb-comp-header{padding:10px 14px 6px;display:flex;align-items:center;gap:8px;flex-shrink:0;border-bottom:1px solid var(--border)}
+.sb-comp-title{font-size:9px;font-weight:700;letter-spacing:1.1px;color:var(--ink3);text-transform:uppercase;flex:1}
+.sb-comp-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.sb-comp-name{font-size:11px;font-weight:600;color:var(--leaf);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sb-comp-cnt{font-size:10px;color:var(--ink3)}
+
+.cards-search{padding:8px 10px 4px;flex-shrink:0}
 .csearch{width:100%;padding:6px 10px 6px 30px;border:1.5px solid var(--border);border-radius:7px;font-size:12px;font-family:var(--font-body);color:var(--ink);background:var(--cream) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%234a5e47' stroke-width='2.5'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.35-4.35'/%3E%3C/svg%3E") no-repeat 9px center;outline:none;transition:border .13s}
 .csearch:focus{border-color:var(--leaf2);background-color:#fff}
-.ccards{padding:6px 10px;flex:1;display:flex;flex-direction:column;gap:5px}
+
+.ccards{padding:6px 10px;flex:1;display:flex;flex-direction:column;gap:5px;overflow-y:auto}
 .cc{padding:9px 10px;border-radius:8px;border:1.5px solid var(--border);background:var(--paper);cursor:grab;transition:all .14s;position:relative;display:flex;align-items:flex-start;gap:8px}
 .cc:hover{border-color:var(--leaf2);box-shadow:0 2px 8px var(--shadow);transform:translateY(-1px)}
 .cc:active{cursor:grabbing;opacity:.6}
@@ -83,12 +101,16 @@ body{font-family:var(--font-body);background:var(--cream);color:var(--ink);min-h
 .cc-grip{opacity:.18;font-size:13px;flex-shrink:0;padding-top:1px;pointer-events:none}
 .no-cards{text-align:center;padding:30px 12px;color:var(--ink3);font-size:12px;line-height:1.6}
 
-.addform{padding:12px;border-top:1px solid var(--border);display:flex;flex-direction:column;gap:7px;background:var(--cream)}
-.addform-label{font-size:9px;font-weight:700;letter-spacing:1.2px;color:var(--ink3);text-transform:uppercase;display:flex;align-items:center;gap:6px}
-.addform-label::after{content:'';flex:1;height:1px;background:var(--border2)}
+/* Add form — collapsible */
+.addform-toggle{display:flex;align-items:center;gap:8px;padding:10px 14px;border-top:1px solid var(--border);cursor:pointer;background:var(--cream);flex-shrink:0;user-select:none}
+.addform-toggle-label{font-size:9px;font-weight:700;letter-spacing:1.1px;color:var(--ink3);text-transform:uppercase;flex:1}
+.addform-toggle-icon{font-size:11px;color:var(--ink3);transition:transform .22s}
+.addform-toggle-icon.open{transform:rotate(180deg)}
+.addform{padding:0 12px 12px;display:flex;flex-direction:column;gap:7px;background:var(--cream);overflow:hidden;max-height:0;transition:max-height .28s cubic-bezier(.4,0,.2,1),padding .2s}
+.addform.open{max-height:280px;padding:0 12px 12px}
 .addform input,.addform textarea,.addform select{width:100%;padding:7px 10px;border:1.5px solid var(--border);border-radius:7px;font-size:12px;font-family:var(--font-body);color:var(--ink);background:#fff;outline:none;transition:border .13s;resize:none}
 .addform input:focus,.addform textarea:focus,.addform select:focus{border-color:var(--leaf2)}
-.addform textarea{min-height:58px}
+.addform textarea{min-height:54px}
 .addbtn{padding:8px;border-radius:8px;font-size:12px;font-weight:700;background:var(--leaf);color:#fff;border:none;cursor:pointer;font-family:var(--font-body);transition:all .13s;letter-spacing:.2px}
 .addbtn:hover{background:var(--leaf2)}
 
@@ -325,20 +347,38 @@ body{font-family:var(--font-body);background:var(--cream);color:var(--ink);min-h
 <!-- ══ LAYOUT ══ -->
 <div class="layout">
   <aside class="sidebar">
-    <div class="sb-head">
-      <div class="sb-section-label">Subjects</div>
+
+    <!-- Panel A: Subject Picker (collapsible) -->
+    <div class="sb-panel-a" id="sb-panel-a">
+      <div class="sb-panel-header" onclick="toggleSubjects()" title="Collapse subject list">
+        <span class="sb-ph-label">Subjects</span>
+        <span class="sb-toggle-icon open" id="sj-toggle-icon">&#9660;</span>
+      </div>
       <div class="sj-list" id="sjtabs"></div>
     </div>
-    <div class="cards-wrap">
+
+    <!-- Panel B: Competencies -->
+    <div class="sb-panel-b">
+      <div class="sb-comp-header" onclick="toggleSubjects()" style="cursor:pointer" title="Click to switch subject">
+        <span class="sb-comp-dot" id="sb-comp-dot"></span>
+        <span class="sb-comp-name" id="sb-comp-name">Mathematics</span>
+        <span class="sb-comp-cnt" id="sb-comp-cnt"></span>
+        <span class="sb-toggle-icon" id="sj-toggle-icon2">&#9660;</span>
+      </div>
       <div class="cards-search">
-        <input class="csearch" id="csearch" placeholder="Search competencies…" oninput="renderCards()">
+        <input class="csearch" id="csearch" placeholder="Search competencies&#8230;" oninput="renderCards()">
       </div>
       <div class="ccards" id="ccards"></div>
     </div>
-    <div class="addform">
-      <div class="addform-label">Add competency</div>
+
+    <!-- Add competency (collapsible) -->
+    <div class="addform-toggle" onclick="toggleAddForm()" title="Add custom competency">
+      <span class="addform-toggle-label">+ Add competency</span>
+      <span class="addform-toggle-icon" id="addform-icon">&#9660;</span>
+    </div>
+    <div class="addform" id="addform">
       <input id="ncode" placeholder="Code  e.g. MTH.4.2.a (optional)" />
-      <textarea id="ndesc" placeholder="Learning outcome description…"></textarea>
+      <textarea id="ndesc" placeholder="Learning outcome description&#8230;"></textarea>
       <select id="nsubj"></select>
       <button class="addbtn" onclick="addComp()">+ Add to library</button>
     </div>
@@ -621,6 +661,14 @@ function renderGrades(){
 function renderSubs(){
   var ss=subs(grade);
   if(ss.indexOf(activeSub)<0) activeSub=ss[0];
+  // Update compact header
+  var m=sm(activeSub);
+  var dotEl=document.getElementById('sb-comp-dot');
+  var nameEl=document.getElementById('sb-comp-name');
+  var cntEl=document.getElementById('sb-comp-cnt');
+  if(dotEl) dotEl.style.background=m.d;
+  if(nameEl) nameEl.textContent=activeSub;
+  if(cntEl){ var n=getComps(activeSub).length; cntEl.textContent=n+' competenc'+(n===1?'y':'ies'); }
   document.getElementById('sjtabs').innerHTML=ss.map(function(s){
     var m=sm(s); var cnt=getComps(s).length;
     return '<button class="sj-btn'+(s===activeSub?' on':'')+'" onclick="swSub(\''+s+'\')" title="'+s+'">'
@@ -727,6 +775,36 @@ function updateSubSelect(){
 }
 
 /* ─── INTERACTIONS ─── */
+/* ─── SIDEBAR TOGGLE ─── */
+var subjOpen = true;
+function toggleSubjects(){
+  subjOpen = !subjOpen;
+  var panel = document.getElementById('sb-panel-a');
+  var icon1 = document.getElementById('sj-toggle-icon');
+  var icon2 = document.getElementById('sj-toggle-icon2');
+  if(subjOpen){
+    panel.classList.remove('collapsed');
+    if(icon1){ icon1.classList.add('open'); icon1.style.transform=''; }
+    if(icon2){ icon2.style.transform='rotate(180deg)'; }
+  } else {
+    panel.classList.add('collapsed');
+    if(icon1){ icon1.classList.remove('open'); icon1.style.transform='rotate(-90deg)'; }
+    if(icon2){ icon2.style.transform=''; }
+  }
+}
+var addFormOpen = false;
+function toggleAddForm(){
+  addFormOpen = !addFormOpen;
+  var form = document.getElementById('addform');
+  var icon = document.getElementById('addform-icon');
+  if(addFormOpen){
+    form.classList.add('open');
+    if(icon) icon.classList.add('open');
+  } else {
+    form.classList.remove('open');
+    if(icon) icon.classList.remove('open');
+  }
+}
 function swGrade(g){ grade=g; activeSub=subs(g)[0]; renderAll(); }
 function swSub(s){ activeSub=s; renderSubs(); renderCards(); }
 
