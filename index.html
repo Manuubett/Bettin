@@ -3,215 +3,223 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CBC Lesson Planner &mdash; Kenya Grades 1&ndash;9</title>
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#128218;</text></svg>">
+<title>CBC Lesson Planner — Kenya Grades 1–9</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --green:#2a5e2a;--green2:#3a8c3a;--green3:#eaf4ea;--green4:#c5e1c5;--greenlt:#f2faf2;
-  --amber:#7c5200;--amber3:#fffbeb;--amber4:#fde68a;
-  --blue:#1a4480;--blue2:#2563eb;--blue3:#eff6ff;--blue4:#bfdbfe;
-  --teal:#0f5850;--teal3:#f0fdfa;
-  --red:#991b1b;
-  --gray50:#fafaf9;--gray100:#f5f5f4;--gray200:#e7e5e4;
-  --gray300:#d4d2cf;--gray400:#a8a29e;--gray600:#57534e;--gray900:#1c1917;
-  --pagebg:#eef0eb;
-  --sw:320px;--hh:60px;--r:10px;--rl:14px;
-  --shadow:0 1px 3px rgba(0,0,0,.08),0 4px 12px rgba(0,0,0,.06);
+  --ink:#0f1a0e;--ink2:#2d3d2b;--ink3:#4a5e47;
+  --leaf:#1e5c1a;--leaf2:#27782a;--leaf3:#d4edda;--leaf4:#a8d5ae;
+  --gold:#b8860b;--gold2:#d4a017;--gold3:#fdf6dc;--gold4:#f0d68a;
+  --sky:#1a3a5c;--sky2:#2558a0;--sky3:#e8f0fb;--sky4:#b8d0f0;
+  --rose:#8b1a1a;--rose3:#fdecea;
+  --teal:#0a4a44;--teal2:#0f7a6e;--teal3:#e6f7f5;
+  --orange:#7a3010;--orange2:#c85a20;--orange3:#fef3ec;
+  --plum:#3d0f5a;--plum2:#7030aa;--plum3:#f2e8ff;
+  --cream:#f8f7f2;--paper:#ffffff;
+  --border:#e2e0d8;--border2:#d0cec4;
+  --shadow:rgba(15,26,14,.08);--shadow2:rgba(15,26,14,.15);
+  --r:10px;--rl:14px;--sw:290px;--hh:58px;
+  --font-head:'Playfair Display',serif;
+  --font-body:'Plus Jakarta Sans',sans-serif;
 }
+
 html{scroll-behavior:smooth}
-body{font-family:'DM Sans',sans-serif;background:var(--pagebg);color:var(--gray900);min-height:100vh;font-size:14px;line-height:1.5}
+body{font-family:var(--font-body);background:var(--cream);color:var(--ink);min-height:100vh;font-size:13.5px;line-height:1.55;-webkit-font-smoothing:antialiased}
 
-/* ---- TOPBAR ---- */
-.topbar{position:fixed;top:0;left:0;right:0;z-index:200;height:var(--hh);background:var(--green);display:flex;align-items:center;gap:10px;padding:0 18px;box-shadow:0 2px 10px rgba(0,0,0,.2)}
-.logo{font-family:'DM Serif Display',serif;font-size:19px;color:#fff;display:flex;align-items:center;gap:9px;flex-shrink:0;white-space:nowrap}
-.logo-sub{font-size:9px;font-weight:400;opacity:.65;letter-spacing:.5px;display:block;font-family:'DM Sans',sans-serif}
-.tdiv{width:1px;height:24px;background:rgba(255,255,255,.2);flex-shrink:0}
-.glabel{font-size:9px;color:rgba(255,255,255,.55);font-weight:700;letter-spacing:.9px;flex-shrink:0;text-transform:uppercase}
-.gpills{display:flex;gap:3px;flex-wrap:nowrap;overflow-x:auto;flex:1;min-width:0;scrollbar-width:none}
+/* ── TOPBAR ── */
+.topbar{position:fixed;top:0;left:0;right:0;z-index:200;height:var(--hh);background:var(--leaf);display:flex;align-items:center;gap:14px;padding:0 18px;box-shadow:0 2px 12px var(--shadow2)}
+.logo{display:flex;align-items:center;gap:10px;flex-shrink:0}
+.logo-mark{width:34px;height:34px;background:rgba(255,255,255,.15);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px}
+.logo-text{display:flex;flex-direction:column;line-height:1.1}
+.logo-name{font-family:var(--font-head);font-size:16px;color:#fff;letter-spacing:.2px}
+.logo-sub{font-size:9.5px;color:rgba(255,255,255,.55);font-weight:500;letter-spacing:.8px;text-transform:uppercase}
+.top-div{width:1px;height:24px;background:rgba(255,255,255,.18);flex-shrink:0}
+.top-label{font-size:9px;color:rgba(255,255,255,.5);font-weight:700;letter-spacing:1px;text-transform:uppercase;flex-shrink:0}
+.gpills{display:flex;gap:3px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
 .gpills::-webkit-scrollbar{display:none}
-.gp{padding:4px 10px;border-radius:20px;font-size:11px;font-weight:700;border:1.5px solid rgba(255,255,255,.22);background:transparent;color:rgba(255,255,255,.72);cursor:pointer;transition:all .14s;font-family:'DM Sans',sans-serif;flex-shrink:0;white-space:nowrap}
-.gp:hover{background:rgba(255,255,255,.14);color:#fff}
-.gp.on{background:#fff;color:var(--green);border-color:#fff}
-.tact{display:flex;gap:6px;margin-left:4px;flex-shrink:0}
-.tbtn{padding:5px 12px;border-radius:7px;font-size:11px;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all .14s;white-space:nowrap}
-.tbtn.ghost{border:1.5px solid rgba(255,255,255,.32);color:#fff;background:transparent}
-.tbtn.ghost:hover{background:rgba(255,255,255,.14)}
-.tbtn.solid{border:none;color:var(--green);background:#fff;font-weight:700}
-.tbtn.solid:hover{background:#e8f4e8}
-.help-btn{width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.18);border:1.5px solid rgba(255,255,255,.35);color:#fff;font-size:14px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:'DM Sans',sans-serif;transition:background .14s}
-.help-btn:hover{background:rgba(255,255,255,.3)}
+.gp{padding:4px 9px;border-radius:20px;font-size:11px;font-weight:600;border:1.5px solid transparent;background:rgba(255,255,255,.1);color:rgba(255,255,255,.7);cursor:pointer;transition:all .14s;font-family:var(--font-body);white-space:nowrap;flex-shrink:0}
+.gp:hover{background:rgba(255,255,255,.2);color:#fff}
+.gp.on{background:#fff;color:var(--leaf);border-color:#fff;box-shadow:0 2px 8px rgba(0,0,0,.2)}
+.top-right{display:flex;gap:8px;margin-left:auto;flex-shrink:0;align-items:center}
+.t-help{width:30px;height:30px;border-radius:50%;border:1.5px solid rgba(255,255,255,.3);background:transparent;color:rgba(255,255,255,.8);font-size:14px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .14s;font-family:var(--font-body)}
+.t-help:hover{background:rgba(255,255,255,.15);color:#fff}
+.tbtn{padding:6px 13px;border-radius:7px;font-size:11.5px;font-weight:600;cursor:pointer;transition:all .14s;font-family:var(--font-body)}
+.tbtn.ghost{border:1.5px solid rgba(255,255,255,.3);color:rgba(255,255,255,.85);background:transparent}
+.tbtn.ghost:hover{background:rgba(255,255,255,.15);color:#fff}
+.tbtn.solid{border:none;color:var(--leaf);background:#fff;box-shadow:0 1px 6px rgba(0,0,0,.12)}
+.tbtn.solid:hover{background:var(--leaf3)}
 
-/* ---- LAYOUT ---- */
+/* ── LAYOUT ── */
 .layout{display:grid;grid-template-columns:var(--sw) 1fr;margin-top:var(--hh);min-height:calc(100vh - var(--hh))}
 
-/* ---- SIDEBAR ---- */
-.sidebar{background:#fff;border-right:1px solid var(--gray200);position:sticky;top:var(--hh);height:calc(100vh - var(--hh));display:flex;flex-direction:column;overflow:hidden}
-.sb-top{padding:12px 14px 8px;border-bottom:1px solid var(--gray200);flex-shrink:0}
-.sb-top-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
-.sb-heading{font-size:11px;font-weight:700;color:var(--gray600);letter-spacing:.4px}
-.sb-hint{font-size:10px;color:var(--gray400)}
-.sb-search{width:100%;padding:7px 10px 7px 32px;border:1.5px solid var(--gray200);border-radius:8px;font-size:12px;font-family:'DM Sans',sans-serif;color:var(--gray900);background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23a8a29e' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.35-4.35'/%3E%3C/svg%3E") no-repeat 9px center;outline:none;transition:border .13s}
-.sb-search:focus{border-color:var(--green2)}
+/* ── SIDEBAR ── */
+.sidebar{background:var(--paper);border-right:1px solid var(--border);position:sticky;top:var(--hh);height:calc(100vh - var(--hh));overflow-y:auto;display:flex;flex-direction:column;box-shadow:2px 0 12px rgba(15,26,14,.05)}
+.sb-head{padding:16px 16px 12px;border-bottom:1px solid var(--border)}
+.sb-section-label{font-size:9px;font-weight:700;letter-spacing:1.2px;color:var(--ink3);text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.sb-section-label::after{content:'';flex:1;height:1px;background:var(--border)}
+.sj-list{display:flex;flex-direction:column;gap:2px}
+.sj-btn{display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:8px;border:none;background:transparent;cursor:pointer;text-align:left;width:100%;font-family:var(--font-body);font-size:12px;color:var(--ink3);transition:all .13s}
+.sj-btn:hover{background:var(--cream);color:var(--ink)}
+.sj-btn.on{background:var(--leaf3);color:var(--leaf);font-weight:600}
+.sj-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.sj-name{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sj-cnt{font-size:10px;background:var(--cream);color:var(--ink3);padding:1px 6px;border-radius:10px;font-weight:600;flex-shrink:0}
+.sj-btn.on .sj-cnt{background:var(--leaf4);color:var(--leaf)}
 
-/* ---- ACCORDION ---- */
-.accordion{flex:1;overflow-y:auto;overflow-x:hidden}
-.accordion::-webkit-scrollbar{width:4px}
-.accordion::-webkit-scrollbar-thumb{background:var(--gray200);border-radius:2px}
-.acc-item{border-bottom:1px solid var(--gray200)}
-.acc-header{display:flex;align-items:center;gap:10px;padding:10px 14px;cursor:pointer;background:#fff;transition:background .12s;user-select:none;border:none;width:100%;text-align:left;font-family:'DM Sans',sans-serif}
-.acc-header:hover{background:var(--gray50)}
-.acc-header.open{background:var(--greenlt)}
-.acc-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
-.acc-name{font-size:12px;font-weight:600;color:var(--gray900);flex:1}
-.acc-header.open .acc-name{color:var(--green)}
-.acc-cnt{font-size:10px;font-weight:700;padding:1px 7px;border-radius:20px;background:var(--gray100);color:var(--gray400)}
-.acc-header.open .acc-cnt{background:var(--green4);color:var(--green)}
-.acc-arrow{font-size:10px;color:var(--gray400);transition:transform .2s;flex-shrink:0}
-.acc-header.open .acc-arrow{transform:rotate(180deg);color:var(--green)}
-.acc-body{display:none;padding:8px;background:var(--gray50);flex-direction:column;gap:6px}
-.acc-body.open{display:flex}
-
-/* ---- DRAG CARDS ---- */
-.cc{
-  padding:11px 14px 11px 12px;border-radius:9px;
-  border:2px solid var(--gray200);background:#fff;
-  cursor:grab;transition:all .14s;user-select:none;
-  display:flex;align-items:flex-start;gap:10px;
-  position:relative;
-}
-.cc:hover{border-color:var(--green2);box-shadow:0 2px 8px rgba(42,94,42,.12);transform:translateY(-1px)}
-.cc:active{cursor:grabbing;opacity:.65;transform:scale(.97)}
-.cc.dragging{opacity:.4;border-style:dashed}
-.cc-left{display:flex;flex-direction:column;align-items:center;gap:4px;flex-shrink:0;padding-top:1px}
-.cc-grip-icon{width:16px;height:16px;display:grid;grid-template-columns:1fr 1fr;gap:3px;opacity:.35}
-.cc-grip-icon span{width:4px;height:4px;border-radius:50%;background:var(--gray600);display:block}
-.cc-dot-sm{width:8px;height:8px;border-radius:50%}
+.cards-wrap{flex:1;overflow-y:auto;display:flex;flex-direction:column}
+.cards-search{padding:10px 12px 6px}
+.csearch{width:100%;padding:6px 10px 6px 30px;border:1.5px solid var(--border);border-radius:7px;font-size:12px;font-family:var(--font-body);color:var(--ink);background:var(--cream) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%234a5e47' stroke-width='2.5'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.35-4.35'/%3E%3C/svg%3E") no-repeat 9px center;outline:none;transition:border .13s}
+.csearch:focus{border-color:var(--leaf2);background-color:#fff}
+.ccards{padding:6px 10px;flex:1;display:flex;flex-direction:column;gap:5px}
+.cc{padding:9px 10px;border-radius:8px;border:1.5px solid var(--border);background:var(--paper);cursor:grab;transition:all .14s;position:relative;display:flex;align-items:flex-start;gap:8px}
+.cc:hover{border-color:var(--leaf2);box-shadow:0 2px 8px var(--shadow);transform:translateY(-1px)}
+.cc:active{cursor:grabbing;opacity:.6}
+.cc-color{width:3px;border-radius:3px;flex-shrink:0;align-self:stretch;min-height:28px}
 .cc-body{flex:1;min-width:0}
-.cc-code{font-size:10px;font-weight:700;letter-spacing:.5px;margin-bottom:3px}
-.cc-desc{font-size:12px;color:var(--gray600);line-height:1.45;word-break:break-word}
-.cc-drag-hint{position:absolute;right:8px;top:8px;font-size:10px;font-weight:700;letter-spacing:.3px;opacity:0;background:var(--green3);color:var(--green);padding:2px 6px;border-radius:4px;transition:opacity .15s;pointer-events:none}
-.cc:hover .cc-drag-hint{opacity:1}
+.cc-code{font-size:9.5px;font-weight:700;letter-spacing:.4px;margin-bottom:2px}
+.cc-desc{font-size:11.5px;color:var(--ink2);line-height:1.4}
+.cc-grip{opacity:.18;font-size:13px;flex-shrink:0;padding-top:1px;pointer-events:none}
+.no-cards{text-align:center;padding:30px 12px;color:var(--ink3);font-size:12px;line-height:1.6}
 
-/* ---- ADD FORM ---- */
-.addform{padding:12px 14px;border-top:1.5px solid var(--gray200);background:#fff;flex-shrink:0}
-.addform-toggle{display:flex;align-items:center;justify-content:space-between;cursor:pointer;font-size:11px;font-weight:700;color:var(--gray600);letter-spacing:.3px;padding:2px 0 8px;user-select:none}
-.addform-toggle span{font-size:14px;transition:transform .2s;color:var(--green)}
-.addform-toggle.open span{transform:rotate(45deg)}
-.addform-fields{display:none;flex-direction:column;gap:7px}
-.addform-fields.open{display:flex}
-.addform input,.addform textarea,.addform select{width:100%;padding:7px 10px;border:1.5px solid var(--gray200);border-radius:7px;font-size:12px;font-family:'DM Sans',sans-serif;color:var(--gray900);background:#fff;outline:none;transition:border .12s;resize:none}
-.addform input:focus,.addform textarea:focus,.addform select:focus{border-color:var(--green2)}
-.addform textarea{min-height:56px}
-.addbtn{padding:9px;border-radius:8px;font-size:12px;font-weight:700;background:var(--green);color:#fff;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .13s;width:100%}
-.addbtn:hover{background:var(--green2)}
+.addform{padding:12px;border-top:1px solid var(--border);display:flex;flex-direction:column;gap:7px;background:var(--cream)}
+.addform-label{font-size:9px;font-weight:700;letter-spacing:1.2px;color:var(--ink3);text-transform:uppercase;display:flex;align-items:center;gap:6px}
+.addform-label::after{content:'';flex:1;height:1px;background:var(--border2)}
+.addform input,.addform textarea,.addform select{width:100%;padding:7px 10px;border:1.5px solid var(--border);border-radius:7px;font-size:12px;font-family:var(--font-body);color:var(--ink);background:#fff;outline:none;transition:border .13s;resize:none}
+.addform input:focus,.addform textarea:focus,.addform select:focus{border-color:var(--leaf2)}
+.addform textarea{min-height:58px}
+.addbtn{padding:8px;border-radius:8px;font-size:12px;font-weight:700;background:var(--leaf);color:#fff;border:none;cursor:pointer;font-family:var(--font-body);transition:all .13s;letter-spacing:.2px}
+.addbtn:hover{background:var(--leaf2)}
 
-/* ---- MAIN ---- */
-.main{padding:20px;display:flex;flex-direction:column;gap:14px;min-width:0}
+/* ── MAIN ── */
+.main{padding:20px 22px;display:flex;flex-direction:column;gap:16px}
 
-/* auto save bar */
-.abar{display:flex;align-items:center;gap:8px;padding:7px 14px;background:var(--green3);border-radius:9px;border:1px solid var(--green4);font-size:11px;color:var(--green);font-weight:500}
-.abar-dot{width:7px;height:7px;border-radius:50%;background:var(--green2);animation:pulse 2.2s infinite;flex-shrink:0}
+/* ── WEEK HEADER ── */
+.week-header{display:flex;align-items:flex-start;gap:16px;flex-wrap:wrap}
+.week-title-wrap{display:flex;flex-direction:column;gap:3px}
+.week-title{font-family:var(--font-head);font-size:26px;color:var(--ink);line-height:1}
+.week-title em{color:var(--leaf);font-style:italic}
+.week-sub{font-size:11.5px;color:var(--ink3);display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.badge{padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;letter-spacing:.5px}
+.b-term{background:var(--gold3);color:var(--gold);border:1px solid var(--gold4)}
+.b-week{background:var(--sky3);color:var(--sky);border:1px solid var(--sky4)}
+.b-grade{background:var(--leaf3);color:var(--leaf);border:1px solid var(--leaf4)}
+.week-nav{display:flex;gap:5px;margin-left:auto;flex-wrap:wrap;align-items:center}
+.nbtn{padding:6px 13px;border-radius:7px;font-size:11.5px;font-weight:600;border:1.5px solid var(--border);background:#fff;color:var(--ink2);cursor:pointer;font-family:var(--font-body);transition:all .13s}
+.nbtn:hover{border-color:var(--ink3);color:var(--ink)}
+.nbtn.today{background:var(--cream);color:var(--ink3)}
+.nbtn.primary{background:var(--leaf);color:#fff;border-color:var(--leaf)}
+.nbtn.primary:hover{background:var(--leaf2)}
+
+/* ── SAVE BAR ── */
+.save-bar{background:var(--paper);border:1px solid var(--border);border-radius:var(--r);padding:8px 14px;display:flex;align-items:center;gap:10px;font-size:11.5px;color:var(--ink3)}
+.save-dot{width:7px;height:7px;border-radius:50%;background:var(--leaf2);animation:pulse 2.5s infinite;flex-shrink:0}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
-.abar-saved{margin-left:auto;font-size:10px;opacity:.65}
+.save-hint{color:var(--ink3)}
+.save-time{margin-left:auto;font-size:11px;color:var(--ink3);font-style:italic}
 
-/* week meta */
-.wmeta{display:flex;align-items:flex-start;gap:14px;flex-wrap:wrap}
-.whead{font-family:'DM Serif Display',serif;font-size:23px;color:var(--gray900);line-height:1.1}
-.whead em{font-style:italic;color:var(--green)}
-.wbadges{display:flex;gap:6px;margin-top:4px;flex-wrap:wrap}
-.badge{padding:3px 10px;border-radius:20px;font-size:10px;font-weight:700;letter-spacing:.4px}
-.badge.amber{background:var(--amber3);color:var(--amber);border:1px solid var(--amber4)}
-.badge.blue{background:var(--blue3);color:var(--blue);border:1px solid var(--blue4)}
-.badge.green{background:var(--green3);color:var(--green);border:1px solid var(--green4)}
-.wacts{display:flex;gap:6px;margin-left:auto;flex-wrap:wrap;align-items:center}
-.sbtn{padding:6px 13px;border-radius:7px;font-size:11px;font-weight:600;border:1.5px solid var(--gray200);background:#fff;color:var(--gray600);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .13s}
-.sbtn:hover{border-color:var(--gray400);color:var(--gray900)}
-.sbtn.g{background:var(--green);color:#fff;border-color:var(--green)}
-.sbtn.g:hover{background:var(--green2)}
-
-/* stats */
+/* ── STATS ROW ── */
 .stats{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
-.scard{background:#fff;border-radius:var(--r);padding:11px 13px;border:1px solid var(--gray200)}
-.sc-day{font-size:9px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:var(--gray400);margin-bottom:2px}
-.sc-n{font-size:22px;font-weight:700;line-height:1}
-.sc-s{display:flex;gap:3px;margin-top:4px;flex-wrap:wrap}
-.sc-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.scard{background:var(--paper);border-radius:var(--r);padding:12px 14px;border:1px solid var(--border);cursor:default;transition:box-shadow .14s}
+.scard:hover{box-shadow:0 3px 12px var(--shadow)}
+.sc-day{font-size:9.5px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:var(--ink3);margin-bottom:2px}
+.sc-n{font-size:22px;font-weight:700;line-height:1.1;font-family:var(--font-head)}
+.sc-dots{display:flex;gap:3px;margin-top:4px;flex-wrap:wrap;min-height:10px}
+.sc-label{font-size:10px;color:var(--ink3);margin-top:2px}
 
-/* planner grid */
+/* ── PLANNER GRID ── */
 .pgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
-.dcol{background:#fff;border-radius:var(--rl);border:1.5px solid var(--gray200);overflow:hidden;display:flex;flex-direction:column;min-height:320px;box-shadow:var(--shadow)}
-.dhead{padding:10px 12px;display:flex;align-items:center;justify-content:space-between;border-bottom:1.5px solid var(--gray200)}
-.dname{font-size:11px;font-weight:800;letter-spacing:.7px;text-transform:uppercase}
-.ddate{font-size:10px;color:var(--gray400)}
-.dzone{flex:1;padding:8px;display:flex;flex-direction:column;gap:5px;min-height:220px;transition:background .13s;position:relative}
-.dzone.over{background:var(--green3);border-radius:8px}
-.dzone.over::after{content:'Drop here';position:absolute;inset:6px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:var(--green);border:2px dashed var(--green2);border-radius:8px;pointer-events:none;background:rgba(234,244,234,.8)}
-.emp{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;pointer-events:none;padding:16px}
-.emp-icon{font-size:26px;opacity:.18}
-.emp-txt{font-size:10px;color:var(--gray400);text-align:center;line-height:1.6;font-weight:500}
-.aitem{border-radius:8px;padding:8px 10px;font-size:11px;display:flex;gap:6px;align-items:flex-start;animation:fi .18s ease;line-height:1.4;border:1px solid transparent}
-@keyframes fi{from{opacity:0;transform:translateY(-3px)}to{opacity:1;transform:translateY(0)}}
+.dcol{background:var(--paper);border-radius:var(--rl);border:1px solid var(--border);display:flex;flex-direction:column;min-height:340px;box-shadow:0 1px 4px var(--shadow);overflow:hidden;transition:box-shadow .14s}
+.dcol:hover{box-shadow:0 3px 14px var(--shadow2)}
+.dhead{padding:10px 12px 9px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border)}
+.dname{font-size:11px;font-weight:700;letter-spacing:.7px;text-transform:uppercase}
+.ddate{font-size:10px;color:var(--ink3)}
+.dzone{flex:1;padding:7px;display:flex;flex-direction:column;gap:4px;transition:background .13s;position:relative;min-height:280px}
+.dzone.over{background:var(--leaf3)}
+.dzone.over::after{content:'Drop here';position:absolute;inset:6px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:var(--leaf2);border:2px dashed var(--leaf2);border-radius:8px;pointer-events:none;background:rgba(212,237,218,.6)}
+.empty-state{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;pointer-events:none;padding:20px}
+.empty-icon{font-size:22px;opacity:.18}
+.empty-text{font-size:10.5px;color:var(--ink3);text-align:center;line-height:1.55;opacity:.7}
+.aitem{border-radius:6px;padding:7px 8px;font-size:11.5px;display:flex;gap:6px;align-items:flex-start;animation:slideIn .2s ease;line-height:1.38;position:relative}
+@keyframes slideIn{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}
+.aitem-bar{width:3px;border-radius:2px;flex-shrink:0;align-self:stretch;min-height:24px}
 .aitem-body{flex:1;min-width:0}
-.acode{font-weight:800;font-size:9px;letter-spacing:.5px;display:block;margin-bottom:2px}
-.adesc{word-break:break-word}
-.arm{cursor:pointer;font-size:16px;line-height:1;flex-shrink:0;padding:0 2px;opacity:.3;transition:opacity .12s;font-weight:700}
-.arm:hover{opacity:1;color:var(--red)}
+.acode{font-weight:700;font-size:9.5px;letter-spacing:.4px;display:block;margin-bottom:2px}
+.adesc{font-size:11px;line-height:1.4;color:var(--ink2)}
+.arm{cursor:pointer;font-size:16px;line-height:1;opacity:.25;flex-shrink:0;transition:opacity .12s;padding:0 2px;align-self:flex-start;margin-top:-1px}
+.arm:hover{opacity:.8}
 
-/* coverage */
-.cov{background:#fff;border-radius:var(--rl);border:1px solid var(--gray200);padding:18px 20px;box-shadow:var(--shadow)}
-.cov-h{font-family:'DM Serif Display',serif;font-size:17px;margin-bottom:14px;color:var(--gray900)}
-.cov-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px}
-.ci{display:flex;flex-direction:column;gap:3px}
-.ci-lbl{display:flex;justify-content:space-between;font-size:11px}
-.ci-nm{font-weight:500;color:var(--gray600)}
-.ci-n{font-weight:700;font-size:10px}
-.ci-track{height:5px;background:var(--gray200);border-radius:3px;overflow:hidden}
-.ci-fill{height:100%;border-radius:3px;transition:width .4s ease}
-.cov-empty{font-size:12px;color:var(--gray400);font-style:italic;text-align:center;padding:16px}
+/* ── COVERAGE ── */
+.cov{background:var(--paper);border-radius:var(--rl);border:1px solid var(--border);padding:18px 20px;box-shadow:0 1px 4px var(--shadow)}
+.cov-head{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.cov-title{font-family:var(--font-head);font-size:17px;color:var(--ink)}
+.cov-sub{font-size:11px;color:var(--ink3);margin-left:auto}
+.cov-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(185px,1fr));gap:10px}
+.ci{display:flex;flex-direction:column;gap:4px}
+.ci-lbl{display:flex;justify-content:space-between;align-items:baseline;font-size:11.5px}
+.ci-name{font-weight:500;color:var(--ink2)}
+.ci-n{font-weight:700;font-size:10.5px}
+.ci-track{height:4px;background:var(--cream);border-radius:3px;overflow:hidden;border:1px solid var(--border)}
+.ci-fill{height:100%;border-radius:3px;transition:width .5s cubic-bezier(.4,0,.2,1)}
+.cov-empty{font-size:12px;color:var(--ink3);font-style:italic;text-align:center;padding:24px;opacity:.7}
 
-/* toast */
-.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(60px);background:var(--gray900);color:#fff;padding:8px 18px;border-radius:8px;font-size:12px;font-weight:600;z-index:999;transition:transform .2s ease;pointer-events:none;white-space:nowrap}
+/* ── TOAST ── */
+.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--ink);color:#fff;padding:9px 18px;border-radius:8px;font-size:12px;font-weight:600;z-index:999;transition:transform .22s cubic-bezier(.34,1.56,.64,1);pointer-events:none;white-space:nowrap;box-shadow:0 4px 20px rgba(0,0,0,.25)}
 .toast.on{transform:translateX(-50%) translateY(0)}
 
-/* modal shared */
-.mback{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:300;display:none;align-items:center;justify-content:center;padding:16px}
+/* ── CLEAR MODAL ── */
+.mback{position:fixed;inset:0;background:rgba(15,26,14,.45);z-index:300;display:none;align-items:center;justify-content:center;backdrop-filter:blur(3px)}
 .mback.open{display:flex}
-.modal{background:#fff;border-radius:var(--rl);width:90%;box-shadow:0 8px 40px rgba(0,0,0,.18);animation:mi .18s ease;overflow:hidden}
-@keyframes mi{from{transform:scale(.94);opacity:0}to{transform:scale(1);opacity:1}}
-.modal-head{padding:20px 24px 16px;border-bottom:1px solid var(--gray200)}
-.modal-head h2{font-family:'DM Serif Display',serif;font-size:20px;margin-bottom:4px}
-.modal-head p{font-size:12px;color:var(--gray600);line-height:1.6}
-.modal-body{padding:20px 24px}
-.modal-foot{padding:14px 24px;border-top:1px solid var(--gray200);display:flex;gap:8px;justify-content:flex-end}
-.msbtn{padding:7px 16px;border-radius:7px;font-size:12px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .13s}
-.msbtn.cancel{border:1.5px solid var(--gray200);background:#fff;color:var(--gray600)}
-.msbtn.cancel:hover{border-color:var(--gray400)}
-.msbtn.danger{border:none;background:var(--red);color:#fff}
-.msbtn.danger:hover{opacity:.88}
+.modal{background:#fff;border-radius:var(--rl);padding:28px;width:90%;max-width:400px;box-shadow:0 12px 50px rgba(0,0,0,.2);animation:mIn .18s cubic-bezier(.34,1.56,.64,1)}
+@keyframes mIn{from{transform:scale(.93);opacity:0}to{transform:scale(1);opacity:1}}
+.modal h2{font-family:var(--font-head);font-size:21px;margin-bottom:6px;color:var(--ink)}
+.modal p{font-size:12.5px;color:var(--ink3);margin-bottom:20px;line-height:1.6}
+.mfoot{display:flex;gap:8px;justify-content:flex-end}
+.mfbtn{padding:8px 16px;border-radius:7px;font-size:12.5px;font-weight:600;cursor:pointer;font-family:var(--font-body);border:1.5px solid var(--border);background:#fff;color:var(--ink2);transition:all .13s}
+.mfbtn:hover{border-color:var(--ink3)}
+.mfbtn.danger{background:var(--rose);color:#fff;border-color:var(--rose)}
+.mfbtn.danger:hover{background:#a02020}
 
-/* ===== ONBOARDING GUIDE MODAL ===== */
-#guide-modal .modal{max-width:600px}
-.guide-steps{display:flex;flex-direction:column;gap:16px}
-.gs{display:flex;gap:14px;align-items:flex-start}
-.gs-num{width:32px;height:32px;border-radius:50%;background:var(--green);color:#fff;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
-.gs-body{}
-.gs-title{font-size:13px;font-weight:700;color:var(--gray900);margin-bottom:3px}
-.gs-desc{font-size:12px;color:var(--gray600);line-height:1.6}
-.gs-img{margin-top:8px;border-radius:8px;border:1.5px solid var(--gray200);overflow:hidden;background:var(--gray50);padding:10px 12px;font-size:11px;color:var(--gray600);display:flex;align-items:center;gap:8px}
-.gs-pill{padding:3px 9px;border-radius:6px;font-size:10px;font-weight:700;white-space:nowrap}
-.guide-tip{margin-top:16px;padding:12px 14px;background:var(--amber3);border-radius:9px;border:1px solid var(--amber4);font-size:11px;color:var(--amber);line-height:1.6}
-.guide-tip strong{font-weight:700;display:block;margin-bottom:3px}
-.dont-show{display:flex;align-items:center;gap:7px;font-size:11px;color:var(--gray600);cursor:pointer;user-select:none;margin-right:auto}
-.dont-show input{cursor:pointer;accent-color:var(--green);width:14px;height:14px}
-.start-btn{padding:9px 24px;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;font-family:'DM Serif Display',serif;background:var(--green);color:#fff;border:none;transition:background .13s}
-.start-btn:hover{background:var(--green2)}
+/* ══════════════════════════════════════
+   ONBOARDING OVERLAY
+══════════════════════════════════════ */
+.ob-back{position:fixed;inset:0;background:rgba(10,20,10,.7);z-index:500;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(6px);animation:obIn .25s ease}
+@keyframes obIn{from{opacity:0}to{opacity:1}}
+.ob-card{background:#fff;border-radius:18px;width:90%;max-width:680px;max-height:90vh;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 20px 80px rgba(0,0,0,.35);animation:cardIn .28s cubic-bezier(.34,1.56,.64,1)}
+@keyframes cardIn{from{transform:scale(.9) translateY(20px);opacity:0}to{transform:scale(1) translateY(0);opacity:1}}
+.ob-top{background:var(--leaf);padding:28px 32px 24px;position:relative}
+.ob-flag{font-size:28px;margin-bottom:8px}
+.ob-title{font-family:var(--font-head);font-size:26px;color:#fff;line-height:1.1;margin-bottom:6px}
+.ob-title em{font-style:italic;color:rgba(255,255,255,.75)}
+.ob-tagline{font-size:13px;color:rgba(255,255,255,.7);line-height:1.5}
+.ob-steps{padding:24px 32px;display:flex;flex-direction:column;gap:0;overflow-y:auto;flex:1}
+.ob-steps-label{font-size:9.5px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--ink3);margin-bottom:16px}
+.ob-step{display:flex;gap:14px;padding:14px 0;border-bottom:1px solid var(--border);position:relative}
+.ob-step:last-child{border-bottom:none}
+.ob-num{width:34px;height:34px;border-radius:50%;background:var(--leaf);color:#fff;font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:var(--font-head)}
+.ob-step-body{flex:1}
+.ob-step-title{font-weight:700;font-size:13.5px;color:var(--ink);margin-bottom:3px}
+.ob-step-desc{font-size:12.5px;color:var(--ink3);line-height:1.55}
+.ob-step-icon{font-size:18px;align-self:center;flex-shrink:0;opacity:.5}
+.ob-tip{background:var(--gold3);border:1px solid var(--gold4);border-radius:8px;padding:12px 14px;display:flex;gap:10px;align-items:flex-start;margin-top:4px}
+.ob-tip-icon{font-size:16px;flex-shrink:0}
+.ob-tip-text{font-size:12px;color:var(--gold);font-weight:500;line-height:1.5}
+.ob-foot{padding:18px 32px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;background:var(--cream)}
+.ob-skip{font-size:12px;color:var(--ink3);cursor:pointer;background:none;border:none;font-family:var(--font-body);padding:4px 8px;border-radius:6px;transition:all .13s}
+.ob-skip:hover{color:var(--ink);background:var(--border)}
+.ob-start{padding:10px 24px;border-radius:8px;background:var(--leaf);color:#fff;border:none;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font-body);letter-spacing:.3px;transition:all .14s;box-shadow:0 3px 12px rgba(30,92,26,.3)}
+.ob-start:hover{background:var(--leaf2);transform:translateY(-1px);box-shadow:0 5px 18px rgba(30,92,26,.4)}
+.ob-check{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--ink3)}
+.ob-check input{accent-color:var(--leaf);width:14px;height:14px;cursor:pointer}
 
-/* print */
+/* ── SPOTLIGHT ── */
+.spotlight{position:fixed;z-index:490;border:3px solid var(--gold2);border-radius:10px;box-shadow:0 0 0 4000px rgba(0,0,0,.55);pointer-events:none;transition:all .3s ease;display:none}
+.spotlight.show{display:block}
+
+/* Print */
 @media print{
-  .topbar,.sidebar,.wacts,.cov,.abar,.arm{display:none!important}
+  .topbar,.sidebar,.week-nav,.cov,.save-bar,.arm,.ob-back,.toast{display:none!important}
   body{background:#fff}
   .layout{display:block;margin-top:0}
   .main{padding:0}
@@ -220,238 +228,204 @@ body{font-family:'DM Sans',sans-serif;background:var(--pagebg);color:var(--gray9
   @page{margin:1.5cm}
 }
 
-/* responsive */
-@media(max-width:900px){:root{--sw:270px}}
-@media(max-width:700px){.layout{grid-template-columns:1fr}.sidebar{position:static;height:auto}.pgrid{grid-template-columns:1fr 1fr}.stats{grid-template-columns:repeat(5,1fr)}}
-@media(max-width:440px){.pgrid{grid-template-columns:1fr}}
+/* Responsive */
+@media(max-width:900px){:root{--sw:250px}}
+@media(max-width:700px){
+  .layout{grid-template-columns:1fr}
+  .sidebar{position:static;height:auto;max-height:50vh}
+  .pgrid{grid-template-columns:1fr 1fr}
+  .stats{grid-template-columns:repeat(5,1fr)}
+}
+@media(max-width:460px){.pgrid{grid-template-columns:1fr}.stats{grid-template-columns:repeat(3,1fr)}.ob-top{padding:20px 18px}.ob-steps{padding:16px 18px}.ob-foot{padding:14px 18px}}
 </style>
 </head>
 <body>
 
-<!-- TOPBAR -->
+<!-- ══ ONBOARDING ══ -->
+<div class="ob-back" id="ob-back">
+  <div class="ob-card">
+    <div class="ob-top">
+      <div class="ob-flag">🇰🇪</div>
+      <div class="ob-title">Welcome to the<br><em>CBC Lesson Planner</em></div>
+      <div class="ob-tagline">Kenya Competency-Based Curriculum · Grades 1–9 · Your weekly planning workspace</div>
+    </div>
+    <div class="ob-steps">
+      <div class="ob-steps-label">How it works — 4 simple steps</div>
+
+      <div class="ob-step">
+        <div class="ob-num">1</div>
+        <div class="ob-step-body">
+          <div class="ob-step-title">Pick your grade &amp; subject</div>
+          <div class="ob-step-desc">Use the <strong>Grade buttons</strong> in the top bar to switch between Grades 1–9. The sidebar updates automatically with the correct CBC subjects and competencies for that level (Lower, Upper or Junior Secondary).</div>
+        </div>
+        <div class="ob-step-icon">🎓</div>
+      </div>
+
+      <div class="ob-step">
+        <div class="ob-num">2</div>
+        <div class="ob-step-body">
+          <div class="ob-step-title">Drag competencies onto the week</div>
+          <div class="ob-step-desc">Click a <strong>subject tab</strong> in the sidebar to see its learning outcomes. <strong>Drag any card</strong> from the sidebar and <strong>drop it onto a day column</strong> in the weekly planner. Each card shows the competency code and outcome description.</div>
+        </div>
+        <div class="ob-step-icon">🖱️</div>
+      </div>
+
+      <div class="ob-step">
+        <div class="ob-num">3</div>
+        <div class="ob-step-body">
+          <div class="ob-step-title">Navigate weeks &amp; add custom competencies</div>
+          <div class="ob-step-desc">Use <strong>Prev / Next</strong> to move between weeks — each grade and week saves separately. Use the <strong>Add competency</strong> form at the bottom of the sidebar to create your own learning outcomes and add them to any subject.</div>
+        </div>
+        <div class="ob-step-icon">📅</div>
+      </div>
+
+      <div class="ob-step">
+        <div class="ob-num">4</div>
+        <div class="ob-step-body">
+          <div class="ob-step-title">Export or print your plan</div>
+          <div class="ob-step-desc">Click <strong>Print / PDF</strong> to generate a clean, print-ready lesson plan table for the week. Your plans save automatically in this browser — no account required.</div>
+        </div>
+        <div class="ob-step-icon">📄</div>
+      </div>
+
+      <div class="ob-tip">
+        <span class="ob-tip-icon">💡</span>
+        <span class="ob-tip-text"><strong>Pro tip:</strong> Use the <strong>Subject coverage</strong> panel at the bottom of the planner to check you're distributing lessons evenly across subjects each week.</span>
+      </div>
+    </div>
+    <div class="ob-foot">
+      <label class="ob-check"><input type="checkbox" id="ob-dont-show"> Don't show this again</label>
+      <div style="display:flex;gap:8px">
+        <button class="ob-skip" onclick="closeOnboard()">Skip</button>
+        <button class="ob-start" onclick="closeOnboard()">Get started →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ TOPBAR ══ -->
 <header class="topbar">
   <div class="logo">
-    <span style="font-size:20px">&#127472;&#127466;</span>
-    <div>CBC Lesson Planner<span class="logo-sub">Kenya Competency-Based Curriculum</span></div>
+    <div class="logo-mark">🇰🇪</div>
+    <div class="logo-text">
+      <span class="logo-name">CBC Lesson Planner</span>
+      <span class="logo-sub">Kenya Competency-Based Curriculum</span>
+    </div>
   </div>
-  <div class="tdiv"></div>
-  <span class="glabel">Grade</span>
+  <div class="top-div"></div>
+  <span class="top-label">Grade</span>
   <div class="gpills" id="gpills"></div>
-  <div class="tact">
-    <button class="help-btn" onclick="openGuide()" title="How to use">?</button>
+  <div class="top-right">
+    <button class="t-help" onclick="openOnboard()" title="Help / Guide">?</button>
     <button class="tbtn ghost" onclick="clearWeek()">Clear week</button>
-    <button class="tbtn solid" onclick="printPlan()">&#128438; Export PDF</button>
+    <button class="tbtn solid" onclick="printPlan()">Export PDF</button>
   </div>
 </header>
 
+<!-- ══ LAYOUT ══ -->
 <div class="layout">
-
-  <!-- SIDEBAR -->
   <aside class="sidebar">
-    <div class="sb-top">
-      <div class="sb-top-row">
-        <span class="sb-heading">Competency Library</span>
-        <span class="sb-hint">Click subject &#8594; drag card</span>
-      </div>
-      <input class="sb-search" id="sbsearch" type="search" placeholder="Search competencies..." oninput="filterCards()" autocomplete="off">
+    <div class="sb-head">
+      <div class="sb-section-label">Subjects</div>
+      <div class="sj-list" id="sjtabs"></div>
     </div>
-    <div class="accordion" id="accordion"></div>
-    <div class="addform" id="addform">
-      <div class="addform-toggle" id="addtoggle" onclick="toggleAddForm()">
-        &#43; Add custom competency
-        <span>&#43;</span>
+    <div class="cards-wrap">
+      <div class="cards-search">
+        <input class="csearch" id="csearch" placeholder="Search competencies…" oninput="renderCards()">
       </div>
-      <div class="addform-fields" id="addfields">
-        <input id="ncode" placeholder="Code e.g. MTH.4.2.a (optional)" />
-        <textarea id="ndesc" placeholder="Learning outcome description..."></textarea>
-        <select id="nsubj"></select>
-        <button class="addbtn" onclick="addComp()">Add to library</button>
-      </div>
+      <div class="ccards" id="ccards"></div>
+    </div>
+    <div class="addform">
+      <div class="addform-label">Add competency</div>
+      <input id="ncode" placeholder="Code  e.g. MTH.4.2.a (optional)" />
+      <textarea id="ndesc" placeholder="Learning outcome description…"></textarea>
+      <select id="nsubj"></select>
+      <button class="addbtn" onclick="addComp()">+ Add to library</button>
     </div>
   </aside>
 
-  <!-- MAIN -->
   <main class="main">
-    <div class="abar">
-      <span class="abar-dot"></span>
-      Plans auto-saved per grade &amp; per week in your browser.
-      <span class="abar-saved" id="lastsaved"></span>
+    <!-- Save bar -->
+    <div class="save-bar">
+      <span class="save-dot"></span>
+      <span class="save-hint">Plans auto-save in your browser per grade and week. No account needed.</span>
+      <span class="save-time" id="lastsaved"></span>
     </div>
 
-    <div class="wmeta">
-      <div>
-        <div class="whead">Week of <em id="wdate"></em></div>
-        <div class="wbadges">
-          <span class="badge amber" id="termbadge">Term 1</span>
-          <span class="badge blue" id="wkbadge">Week 1</span>
-          <span class="badge green" id="lvbadge">Lower Primary</span>
-        </div>
+    <!-- Week header -->
+    <div class="week-header">
+      <div class="week-title-wrap">
+        <div class="week-title">Week of <em id="wdate"></em></div>
+        <div class="week-sub" id="wsub"></div>
       </div>
-      <div class="wacts">
-        <button class="sbtn" onclick="prevWeek()">&#8592; Prev</button>
-        <button class="sbtn" onclick="goToday()">Today</button>
-        <button class="sbtn" onclick="nextWeek()">Next &#8594;</button>
-        <button class="sbtn g" onclick="printPlan()">Print / PDF</button>
+      <span class="badge b-term" id="termbadge">Term 1</span>
+      <span class="badge b-week" id="wkbadge">Week 1</span>
+      <div class="week-nav">
+        <button class="nbtn" onclick="prevWeek()">← Prev</button>
+        <button class="nbtn today" onclick="goToday()">Today</button>
+        <button class="nbtn" onclick="nextWeek()">Next →</button>
+        <button class="nbtn primary" onclick="printPlan()">Print / PDF</button>
       </div>
     </div>
 
+    <!-- Stats -->
     <div class="stats" id="stats"></div>
+
+    <!-- Planner grid -->
     <div class="pgrid" id="pgrid"></div>
 
+    <!-- Coverage -->
     <div class="cov">
-      <div class="cov-h">Subject coverage this week</div>
+      <div class="cov-head">
+        <span class="cov-title">Subject coverage this week</span>
+        <span class="cov-sub" id="cov-total"></span>
+      </div>
       <div class="cov-grid" id="covgrid"></div>
     </div>
   </main>
 </div>
 
-<!-- CLEAR MODAL -->
+<!-- Clear modal -->
 <div class="mback" id="clrmodal">
-  <div class="modal" style="max-width:420px">
-    <div class="modal-head">
-      <h2>Clear this week?</h2>
-      <p>All planned competencies for Grade <strong id="clrg"></strong> this week will be removed. This cannot be undone.</p>
-    </div>
-    <div class="modal-foot">
-      <button class="msbtn cancel" onclick="closeMod('clrmodal')">Cancel</button>
-      <button class="msbtn danger" onclick="confirmClear()">Yes, clear week</button>
+  <div class="modal">
+    <h2>Clear this week?</h2>
+    <p>All planned competencies for <strong>Grade <span id="clrg"></span></strong> this week will be removed. This cannot be undone.</p>
+    <div class="mfoot">
+      <button class="mfbtn" onclick="closeMod()">Cancel</button>
+      <button class="mfbtn danger" onclick="confirmClear()">Clear week</button>
     </div>
   </div>
 </div>
 
-<!-- GUIDE MODAL -->
-<div class="mback" id="guide-modal">
-  <div class="modal" style="max-width:600px;max-height:90vh;overflow-y:auto">
-    <div class="modal-head">
-      <h2>Welcome to CBC Lesson Planner &#127960;</h2>
-      <p>Plan your Grade 1&ndash;9 lessons for the week in just a few steps. Here&rsquo;s how it works:</p>
-    </div>
-    <div class="modal-body">
-      <div class="guide-steps">
-
-        <div class="gs">
-          <div class="gs-num">1</div>
-          <div class="gs-body">
-            <div class="gs-title">Pick your grade</div>
-            <div class="gs-desc">At the top of the page, click your class grade (Gr 1 through Gr 9). The subject list and competencies will update automatically for that grade level.</div>
-            <div class="gs-img">
-              <span style="font-size:18px">&#127472;&#127466;</span>
-              <div>
-                <span class="gs-pill" style="background:#fff;border:1.5px solid rgba(255,255,255,.3);color:#2a5e2a;border-color:#c5e1c5">Gr 1</span>&nbsp;
-                <span class="gs-pill" style="background:#2a5e2a;color:#fff">Gr 4</span>&nbsp;
-                <span class="gs-pill" style="background:#fff;border:1.5px solid #c5e1c5;color:#2a5e2a">Gr 7</span>
-                <div style="margin-top:5px;font-size:10px;color:var(--gray400)">Green = currently selected grade</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="gs">
-          <div class="gs-num">2</div>
-          <div class="gs-body">
-            <div class="gs-title">Open a subject accordion</div>
-            <div class="gs-desc">In the left panel, click any subject name (e.g. <strong>Mathematics</strong>) to expand it and reveal all competency cards for that subject. Click it again to collapse and save space.</div>
-            <div class="gs-img">
-              <div style="width:100%">
-                <div style="display:flex;align-items:center;gap:8px;padding:7px 10px;background:var(--greenlt);border-radius:7px;border:1.5px solid var(--green4)">
-                  <span style="width:9px;height:9px;border-radius:50%;background:#2563eb;display:inline-block"></span>
-                  <span style="font-size:12px;font-weight:700;color:var(--green);flex:1">Mathematics</span>
-                  <span style="font-size:10px;font-weight:700;background:var(--green4);color:var(--green);padding:1px 7px;border-radius:20px">8</span>
-                  <span style="color:var(--green);font-size:10px">&#9650;</span>
-                </div>
-                <div style="padding:6px 8px;background:var(--gray50);border-radius:0 0 7px 7px;border:1.5px solid var(--gray200);border-top:none;font-size:10px;color:var(--gray400)">&#8595; Competency cards appear here</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="gs">
-          <div class="gs-num">3</div>
-          <div class="gs-body">
-            <div class="gs-title">Drag a competency onto a day</div>
-            <div class="gs-desc">Each card has a <strong>drag grip</strong> (&#8942;&#8942;) on the left. Click and hold any card, then drag it onto one of the five day columns (Monday &ndash; Friday) on the right. Drop it and it&rsquo;s planned!</div>
-            <div class="gs-img" style="background:var(--blue3);border-color:var(--blue4)">
-              <span style="font-size:20px">&#128203;</span>
-              <div>
-                <div style="font-size:11px;font-weight:700;color:var(--blue)">MTH.4.1.a</div>
-                <div style="font-size:11px;color:var(--gray600)">Divide numbers up to 1000&hellip;</div>
-                <div style="font-size:10px;color:var(--blue2);margin-top:3px">&#8594; drag to Tuesday column</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="gs">
-          <div class="gs-num">4</div>
-          <div class="gs-body">
-            <div class="gs-title">Navigate weeks</div>
-            <div class="gs-desc">Use <strong>Prev</strong> and <strong>Next</strong> buttons to plan ahead or look back. Each week is saved separately. Your plans are never lost when switching grades or weeks.</div>
-          </div>
-        </div>
-
-        <div class="gs">
-          <div class="gs-num">5</div>
-          <div class="gs-body">
-            <div class="gs-title">Export or print your plan</div>
-            <div class="gs-desc">Click <strong>Print / PDF</strong> to open a clean, printable version of your weekly plan. Use your browser&rsquo;s <em>Save as PDF</em> option to keep a digital copy.</div>
-          </div>
-        </div>
-
-        <div class="gs">
-          <div class="gs-num">6</div>
-          <div class="gs-body">
-            <div class="gs-title">Add your own competencies</div>
-            <div class="gs-desc">Click <strong>+ Add custom competency</strong> at the bottom of the left panel to add your own learning outcomes. They will appear in the library alongside the built-in ones.</div>
-          </div>
-        </div>
-
-      </div>
-
-      <div class="guide-tip">
-        <strong>&#128161; Quick tip</strong>
-        Use the search bar at the top of the left panel to quickly find any competency by keyword or code. Type &ldquo;fraction&rdquo; or &ldquo;MTH.5&rdquo; to filter instantly.
-      </div>
-    </div>
-    <div class="modal-foot">
-      <label class="dont-show">
-        <input type="checkbox" id="dontshow"> Don&rsquo;t show this again
-      </label>
-      <button class="start-btn" onclick="closeGuide()">Start planning &#8594;</button>
-    </div>
-  </div>
-</div>
-
-<!-- TOAST -->
 <div class="toast" id="toast"></div>
 
 <script>
+/* ─── CONSTANTS ─── */
 var DAYS = ['Monday','Tuesday','Wednesday','Thursday','Friday'];
-
 var SLEVELS = {
   lower:  ['Mathematics','English','Kiswahili','Environmental Activities','Creative Arts','Physical Education','Religious Education'],
   upper:  ['Mathematics','English','Kiswahili','Science & Technology','Social Studies','Creative Arts','Physical & Health Education','Religious Education'],
   junior: ['Mathematics','English','Kiswahili','Integrated Science','Social Studies','Creative Arts & Sports','Pre-Technical Studies','Agriculture','Religious Education']
 };
-
 var SMETA = {
-  'Mathematics':              {c:'#1a4480',bg:'#eff6ff',bd:'#bfdbfe',d:'#2563eb'},
-  'English':                  {c:'#2a5e2a',bg:'#eaf4ea',bd:'#c5e1c5',d:'#3a8c3a'},
-  'Kiswahili':                {c:'#7c5200',bg:'#fffbeb',bd:'#fde68a',d:'#f59e0b'},
-  'Environmental Activities': {c:'#0f5850',bg:'#f0fdfa',bd:'#99f6e4',d:'#0d9488'},
-  'Creative Arts':            {c:'#7c2d12',bg:'#fff7ed',bd:'#fed7aa',d:'#ea580c'},
-  'Physical Education':       {c:'#4c1d95',bg:'#f5f3ff',bd:'#ddd6fe',d:'#7c3aed'},
-  'Physical & Health Education':{c:'#4c1d95',bg:'#f5f3ff',bd:'#ddd6fe',d:'#7c3aed'},
-  'Religious Education':      {c:'#44403c',bg:'#fafaf9',bd:'#d4d2cf',d:'#78716c'},
-  'Science & Technology':     {c:'#0f5850',bg:'#f0fdfa',bd:'#99f6e4',d:'#0d9488'},
-  'Social Studies':           {c:'#1e3a5f',bg:'#f0f4ff',bd:'#c7d7f8',d:'#3b5998'},
-  'Integrated Science':       {c:'#0f5850',bg:'#f0fdfa',bd:'#99f6e4',d:'#0d9488'},
-  'Creative Arts & Sports':   {c:'#7c2d12',bg:'#fff7ed',bd:'#fed7aa',d:'#ea580c'},
-  'Pre-Technical Studies':    {c:'#1a4480',bg:'#eff6ff',bd:'#bfdbfe',d:'#2563eb'},
-  'Agriculture':              {c:'#2a5e2a',bg:'#eaf4ea',bd:'#c5e1c5',d:'#3a8c3a'}
+  'Mathematics':                {c:'#1a3a5c',bg:'#e8f0fb',d:'#2558a0'},
+  'English':                    {c:'#1e5c1a',bg:'#d4edda',d:'#27782a'},
+  'Kiswahili':                  {c:'#7a3010',bg:'#fef3ec',d:'#c85a20'},
+  'Environmental Activities':   {c:'#0a4a44',bg:'#e6f7f5',d:'#0f7a6e'},
+  'Creative Arts':              {c:'#8b1a1a',bg:'#fdecea',d:'#c0392b'},
+  'Physical Education':         {c:'#3d0f5a',bg:'#f2e8ff',d:'#7030aa'},
+  'Physical & Health Education':{c:'#3d0f5a',bg:'#f2e8ff',d:'#7030aa'},
+  'Religious Education':        {c:'#4a4035',bg:'#f5f2ea',d:'#8c7b6e'},
+  'Science & Technology':       {c:'#0a4a44',bg:'#e6f7f5',d:'#0f7a6e'},
+  'Social Studies':             {c:'#1e5c1a',bg:'#d4edda',d:'#27782a'},
+  'Integrated Science':         {c:'#0a4a44',bg:'#e6f7f5',d:'#0f7a6e'},
+  'Creative Arts & Sports':     {c:'#8b1a1a',bg:'#fdecea',d:'#c0392b'},
+  'Pre-Technical Studies':      {c:'#1a3a5c',bg:'#e8f0fb',d:'#2558a0'},
+  'Agriculture':                {c:'#1e5c1a',bg:'#d4edda',d:'#27782a'}
 };
 
 var COMPS = {
-  'Mathematics': [
+  'Mathematics':[
     {code:'MTH.1.1.a',g:1,desc:'Count objects up to 100 using one-to-one correspondence'},
     {code:'MTH.1.2.a',g:1,desc:'Write numbers 1 to 100 in words and figures'},
     {code:'MTH.2.1.a',g:2,desc:'Add two-digit numbers without and with carrying'},
@@ -471,7 +445,7 @@ var COMPS = {
     {code:'MTH.9.1.a',g:9,desc:'Expand and factorise quadratic expressions'},
     {code:'MTH.9.3.b',g:9,desc:'Solve simultaneous equations using substitution and elimination'}
   ],
-  'English': [
+  'English':[
     {code:'ENG.1.1.a',g:1,desc:'Identify and blend CVC words in reading activities'},
     {code:'ENG.1.3.b',g:1,desc:'Listen to and retell short stories in own words'},
     {code:'ENG.2.2.a',g:2,desc:'Read simple sentences with expression and fluency'},
@@ -491,7 +465,7 @@ var COMPS = {
     {code:'ENG.9.2.a',g:9,desc:'Produce a research-based essay with proper citations'},
     {code:'ENG.9.5.b',g:9,desc:'Compare two literary texts on a shared theme critically'}
   ],
-  'Kiswahili': [
+  'Kiswahili':[
     {code:'KSW.1.1.a',g:1,desc:'Tambua na kutamka herufi za alfabeti ya Kiswahili'},
     {code:'KSW.2.2.b',g:2,desc:'Soma sentensi fupi kwa usahihi na uelewa'},
     {code:'KSW.3.3.a',g:3,desc:'Andika sentensi sahihi kwa kutumia alama za uandishi'},
@@ -502,7 +476,7 @@ var COMPS = {
     {code:'KSW.8.4.b',g:8,desc:'Andika barua rasmi kwa muundo unaofaa'},
     {code:'KSW.9.3.c',g:9,desc:'Tathmini tamthilia kwa kutumia vigezo vya fasihi'}
   ],
-  'Science & Technology': [
+  'Science & Technology':[
     {code:'STC.4.1.a',g:4,desc:'Classify living and non-living things in the environment'},
     {code:'STC.4.3.b',g:4,desc:'Demonstrate safe use of basic science equipment'},
     {code:'STC.5.2.a',g:5,desc:'Describe the water cycle using labelled diagrams'},
@@ -511,339 +485,290 @@ var COMPS = {
     {code:'STC.6.3.c',g:6,desc:'Design and test a simple electrical circuit'},
     {code:'STC.7.2.b',g:7,desc:'Describe the structure of the human digestive system'},
     {code:'STC.7.5.a',g:7,desc:'Analyse effects of human activity on local ecosystems'},
-    {code:'STC.8.3.a',g:8,desc:"Explain Newton's three laws of motion with examples"},
+    {code:'STC.8.3.a',g:8,desc:'Explain Newton\'s three laws of motion with examples'},
     {code:'STC.9.2.b',g:9,desc:'Evaluate renewable versus non-renewable energy sources'}
   ],
-  'Environmental Activities': [
+  'Environmental Activities':[
     {code:'ENV.1.1.a',g:1,desc:'Identify and name plants and animals in the school compound'},
     {code:'ENV.2.2.b',g:2,desc:'Describe daily weather changes and their effects on people'},
     {code:'ENV.3.3.a',g:3,desc:'Explain the importance of keeping our environment clean'},
     {code:'ENV.3.4.b',g:3,desc:'Describe uses of water and ways to conserve it'}
   ],
-  'Social Studies': [
+  'Social Studies':[
     {code:'SST.4.1.a',g:4,desc:'Describe the physical features of the local environment'},
-    {code:'SST.5.2.b',g:5,desc:"Identify Kenya's major economic activities and regions"},
+    {code:'SST.5.2.b',g:5,desc:'Identify Kenya\'s major economic activities and regions'},
     {code:'SST.6.3.a',g:6,desc:'Explain causes and effects of rural to urban migration'},
     {code:'SST.7.2.c',g:7,desc:'Analyse the structure and functions of county government'},
     {code:'SST.8.4.a',g:8,desc:'Evaluate the role of EAC in regional integration'},
     {code:'SST.9.3.b',g:9,desc:'Discuss challenges and opportunities of globalisation in Kenya'}
-  ,
-    {code:'SST.5.3.a',g:5,desc:'Explain the importance of national symbols and government institutions'}],
-  'Agriculture': [
+  ],
+  'Agriculture':[
     {code:'AGR.7.1.a',g:7,desc:'Identify and prepare different types of seedbeds'},
     {code:'AGR.7.3.b',g:7,desc:'Demonstrate correct planting of seeds and seedlings'},
     {code:'AGR.8.2.a',g:8,desc:'Explain soil types and their suitability for different crops'},
     {code:'AGR.9.4.b',g:9,desc:'Evaluate pest and disease control methods in crop farming'}
   ],
-    'Creative Arts': [
+  'Pre-Technical Studies':[
+    {code:'PTS.7.1.a',g:7,desc:'Identify and safely use basic hand tools in the workshop'},
+    {code:'PTS.7.3.b',g:7,desc:'Construct a simple wooden joint using correct technique'},
+    {code:'PTS.8.2.a',g:8,desc:'Draw and interpret simple engineering workshop drawings'},
+    {code:'PTS.9.4.c',g:9,desc:'Design and build a functional model structure from materials'}
+  ],
+  'Creative Arts':[
     {code:'CRA.1.1.a',g:1,desc:'Draw and colour simple objects from the local environment'},
     {code:'CRA.3.2.b',g:3,desc:'Create a collage using locally available natural materials'},
     {code:'CRA.5.3.a',g:5,desc:'Perform a simple musical piece using body percussion'},
     {code:'CRA.6.4.b',g:6,desc:'Act out a short drama script with expression and confidence'}
-  ,
-    {code:'CRA.2.1.a',g:2,desc:'Model simple objects using clay and locally available materials'},
-    {code:'CRA.4.2.a',g:4,desc:'Create a pattern design using colour mixing and printing techniques'}],
-  'Creative Arts & Sports': [
+  ],
+  'Creative Arts & Sports':[
     {code:'CAS.7.1.a',g:7,desc:'Create an original artwork inspired by Kenyan cultural heritage'},
     {code:'CAS.8.3.b',g:8,desc:'Compose and perform a short musical piece for an audience'},
     {code:'CAS.9.2.a',g:9,desc:'Demonstrate teamwork and sportsmanship in competitive games'}
   ],
-  'Physical Education': [
+  'Physical Education':[
     {code:'PHE.1.1.a',g:1,desc:'Perform basic locomotor movements: walk, run, jump and hop'},
     {code:'PHE.3.2.b',g:3,desc:'Play simple team games while following basic rules'},
     {code:'PHE.5.3.a',g:5,desc:'Demonstrate correct technique in athletics field events'}
-  ,
-    {code:'PHE.2.1.a',g:2,desc:'Perform catching, throwing and kicking skills with a ball'}],
-  'Physical & Health Education': [
+  ],
+  'Physical & Health Education':[
     {code:'PHE.4.1.a',g:4,desc:'Identify healthy foods and explain their nutritional value'},
     {code:'PHE.6.2.b',g:6,desc:'Demonstrate correct water safety and swimming technique'},
     {code:'PHE.7.3.a',g:7,desc:'Apply rules of volleyball correctly in a supervised game'},
     {code:'PHE.8.4.b',g:8,desc:'Discuss puberty changes and personal hygiene practices'}
-  ,
-    {code:'PHE.5.2.a',g:5,desc:'Demonstrate correct technique for long jump and short sprint events'}],
-  'Religious Education': [
+  ],
+  'Integrated Science':[
+    {code:'INT.7.1.a',g:7,desc:'Classify organisms into the five kingdoms with examples'},
+    {code:'INT.7.3.b',g:7,desc:'Explain the role of enzymes in chemical digestion'},
+    {code:'INT.8.2.a',g:8,desc:'Describe the structure and function of the cell membrane'},
+    {code:'INT.8.4.c',g:8,desc:'Analyse the impact of pollution on aquatic ecosystems'},
+    {code:'INT.9.1.b',g:9,desc:'Explain genetic inheritance using Mendel\'s laws'},
+    {code:'INT.9.3.a',g:9,desc:'Evaluate the applications of biotechnology in medicine and agriculture'}
+  ],
+  'Religious Education':[
     {code:'CRE.1.1.a',g:1,desc:'Recall the creation story and identify God as creator'},
     {code:'IRE.4.2.b',g:4,desc:'Identify the five pillars of Islam and their importance'},
     {code:'HRE.7.3.a',g:7,desc:'Explain Hindu teachings on dharma, karma and right action'}
-  ,
-    {code:'CRE.2.1.a',g:2,desc:'Identify ways of caring for God\'s creation in our environment'},
-    {code:'CRE.3.2.b',g:3,desc:'Describe the importance of prayer in daily life'},
-    {code:'IRE.5.3.a',g:5,desc:'Explain the significance of Ramadhan in Islamic practice'},
-    {code:'CRE.6.4.b',g:6,desc:'Discuss the importance of forgiveness and reconciliation'},
-    {code:'CRE.8.2.a',g:8,desc:'Analyse the role of faith and values in responsible decision-making'},
-    {code:'CRE.9.3.b',g:9,desc:'Evaluate the impact of Christian values on social justice issues'}],
-  'Integrated Science': [
-    {code:'ISC.7.1.a',g:7,desc:'Distinguish between elements, compounds and mixtures with examples'},
-    {code:'ISC.7.3.b',g:7,desc:'Explain cell structure and function in living organisms'},
-    {code:'ISC.7.5.a',g:7,desc:'Describe Newton\'s laws of motion and apply them to everyday situations'},
-    {code:'ISC.8.2.a',g:8,desc:'Describe chemical and physical changes with everyday examples'},
-    {code:'ISC.8.4.b',g:8,desc:'Explain reproduction in plants and animals'},
-    {code:'ISC.8.6.a',g:8,desc:'Investigate properties of waves: sound and light'},
-    {code:'ISC.9.1.a',g:9,desc:'Analyse the periodic table and properties of common elements'},
-    {code:'ISC.9.3.b',g:9,desc:'Explain the basic principles of genetics and heredity'},
-    {code:'ISC.9.5.a',g:9,desc:'Evaluate the impact of technology on health and environment'}
-  ],
-  'Pre-Technical Studies': [
-    {code:'PTS.7.1.a',g:7,desc:'Identify and safely use basic hand tools in the workshop'},
-    {code:'PTS.7.3.b',g:7,desc:'Construct a simple wooden joint using correct joinery technique'},
-    {code:'PTS.8.2.a',g:8,desc:'Draw and interpret simple engineering and workshop drawings'},
-    {code:'PTS.8.4.b',g:8,desc:'Demonstrate basic electrical installation skills safely'},
-    {code:'PTS.9.1.a',g:9,desc:'Apply principles of measurement and marking out in metalwork'},
-    {code:'PTS.9.4.c',g:9,desc:'Design and build a functional model structure from given materials'}
   ]
 };
 
-// ---- STATE ----
-var grade = 1;
-var weekOff = 0;
-var dragging = null;
-var custom = {};
-var openSubjects = {};
-var searchQ = '';
-var toastT;
+/* ─── STATE ─── */
+var grade = 1, activeSub = 'Mathematics', weekOff = 0, dragging = null, custom = {}, toastT;
 
-function sm(s){ return SMETA[s] || {c:'#1a4480',bg:'#eff6ff',bd:'#bfdbfe',d:'#2563eb'}; }
 function level(g){ return g<=3?'lower':g<=6?'upper':'junior'; }
 function subs(g){ return SLEVELS[level(g)]; }
-
-function planKey(){ return 'cbcp_g'+grade+'_w'+weekOff; }
+function sm(s){ return SMETA[s]||{c:'#1a3a5c',bg:'#e8f0fb',d:'#2558a0'}; }
+function planKey(){ return 'cbcp_v2_g'+grade+'_w'+weekOff; }
 function emptyPlan(){ var p={}; DAYS.forEach(function(d){p[d]=[];}); return p; }
-function loadPlan(){
-  try{ var v=localStorage.getItem(planKey()); return v?JSON.parse(v):emptyPlan(); }
-  catch(e){ return emptyPlan(); }
-}
+function loadPlan(){ try{ var v=localStorage.getItem(planKey()); return v?JSON.parse(v):emptyPlan(); }catch(e){ return emptyPlan(); } }
 function savePlan(p){
   localStorage.setItem(planKey(),JSON.stringify(p));
   var ts=new Date().toLocaleTimeString('en-KE',{hour:'2-digit',minute:'2-digit'});
-  var el=document.getElementById('lastsaved');
-  if(el) el.textContent='Saved '+ts;
+  var el=document.getElementById('lastsaved'); if(el) el.textContent='Saved '+ts;
 }
 function getPlan(){ return loadPlan(); }
 
 function monday(off){
-  var n=new Date(); var dw=n.getDay(); var d=(dw+6)%7;
-  var m=new Date(n); m.setDate(n.getDate()-d+off*7); m.setHours(0,0,0,0); return m;
+  var n=new Date(),dw=n.getDay(),d=(dw+6)%7,m=new Date(n);
+  m.setDate(n.getDate()-d+off*7); m.setHours(0,0,0,0); return m;
 }
 function fmtDate(d){ return d.toLocaleDateString('en-KE',{day:'numeric',month:'short',year:'numeric'}); }
 function fmtShort(d){ return d.toLocaleDateString('en-KE',{day:'numeric',month:'short'}); }
 
 function getComps(s){
-  var base=(COMPS[s]||[]).filter(function(c){return !c.g||c.g===grade;});
+  var q=(document.getElementById('csearch')||{}).value||'';
+  q=q.toLowerCase().trim();
+  var base=(COMPS[s]||[]).filter(function(c){return !c.g||c.g<=grade;});
   var cu=((custom[grade]||{})[s])||[];
-  return base.concat(cu).map(function(c){ return Object.assign({},c,{subject:s}); });
+  var all=base.concat(cu).map(function(c){ return Object.assign({},c,{subject:s}); });
+  if(!q) return all;
+  return all.filter(function(c){ return (c.code+' '+c.desc).toLowerCase().indexOf(q)>=0; });
 }
 
-function matchSearch(c){
-  if(!searchQ) return true;
-  var q=searchQ.toLowerCase();
-  return (c.code&&c.code.toLowerCase().indexOf(q)>=0)||(c.desc&&c.desc.toLowerCase().indexOf(q)>=0);
+/* ─── ONBOARDING ─── */
+function shouldShowOnboard(){
+  return !localStorage.getItem('cbc_ob_done');
 }
+function openOnboard(){
+  document.getElementById('ob-back').style.display='flex';
+}
+function closeOnboard(){
+  var el=document.getElementById('ob-back');
+  el.style.animation='obOut .2s ease forwards';
+  setTimeout(function(){ el.style.display='none'; el.style.animation=''; },200);
+  if(document.getElementById('ob-dont-show').checked){
+    localStorage.setItem('cbc_ob_done','1');
+  }
+}
+// Fade-out keyframe
+var obStyle=document.createElement('style');
+obStyle.textContent='@keyframes obOut{from{opacity:1}to{opacity:0}}';
+document.head.appendChild(obStyle);
 
-// ---- RENDER ----
+/* ─── RENDER ─── */
 function renderAll(){
-  renderGrades(); renderAccordion(); renderMeta();
+  renderGrades(); renderSubs(); renderCards(); renderMeta();
   renderStats(); renderGrid(); renderCov(); updateSubSelect();
 }
 
 function renderGrades(){
   document.getElementById('gpills').innerHTML=
     [1,2,3,4,5,6,7,8,9].map(function(g){
-      return '<button class="gp'+(g===grade?' on':'')+'" onclick="swGrade('+g+')">Gr '+g+'</button>';
+      var lv=g<=3?'L':g<=6?'U':'J';
+      return '<button class="gp'+(g===grade?' on':'')+'" onclick="swGrade('+g+')" title="Grade '+g+' ('+(g<=3?'Lower':g<=6?'Upper':'Junior')+' Primary)">Gr '+g+'</button>';
     }).join('');
 }
 
-function renderAccordion(){
+function renderSubs(){
   var ss=subs(grade);
-  var html='';
-  ss.forEach(function(s){
-    var m=sm(s);
-    var cs=getComps(s).filter(matchSearch);
-    var isOpen=!!openSubjects[s];
-    html+='<div class="acc-item">';
-    html+='<button class="acc-header'+(isOpen?' open':'')+'" onclick="toggleSubject(''+s+'')">';
-    html+='<span class="acc-dot" style="background:'+m.d+'"></span>';
-    html+='<span class="acc-name">'+s+'</span>';
-    html+='<span class="acc-cnt">'+cs.length+'</span>';
-    html+='<span class="acc-arrow">&#9660;</span>';
-    html+='</button>';
-    html+='<div class="acc-body'+(isOpen?' open':'')+'" id="accbody-'+s.replace(/[^a-z0-9]/gi,'_')+'">';
-    if(isOpen){
-      if(cs.length){
-        cs.forEach(function(c,i){
-          html+='<div class="cc" draggable="true" ondragstart="dstart(event,''+s+'','+i+')" ondragend="dend(event)">';
-          html+='<div class="cc-left">';
-          html+='<div class="cc-grip-icon"><span></span><span></span><span></span><span></span></div>';
-          html+='<span class="cc-dot-sm" style="background:'+m.d+'"></span>';
-          html+='</div>';
-          html+='<div class="cc-body">';
-          html+='<div class="cc-code" style="color:'+m.c+'">'+c.code+'</div>';
-          html+='<div class="cc-desc">'+c.desc+'</div>';
-          html+='</div>';
-          html+='<span class="cc-drag-hint">drag</span>';
-          html+='</div>';
-        });
-      } else {
-        html+='<div style="text-align:center;padding:20px 12px;color:var(--gray400);font-size:11px">No results for "'+searchQ+'"</div>';
-      }
-    }
-    html+='</div></div>';
-  });
-  document.getElementById('accordion').innerHTML=html;
+  if(ss.indexOf(activeSub)<0) activeSub=ss[0];
+  document.getElementById('sjtabs').innerHTML=ss.map(function(s){
+    var m=sm(s); var cnt=getComps(s).length;
+    return '<button class="sj-btn'+(s===activeSub?' on':'')+'" onclick="swSub(\''+s+'\')" title="'+s+'">'
+      +'<span class="sj-dot" style="background:'+m.d+'"></span>'
+      +'<span class="sj-name">'+s+'</span>'
+      +'<span class="sj-cnt">'+cnt+'</span></button>';
+  }).join('');
+}
+
+function renderCards(){
+  var cs=getComps(activeSub); var m=sm(activeSub);
+  if(!cs.length){
+    document.getElementById('ccards').innerHTML='<div class="no-cards">No competencies found.<br>Try a different search or add one below.</div>';
+    return;
+  }
+  document.getElementById('ccards').innerHTML=cs.map(function(c,i){
+    return '<div class="cc" draggable="true" ondragstart="dstart(event,\''+activeSub+'\','+i+')" ondragend="dend(event)">'
+      +'<div class="cc-color" style="background:'+m.d+'"></div>'
+      +'<div class="cc-body">'
+        +'<div class="cc-code" style="color:'+m.c+'">'+c.code+'</div>'
+        +'<div class="cc-desc">'+c.desc+'</div>'
+      +'</div>'
+      +'<span class="cc-grip">⋮</span></div>';
+  }).join('');
 }
 
 function renderMeta(){
-  var mon=monday(weekOff);
-  var fri=new Date(mon); fri.setDate(mon.getDate()+4);
+  var mon=monday(weekOff), fri=new Date(mon); fri.setDate(mon.getDate()+4);
   document.getElementById('wdate').textContent=fmtDate(mon);
-  var lv=level(grade);
-  var lvn=lv==='lower'?'Lower Primary':lv==='upper'?'Upper Primary':'Junior Secondary';
-  document.getElementById('lvbadge').textContent='Gr '+grade+' - '+lvn;
+  var lv=level(grade), lvn=lv==='lower'?'Lower Primary':lv==='upper'?'Upper Primary':'Junior Secondary';
+  document.getElementById('wsub').innerHTML='<span class="badge b-grade">Grade '+grade+'</span>&nbsp;'+lvn+'&nbsp;·&nbsp;'+fmtDate(mon)+'–'+fmtDate(fri);
   var m=mon.getMonth()+1;
   document.getElementById('termbadge').textContent=m<=3?'Term 1':m<=7?'Term 2':'Term 3';
-  var jan4=new Date(Date.UTC(mon.getFullYear(),0,4));
-  var wn=Math.ceil((((mon-jan4)/86400000)+jan4.getUTCDay()+1)/7);
-  document.getElementById('wkbadge').textContent='Week '+Math.max(1,wn);
+  var d=new Date(Date.UTC(mon.getFullYear(),mon.getMonth(),mon.getDate()));
+  var y=new Date(Date.UTC(d.getUTCFullYear(),0,4));
+  var wn=Math.ceil((((d-y)/86400000)+y.getUTCDay()+1)/7);
+  document.getElementById('wkbadge').textContent='Week '+wn;
 }
 
 function renderStats(){
   var plan=getPlan();
   document.getElementById('stats').innerHTML=DAYS.map(function(day){
-    var its=plan[day]||[];
+    var its=plan[day]||[], n=its.length;
+    var col=n>0?'var(--leaf)':'var(--ink3)';
     var ss=[]; its.forEach(function(c){if(ss.indexOf(c.subject)<0)ss.push(c.subject);});
-    var col=its.length>0?'var(--green)':'var(--gray400)';
     var dots=ss.slice(0,4).map(function(s){
-      return '<span class="sc-dot" style="background:'+sm(s).d+'"></span>';
+      return '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:'+sm(s).d+';" title="'+s+'"></span>';
     }).join('');
-    return '<div class="scard">'
-      +'<div class="sc-day">'+day.substring(0,3)+'</div>'
-      +'<div class="sc-n" style="color:'+col+'">'+its.length+'</div>'
-      +'<div class="sc-s">'+dots+'</div>'
-      +'</div>';
+    return '<div class="scard"><div class="sc-day">'+day.slice(0,3)+'</div>'
+      +'<div class="sc-n" style="color:'+col+'">'+n+'</div>'
+      +'<div class="sc-dots">'+dots+'</div>'
+      +'<div class="sc-label" style="font-size:10px;color:var(--ink3);">'+(ss.length?ss.length+' subj':'No lessons')+'</div></div>';
   }).join('');
 }
 
 function renderGrid(){
-  var plan=getPlan(); var mon=monday(weekOff);
-  var dayColors=['#2a5e2a','#1a4480','#7c5200','#0f5850','#4c1d95'];
+  var plan=getPlan(), mon=monday(weekOff);
   document.getElementById('pgrid').innerHTML=DAYS.map(function(day,di){
     var d=new Date(mon); d.setDate(mon.getDate()+di);
     var its=plan[day]||[];
-    var bc=dayColors[di];
+    var isToday=d.toDateString()===new Date().toDateString();
+    var accentCol=isToday?'var(--leaf)':di===4?'var(--sky)':'var(--border2)';
     var chips=its.map(function(c,i){
       var m=sm(c.subject);
-      return '<div class="aitem" style="background:'+m.bg+';border-color:'+m.bd+'">'
+      return '<div class="aitem" style="background:'+m.bg+'">'
+        +'<div class="aitem-bar" style="background:'+m.d+'"></div>'
         +'<div class="aitem-body"><span class="acode" style="color:'+m.c+'">'+c.code+'</span>'
-        +'<span class="adesc">'+c.desc+'</span></div>'
-        +'<span class="arm" onclick="rmItem(''+day+'','+i+')" title="Remove">&times;</span></div>';
+          +'<span class="adesc">'+c.desc+'</span></div>'
+        +'<span class="arm" onclick="rmItem(\''+day+'\','+i+')" title="Remove">×</span></div>';
     }).join('');
-    var emp=its.length===0?'<div class="emp"><div class="emp-icon">&#128203;</div>'
-      +'<div class="emp-txt">Open a subject<br>then drag a card here</div></div>':'';
+    var emp=its.length===0?'<div class="empty-state"><div class="empty-icon">📋</div><div class="empty-text">Drag a competency<br>from the sidebar here</div></div>':'';
     return '<div class="dcol">'
-      +'<div class="dhead" style="border-left:3px solid '+bc+'">'
-        +'<span class="dname" style="color:'+bc+'">'+day+'</span>'
+      +'<div class="dhead" style="border-left:3px solid '+accentCol+'">'
+        +'<span class="dname" style="color:'+(isToday?'var(--leaf)':'var(--ink2)')+'">'
+          +(isToday?'<span style="font-size:9px;background:var(--leaf3);color:var(--leaf);padding:1px 5px;border-radius:4px;margin-right:4px;">TODAY</span>':'')
+          +day+'</span>'
         +'<span class="ddate">'+fmtShort(d)+'</span></div>'
-      +'<div class="dzone" data-day="'+day
-        +'" ondragover="dov(event)" ondragleave="dlv(event)" ondrop="dp(event,''+day+'')">'
+      +'<div class="dzone" data-day="'+day+'" ondragover="dov(event)" ondragleave="dlv(event)" ondrop="dp(event,\''+day+'\')">'
         +emp+chips+'</div></div>';
   }).join('');
 }
 
 function renderCov(){
-  var plan=getPlan(); var ss=subs(grade);
-  var cnt={}; ss.forEach(function(s){cnt[s]=0;});
+  var plan=getPlan(), ss=subs(grade), cnt={};
+  ss.forEach(function(s){cnt[s]=0;});
   DAYS.forEach(function(d){(plan[d]||[]).forEach(function(c){if(cnt[c.subject]!==undefined)cnt[c.subject]++;});});
-  var total=0; ss.forEach(function(s){total+=cnt[s];}); if(!total)total=1;
+  var total=0; ss.forEach(function(s){total+=cnt[s];});
   var has=ss.filter(function(s){return cnt[s]>0;});
-  document.getElementById('covgrid').innerHTML=has.length?has.map(function(s){
-    var m=sm(s); var pct=Math.round(cnt[s]/total*100);
-    return '<div class="ci"><div class="ci-lbl"><span class="ci-nm">'+s+'</span>'
-      +'<span class="ci-n" style="color:'+m.c+'">'+cnt[s]+' lesson'+(cnt[s]!==1?'s':'')+'</span></div>'
-      +'<div class="ci-track"><div class="ci-fill" style="width:'+pct+'%;background:'+m.d+'"></div></div></div>';
-  }).join(''):'<div class="cov-empty">No lessons planned yet. Open a subject and drag competency cards onto the days above.</div>';
+  document.getElementById('cov-total').textContent=total?total+' lesson'+(total!==1?'s':'')+' planned':'';
+  document.getElementById('covgrid').innerHTML=has.length
+    ?has.map(function(s){
+        var m=sm(s), pct=total?Math.round(cnt[s]/total*100):0;
+        return '<div class="ci"><div class="ci-lbl"><span class="ci-name">'+s+'</span>'
+          +'<span class="ci-n" style="color:'+m.c+'">'+cnt[s]+' lesson'+(cnt[s]!==1?'s':'')+'</span></div>'
+          +'<div class="ci-track"><div class="ci-fill" style="width:'+pct+'%;background:'+m.d+'"></div></div></div>';
+      }).join('')
+    :'<div class="cov-empty">No lessons planned yet — drag competencies onto any day to begin.</div>';
 }
 
 function updateSubSelect(){
-  var ss=subs(grade); var sel=document.getElementById('nsubj');
+  var ss=subs(grade), sel=document.getElementById('nsubj');
   sel.innerHTML=ss.map(function(s){return '<option value="'+s+'">'+s+'</option>';}).join('');
+  sel.value=activeSub;
 }
 
-// ---- INTERACTIONS ----
-function swGrade(g){
-  grade=g;
-  openSubjects={};
-  renderAll();
-  toast('Grade '+g+' loaded');
-}
-
-function toggleSubject(s){
-  openSubjects[s]=!openSubjects[s];
-  renderAccordion();
-}
-
-function filterCards(){
-  searchQ=document.getElementById('sbsearch').value.trim();
-  // auto-open subjects that have matches
-  if(searchQ){
-    subs(grade).forEach(function(s){
-      var cs=getComps(s).filter(matchSearch);
-      if(cs.length>0) openSubjects[s]=true;
-    });
-  }
-  renderAccordion();
-}
-
-function toggleAddForm(){
-  var fields=document.getElementById('addfields');
-  var toggle=document.getElementById('addtoggle');
-  var isOpen=fields.classList.contains('open');
-  if(isOpen){ fields.classList.remove('open'); toggle.classList.remove('open'); }
-  else { fields.classList.add('open'); toggle.classList.add('open'); }
-}
+/* ─── INTERACTIONS ─── */
+function swGrade(g){ grade=g; activeSub=subs(g)[0]; renderAll(); }
+function swSub(s){ activeSub=s; renderSubs(); renderCards(); }
 
 function dstart(e,sub,idx){
-  var cs=getComps(sub).filter(matchSearch);
-  dragging=cs[idx];
+  var cs=getComps(sub); dragging=cs[idx];
   e.dataTransfer.effectAllowed='copy';
-  try{e.dataTransfer.setData('text/plain',JSON.stringify(dragging));}catch(x){}
-  e.currentTarget.classList.add('dragging');
+  try{ e.dataTransfer.setData('text/plain',JSON.stringify(dragging)); }catch(x){}
+  e.currentTarget.style.opacity='.45';
 }
-function dend(e){ e.currentTarget.classList.remove('dragging'); dragging=null; }
+function dend(e){ e.currentTarget.style.opacity=''; dragging=null; }
 function dov(e){ e.preventDefault(); e.currentTarget.classList.add('over'); }
 function dlv(e){ e.currentTarget.classList.remove('over'); }
 function dp(e,day){
   e.preventDefault(); e.currentTarget.classList.remove('over');
   var comp=dragging;
-  if(!comp){ try{comp=JSON.parse(e.dataTransfer.getData('text/plain'));}catch(x){} }
+  if(!comp){ try{ comp=JSON.parse(e.dataTransfer.getData('text/plain')); }catch(x){} }
   if(!comp) return;
   var plan=getPlan();
   if(!(plan[day]||[]).some(function(c){return c.code===comp.code;})){
     if(!plan[day]) plan[day]=[];
-    plan[day].push(comp); savePlan(plan);
-    renderStats(); renderGrid(); renderCov();
-    toast(comp.code+' added to '+day);
+    plan[day].push(comp);
+    savePlan(plan);
+    renderStats(); renderGrid(); renderCov(); renderSubs();
+    toast('Added to '+day);
   } else {
     toast('Already on '+day);
   }
   dragging=null;
 }
-
 function rmItem(day,idx){
   var plan=getPlan(); plan[day].splice(idx,1);
-  savePlan(plan); renderStats(); renderGrid(); renderCov();
+  savePlan(plan); renderStats(); renderGrid(); renderCov(); renderSubs();
 }
-
 function prevWeek(){ weekOff--; renderAll(); }
 function nextWeek(){ weekOff++; renderAll(); }
 function goToday(){ weekOff=0; renderAll(); }
-
 function clearWeek(){
   document.getElementById('clrg').textContent=grade;
   document.getElementById('clrmodal').classList.add('open');
 }
-function closeMod(id){ document.getElementById(id).classList.remove('open'); }
-function confirmClear(){
-  savePlan(emptyPlan()); closeMod('clrmodal'); renderAll(); toast('Week cleared');
-}
+function closeMod(){ document.getElementById('clrmodal').classList.remove('open'); }
+function confirmClear(){ savePlan(emptyPlan()); closeMod(); renderAll(); toast('Week cleared'); }
 
 function addComp(){
   var code=document.getElementById('ncode').value.trim();
@@ -852,43 +777,45 @@ function addComp(){
   if(!desc){ toast('Please enter a description'); return; }
   if(!custom[grade]) custom[grade]={};
   if(!custom[grade][subj]) custom[grade][subj]=[];
-  custom[grade][subj].push({code:code||'CUST.001',desc:desc});
-  openSubjects[subj]=true;
+  custom[grade][subj].push({code:code||'CUST',desc:desc});
+  activeSub=subj;
   document.getElementById('ncode').value='';
   document.getElementById('ndesc').value='';
-  toast('Competency added to '+subj);
-  renderAccordion();
+  toast('Added to '+subj);
+  renderSubs(); renderCards();
 }
 
 function printPlan(){
-  var plan=getPlan(); var mon=monday(weekOff);
-  var fmt2=function(d){return d.toLocaleDateString('en-KE',{weekday:'long',year:'numeric',month:'long',day:'numeric'});};
+  var plan=getPlan(), mon=monday(weekOff);
+  var fmt2=function(d){ return d.toLocaleDateString('en-KE',{weekday:'long',year:'numeric',month:'long',day:'numeric'}); };
+  var lv=level(grade), lvn=lv==='lower'?'Lower Primary':lv==='upper'?'Upper Primary':'Junior Secondary';
   var rows=DAYS.map(function(day,di){
     var d=new Date(mon); d.setDate(mon.getDate()+di);
     var its=plan[day]||[];
-    return '<tr><td style="font-weight:700;padding:10px 14px;background:#f0f4f0;border:1px solid #ddd;vertical-align:top;white-space:nowrap">'
+    return '<tr><td style="font-weight:700;padding:10px 14px;background:#f4f8f4;border:1px solid #dde8dd;vertical-align:top;white-space:nowrap;font-size:12px">'
       +day+'<br><small style="font-weight:400;color:#666">'+fmtShort(d)+'</small></td>'
-      +'<td style="padding:10px 14px;border:1px solid #ddd;vertical-align:top">'
+      +'<td style="padding:10px 14px;border:1px solid #dde8dd;vertical-align:top">'
       +(its.length?its.map(function(c){
         var m=sm(c.subject);
-        return '<div style="margin-bottom:8px;padding:6px 8px;border-left:3px solid '+m.d+';background:#f9f9f9;border-radius:0 4px 4px 0">'
-          +'<strong style="font-size:11px;color:'+m.c+'">'+c.code+'</strong>'
-          +' <span style="font-size:11px;color:#666">['+c.subject+']</span><br>'
-          +'<span style="font-size:13px">'+c.desc+'</span></div>';
-      }).join(''):'<span style="color:#999;font-size:13px;font-style:italic">No lessons planned</span>')
+        return '<div style="margin-bottom:8px;padding:7px 10px;border-left:3px solid '+m.d+';background:#f9fcf9;border-radius:0 5px 5px 0">'
+          +'<strong style="font-size:10px;color:'+m.c+'">'+c.code+'</strong>'
+          +' <span style="font-size:10px;color:#666">['+c.subject+']</span><br>'
+          +'<span style="font-size:12.5px;color:#222">'+c.desc+'</span></div>';
+      }).join(''):'<span style="color:#999;font-size:12px;font-style:italic">No lessons planned</span>')
       +'</td></tr>';
   }).join('');
   var w=window.open('','_blank');
-  if(!w){toast('Please allow pop-ups to export PDF');return;}
-  w.document.write('<!DOCTYPE html><html><head><title>CBC Lesson Plan Grade '+grade+'</title>'
-    +'<style>body{font-family:Segoe UI,sans-serif;padding:32px;color:#111;max-width:900px;margin:0 auto}'
-    +'h1{font-size:20px;margin-bottom:4px;color:#2a5e2a}.sub{font-size:12px;color:#666;margin-bottom:20px}'
-    +'table{border-collapse:collapse;width:100%}@media print{body{padding:0}@page{margin:1.5cm}}'
+  w.document.write('<!DOCTYPE html><html><head><title>CBC Lesson Plan</title>'
+    +'<style>body{font-family:"Segoe UI",sans-serif;padding:36px;color:#0f1a0e;max-width:860px;margin:0 auto}'
+    +'h1{font-size:20px;margin-bottom:2px;color:#1e5c1a}h1 span{font-weight:300;font-size:15px;color:#4a5e47}'
+    +'.meta{font-size:11px;color:#4a5e47;margin-bottom:22px;padding-bottom:10px;border-bottom:2px solid #d4edda}'
+    +'table{border-collapse:collapse;width:100%}'
+    +'@media print{body{padding:0}@page{margin:1.5cm}}'
     +'</style></head><body>'
-    +'<h1>CBC Weekly Lesson Plan &mdash; Grade '+grade+'</h1>'
-    +'<div class="sub">Week of '+fmt2(mon)+' &middot; Printed: '+fmt2(new Date())+'</div>'
+    +'<h1>CBC Weekly Lesson Plan <span>— Grade '+grade+' · '+lvn+'</span></h1>'
+    +'<div class="meta">Week of '+fmt2(mon)+' &nbsp;·&nbsp; Printed: '+fmt2(new Date())+'</div>'
     +'<table>'+rows+'</table>'
-    +'<script>setTimeout(function(){window.print();},300);<\/script>'
+    +'<script>setTimeout(function(){window.print();},350);<\/script>'
     +'</body></html>');
 }
 
@@ -896,30 +823,19 @@ function toast(msg){
   var el=document.getElementById('toast');
   el.textContent=msg; el.classList.add('on');
   clearTimeout(toastT);
-  toastT=setTimeout(function(){el.classList.remove('on');},2400);
+  toastT=setTimeout(function(){ el.classList.remove('on'); },2400);
 }
 
-// ---- GUIDE ----
-function openGuide(){ document.getElementById('guide-modal').classList.add('open'); }
-function closeGuide(){
-  if(document.getElementById('dontshow').checked){
-    localStorage.setItem('cbcp_guide_seen','1');
-  }
-  document.getElementById('guide-modal').classList.remove('open');
+/* ─── INIT ─── */
+if(shouldShowOnboard()){ /* already shown */ } else {
+  document.getElementById('ob-back').style.display='none';
 }
 
-// Close modals on backdrop click
-document.addEventListener('click',function(e){
-  if(e.target.id==='clrmodal') closeMod('clrmodal');
-  if(e.target.id==='guide-modal') closeGuide();
-});
-
-// ---- INIT ----
+// Restore last saved time if plan exists
 (function(){
-  var seen=localStorage.getItem('cbcp_guide_seen');
-  if(!seen) openGuide();
-  var v=localStorage.getItem(planKey());
-  if(v){ var el=document.getElementById('lastsaved'); if(el) el.textContent='Plan loaded'; }
+  if(localStorage.getItem(planKey())){
+    var el=document.getElementById('lastsaved'); if(el) el.textContent='Plan loaded';
+  }
 })();
 
 renderAll();
