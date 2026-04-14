@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CBC Lesson Planner &mdash; Kenya Grades 1&ndash;9</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#128218;</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --green:#2a5e2a;--green2:#3a8c3a;--green3:#eaf4ea;--green4:#c5e1c5;--greenlt:#f2faf2;
+  --amber:#7c5200;--amber3:#fffbeb;--amber4:#fde68a;
+  --blue:#1a4480;--blue2:#2563eb;--blue3:#eff6ff;--blue4:#bfdbfe;
+  --teal:#0f5850;--teal3:#f0fdfa;
+  --red:#991b1b;
+  --gray50:#fafaf9;--gray100:#f5f5f4;--gray200:#e7e5e4;
+  --gray300:#d4d2cf;--gray400:#a8a29e;--gray600:#57534e;--gray900:#1c1917;
+  --pagebg:#eef0eb;
+  --sw:320px;--hh:60px;--r:10px;--rl:14px;
+  --shadow:0 1px 3px rgba(0,0,0,.08),0 4px 12px rgba(0,0,0,.06);
+}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--pagebg);color:var(--gray900);min-height:100vh;font-size:14px;line-height:1.5}
+
+/* ---- TOPBAR ---- */
+.topbar{position:fixed;top:0;left:0;right:0;z-index:200;height:var(--hh);background:var(--green);display:flex;align-items:center;gap:10px;padding:0 18px;box-shadow:0 2px 10px rgba(0,0,0,.2)}
+.logo{font-family:'DM Serif Display',serif;font-size:19px;color:#fff;display:flex;align-items:center;gap:9px;flex-shrink:0;white-space:nowrap}
+.logo-sub{font-size:9px;font-weight:400;opacity:.65;letter-spacing:.5px;display:block;font-family:'DM Sans',sans-serif}
+.tdiv{width:1px;height:24px;background:rgba(255,255,255,.2);flex-shrink:0}
+.glabel{font-size:9px;color:rgba(255,255,255,.55);font-weight:700;letter-spacing:.9px;flex-shrink:0;text-transform:uppercase}
+.gpills{display:flex;gap:3px;flex-wrap:nowrap;overflow-x:auto;flex:1;min-width:0;scrollbar-width:none}
+.gpills::-webkit-scrollbar{display:none}
+.gp{padding:4px 10px;border-radius:20px;font-size:11px;font-weight:700;border:1.5px solid rgba(255,255,255,.22);background:transparent;color:rgba(255,255,255,.72);cursor:pointer;transition:all .14s;font-family:'DM Sans',sans-serif;flex-shrink:0;white-space:nowrap}
+.gp:hover{background:rgba(255,255,255,.14);color:#fff}
+.gp.on{background:#fff;color:var(--green);border-color:#fff}
+.tact{display:flex;gap:6px;margin-left:4px;flex-shrink:0}
+.tbtn{padding:5px 12px;border-radius:7px;font-size:11px;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all .14s;white-space:nowrap}
+.tbtn.ghost{border:1.5px solid rgba(255,255,255,.32);color:#fff;background:transparent}
+.tbtn.ghost:hover{background:rgba(255,255,255,.14)}
+.tbtn.solid{border:none;color:var(--green);background:#fff;font-weight:700}
+.tbtn.solid:hover{background:#e8f4e8}
+.help-btn{width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.18);border:1.5px solid rgba(255,255,255,.35);color:#fff;font-size:14px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:'DM Sans',sans-serif;transition:background .14s}
+.help-btn:hover{background:rgba(255,255,255,.3)}
+
+/* ---- LAYOUT ---- */
+.layout{display:grid;grid-template-columns:var(--sw) 1fr;margin-top:var(--hh);min-height:calc(100vh - var(--hh))}
+
+/* ---- SIDEBAR ---- */
+.sidebar{background:#fff;border-right:1px solid var(--gray200);position:sticky;top:var(--hh);height:calc(100vh - var(--hh));display:flex;flex-direction:column;overflow:hidden}
+.sb-top{padding:12px 14px 8px;border-bottom:1px solid var(--gray200);flex-shrink:0}
+.sb-top-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.sb-heading{font-size:11px;font-weight:700;color:var(--gray600);letter-spacing:.4px}
+.sb-hint{font-size:10px;color:var(--gray400)}
+.sb-search{width:100%;padding:7px 10px 7px 32px;border:1.5px solid var(--gray200);border-radius:8px;font-size:12px;font-family:'DM Sans',sans-serif;color:var(--gray900);background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23a8a29e' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.35-4.35'/%3E%3C/svg%3E") no-repeat 9px center;outline:none;transition:border .13s}
+.sb-search:focus{border-color:var(--green2)}
+
+/* ---- ACCORDION ---- */
+.accordion{flex:1;overflow-y:auto;overflow-x:hidden}
+.accordion::-webkit-scrollbar{width:4px}
+.accordion::-webkit-scrollbar-thumb{background:var(--gray200);border-radius:2px}
+.acc-item{border-bottom:1px solid var(--gray200)}
+.acc-header{display:flex;align-items:center;gap:10px;padding:10px 14px;cursor:pointer;background:#fff;transition:background .12s;user-select:none;border:none;width:100%;text-align:left;font-family:'DM Sans',sans-serif}
+.acc-header:hover{background:var(--gray50)}
+.acc-header.open{background:var(--greenlt)}
+.acc-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.acc-name{font-size:12px;font-weight:600;color:var(--gray900);flex:1}
+.acc-header.open .acc-name{color:var(--green)}
+.acc-cnt{font-size:10px;font-weight:700;padding:1px 7px;border-radius:20px;background:var(--gray100);color:var(--gray400)}
+.acc-header.open .acc-cnt{background:var(--green4);color:var(--green)}
+.acc-arrow{font-size:10px;color:var(--gray400);transition:transform .2s;flex-shrink:0}
+.acc-header.open .acc-arrow{transform:rotate(180deg);color:var(--green)}
+.acc-body{display:none;padding:8px;background:var(--gray50);flex-direction:column;gap:6px}
+.acc-body.open{display:flex}
+
+/* ---- DRAG CARDS ---- */
+.cc{
+  padding:11px 14px 11px 12px;border-radius:9px;
+  border:2px solid var(--gray200);background:#fff;
+  cursor:grab;transition:all .14s;user-select:none;
+  display:flex;align-items:flex-start;gap:10px;
+  position:relative;
+}
+.cc:hover{border-color:var(--green2);box-shadow:0 2px 8px rgba(42,94,42,.12);transform:translateY(-1px)}
+.cc:active{cursor:grabbing;opacity:.65;transform:scale(.97)}
+.cc.dragging{opacity:.4;border-style:dashed}
+.cc-left{display:flex;flex-direction:column;align-items:center;gap:4px;flex-shrink:0;padding-top:1px}
+.cc-grip-icon{width:16px;height:16px;display:grid;grid-template-columns:1fr 1fr;gap:3px;opacity:.35}
+.cc-grip-icon span{width:4px;height:4px;border-radius:50%;background:var(--gray600);display:block}
+.cc-dot-sm{width:8px;height:8px;border-radius:50%}
+.cc-body{flex:1;min-width:0}
+.cc-code{font-size:10px;font-weight:700;letter-spacing:.5px;margin-bottom:3px}
+.cc-desc{font-size:12px;color:var(--gray600);line-height:1.45;word-break:break-word}
+.cc-drag-hint{position:absolute;right:8px;top:8px;font-size:10px;font-weight:700;letter-spacing:.3px;opacity:0;background:var(--green3);color:var(--green);padding:2px 6px;border-radius:4px;transition:opacity .15s;pointer-events:none}
+.cc:hover .cc-drag-hint{opacity:1}
+
+/* ---- ADD FORM ---- */
+.addform{padding:12px 14px;border-top:1.5px solid var(--gray200);background:#fff;flex-shrink:0}
+.addform-toggle{display:flex;align-items:center;justify-content:space-between;cursor:pointer;font-size:11px;font-weight:700;color:var(--gray600);letter-spacing:.3px;padding:2px 0 8px;user-select:none}
+.addform-toggle span{font-size:14px;transition:transform .2s;color:var(--green)}
+.addform-toggle.open span{transform:rotate(45deg)}
+.addform-fields{display:none;flex-direction:column;gap:7px}
+.addform-fields.open{display:flex}
+.addform input,.addform textarea,.addform select{width:100%;padding:7px 10px;border:1.5px solid var(--gray200);border-radius:7px;font-size:12px;font-family:'DM Sans',sans-serif;color:var(--gray900);background:#fff;outline:none;transition:border .12s;resize:none}
+.addform input:focus,.addform textarea:focus,.addform select:focus{border-color:var(--green2)}
+.addform textarea{min-height:56px}
+.addbtn{padding:9px;border-radius:8px;font-size:12px;font-weight:700;background:var(--green);color:#fff;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .13s;width:100%}
+.addbtn:hover{background:var(--green2)}
+
+/* ---- MAIN ---- */
+.main{padding:20px;display:flex;flex-direction:column;gap:14px;min-width:0}
+
+/* auto save bar */
+.abar{display:flex;align-items:center;gap:8px;padding:7px 14px;background:var(--green3);border-radius:9px;border:1px solid var(--green4);font-size:11px;color:var(--green);font-weight:500}
+.abar-dot{width:7px;height:7px;border-radius:50%;background:var(--green2);animation:pulse 2.2s infinite;flex-shrink:0}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.abar-saved{margin-left:auto;font-size:10px;opacity:.65}
+
+/* week meta */
+.wmeta{display:flex;align-items:flex-start;gap:14px;flex-wrap:wrap}
+.whead{font-family:'DM Serif Display',serif;font-size:23px;color:var(--gray900);line-height:1.1}
+.whead em{font-style:italic;color:var(--green)}
+.wbadges{display:flex;gap:6px;margin-top:4px;flex-wrap:wrap}
+.badge{padding:3px 10px;border-radius:20px;font-size:10px;font-weight:700;letter-spacing:.4px}
+.badge.amber{background:var(--amber3);color:var(--amber);border:1px solid var(--amber4)}
+.badge.blue{background:var(--blue3);color:var(--blue);border:1px solid var(--blue4)}
+.badge.green{background:var(--green3);color:var(--green);border:1px solid var(--green4)}
+.wacts{display:flex;gap:6px;margin-left:auto;flex-wrap:wrap;align-items:center}
+.sbtn{padding:6px 13px;border-radius:7px;font-size:11px;font-weight:600;border:1.5px solid var(--gray200);background:#fff;color:var(--gray600);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .13s}
+.sbtn:hover{border-color:var(--gray400);color:var(--gray900)}
+.sbtn.g{background:var(--green);color:#fff;border-color:var(--green)}
+.sbtn.g:hover{background:var(--green2)}
+
+/* stats */
+.stats{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.scard{background:#fff;border-radius:var(--r);padding:11px 13px;border:1px solid var(--gray200)}
+.sc-day{font-size:9px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:var(--gray400);margin-bottom:2px}
+.sc-n{font-size:22px;font-weight:700;line-height:1}
+.sc-s{display:flex;gap:3px;margin-top:4px;flex-wrap:wrap}
+.sc-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+
+/* planner grid */
+.pgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+.dcol{background:#fff;border-radius:var(--rl);border:1.5px solid var(--gray200);overflow:hidden;display:flex;flex-direction:column;min-height:320px;box-shadow:var(--shadow)}
+.dhead{padding:10px 12px;display:flex;align-items:center;justify-content:space-between;border-bottom:1.5px solid var(--gray200)}
+.dname{font-size:11px;font-weight:800;letter-spacing:.7px;text-transform:uppercase}
+.ddate{font-size:10px;color:var(--gray400)}
+.dzone{flex:1;padding:8px;display:flex;flex-direction:column;gap:5px;min-height:220px;transition:background .13s;position:relative}
+.dzone.over{background:var(--green3);border-radius:8px}
+.dzone.over::after{content:'Drop here';position:absolute;inset:6px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:var(--green);border:2px dashed var(--green2);border-radius:8px;pointer-events:none;background:rgba(234,244,234,.8)}
+.emp{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;pointer-events:none;padding:16px}
+.emp-icon{font-size:26px;opacity:.18}
+.emp-txt{font-size:10px;color:var(--gray400);text-align:center;line-height:1.6;font-weight:500}
+.aitem{border-radius:8px;padding:8px 10px;font-size:11px;display:flex;gap:6px;align-items:flex-start;animation:fi .18s ease;line-height:1.4;border:1px solid transparent}
+@keyframes fi{from{opacity:0;transform:translateY(-3px)}to{opacity:1;transform:translateY(0)}}
+.aitem-body{flex:1;min-width:0}
+.acode{font-weight:800;font-size:9px;letter-spacing:.5px;display:block;margin-bottom:2px}
+.adesc{word-break:break-word}
+.arm{cursor:pointer;font-size:16px;line-height:1;flex-shrink:0;padding:0 2px;opacity:.3;transition:opacity .12s;font-weight:700}
+.arm:hover{opacity:1;color:var(--red)}
+
+/* coverage */
+.cov{background:#fff;border-radius:var(--rl);border:1px solid var(--gray200);padding:18px 20px;box-shadow:var(--shadow)}
+.cov-h{font-family:'DM Serif Display',serif;font-size:17px;margin-bottom:14px;color:var(--gray900)}
+.cov-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px}
+.ci{display:flex;flex-direction:column;gap:3px}
+.ci-lbl{display:flex;justify-content:space-between;font-size:11px}
+.ci-nm{font-weight:500;color:var(--gray600)}
+.ci-n{font-weight:700;font-size:10px}
+.ci-track{height:5px;background:var(--gray200);border-radius:3px;overflow:hidden}
+.ci-fill{height:100%;border-radius:3px;transition:width .4s ease}
+.cov-empty{font-size:12px;color:var(--gray400);font-style:italic;text-align:center;padding:16px}
+
+/* toast */
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(60px);background:var(--gray900);color:#fff;padding:8px 18px;border-radius:8px;font-size:12px;font-weight:600;z-index:999;transition:transform .2s ease;pointer-events:none;white-space:nowrap}
+.toast.on{transform:translateX(-50%) translateY(0)}
+
+/* modal shared */
+.mback{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:300;display:none;align-items:center;justify-content:center;padding:16px}
+.mback.open{display:flex}
+.modal{background:#fff;border-radius:var(--rl);width:90%;box-shadow:0 8px 40px rgba(0,0,0,.18);animation:mi .18s ease;overflow:hidden}
+@keyframes mi{from{transform:scale(.94);opacity:0}to{transform:scale(1);opacity:1}}
+.modal-head{padding:20px 24px 16px;border-bottom:1px solid var(--gray200)}
+.modal-head h2{font-family:'DM Serif Display',serif;font-size:20px;margin-bottom:4px}
+.modal-head p{font-size:12px;color:var(--gray600);line-height:1.6}
+.modal-body{padding:20px 24px}
+.modal-foot{padding:14px 24px;border-top:1px solid var(--gray200);display:flex;gap:8px;justify-content:flex-end}
+.msbtn{padding:7px 16px;border-radius:7px;font-size:12px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .13s}
+.msbtn.cancel{border:1.5px solid var(--gray200);background:#fff;color:var(--gray600)}
+.msbtn.cancel:hover{border-color:var(--gray400)}
+.msbtn.danger{border:none;background:var(--red);color:#fff}
+.msbtn.danger:hover{opacity:.88}
+
+/* ===== ONBOARDING GUIDE MODAL ===== */
+#guide-modal .modal{max-width:600px}
+.guide-steps{display:flex;flex-direction:column;gap:16px}
+.gs{display:flex;gap:14px;align-items:flex-start}
+.gs-num{width:32px;height:32px;border-radius:50%;background:var(--green);color:#fff;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.gs-body{}
+.gs-title{font-size:13px;font-weight:700;color:var(--gray900);margin-bottom:3px}
+.gs-desc{font-size:12px;color:var(--gray600);line-height:1.6}
+.gs-img{margin-top:8px;border-radius:8px;border:1.5px solid var(--gray200);overflow:hidden;background:var(--gray50);padding:10px 12px;font-size:11px;color:var(--gray600);display:flex;align-items:center;gap:8px}
+.gs-pill{padding:3px 9px;border-radius:6px;font-size:10px;font-weight:700;white-space:nowrap}
+.guide-tip{margin-top:16px;padding:12px 14px;background:var(--amber3);border-radius:9px;border:1px solid var(--amber4);font-size:11px;color:var(--amber);line-height:1.6}
+.guide-tip strong{font-weight:700;display:block;margin-bottom:3px}
+.dont-show{display:flex;align-items:center;gap:7px;font-size:11px;color:var(--gray600);cursor:pointer;user-select:none;margin-right:auto}
+.dont-show input{cursor:pointer;accent-color:var(--green);width:14px;height:14px}
+.start-btn{padding:9px 24px;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;font-family:'DM Serif Display',serif;background:var(--green);color:#fff;border:none;transition:background .13s}
+.start-btn:hover{background:var(--green2)}
+
+/* print */
+@media print{
+  .topbar,.sidebar,.wacts,.cov,.abar,.arm{display:none!important}
+  body{background:#fff}
+  .layout{display:block;margin-top:0}
+  .main{padding:0}
+  .pgrid{grid-template-columns:repeat(5,1fr);gap:6px}
+  .dcol{break-inside:avoid;box-shadow:none}
+  @page{margin:1.5cm}
+}
+
+/* responsive */
+@media(max-width:900px){:root{--sw:270px}}
+@media(max-width:700px){.layout{grid-template-columns:1fr}.sidebar{position:static;height:auto}.pgrid{grid-template-columns:1fr 1fr}.stats{grid-template-columns:repeat(5,1fr)}}
+@media(max-width:440px){.pgrid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<header class="topbar">
+  <div class="logo">
+    <span style="font-size:20px">&#127472;&#127466;</span>
+    <div>CBC Lesson Planner<span class="logo-sub">Kenya Competency-Based Curriculum</span></div>
+  </div>
+  <div class="tdiv"></div>
+  <span class="glabel">Grade</span>
+  <div class="gpills" id="gpills"></div>
+  <div class="tact">
+    <button class="help-btn" onclick="openGuide()" title="How to use">?</button>
+    <button class="tbtn ghost" onclick="clearWeek()">Clear week</button>
+    <button class="tbtn solid" onclick="printPlan()">&#128438; Export PDF</button>
+  </div>
+</header>
+
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sb-top">
+      <div class="sb-top-row">
+        <span class="sb-heading">Competency Library</span>
+        <span class="sb-hint">Click subject &#8594; drag card</span>
+      </div>
+      <input class="sb-search" id="sbsearch" type="search" placeholder="Search competencies..." oninput="filterCards()" autocomplete="off">
+    </div>
+    <div class="accordion" id="accordion"></div>
+    <div class="addform" id="addform">
+      <div class="addform-toggle" id="addtoggle" onclick="toggleAddForm()">
+        &#43; Add custom competency
+        <span>&#43;</span>
+      </div>
+      <div class="addform-fields" id="addfields">
+        <input id="ncode" placeholder="Code e.g. MTH.4.2.a (optional)" />
+        <textarea id="ndesc" placeholder="Learning outcome description..."></textarea>
+        <select id="nsubj"></select>
+        <button class="addbtn" onclick="addComp()">Add to library</button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+    <div class="abar">
+      <span class="abar-dot"></span>
+      Plans auto-saved per grade &amp; per week in your browser.
+      <span class="abar-saved" id="lastsaved"></span>
+    </div>
+
+    <div class="wmeta">
+      <div>
+        <div class="whead">Week of <em id="wdate"></em></div>
+        <div class="wbadges">
+          <span class="badge amber" id="termbadge">Term 1</span>
+          <span class="badge blue" id="wkbadge">Week 1</span>
+          <span class="badge green" id="lvbadge">Lower Primary</span>
+        </div>
+      </div>
+      <div class="wacts">
+        <button class="sbtn" onclick="prevWeek()">&#8592; Prev</button>
+        <button class="sbtn" onclick="goToday()">Today</button>
+        <button class="sbtn" onclick="nextWeek()">Next &#8594;</button>
+        <button class="sbtn g" onclick="printPlan()">Print / PDF</button>
+      </div>
+    </div>
+
+    <div class="stats" id="stats"></div>
+    <div class="pgrid" id="pgrid"></div>
+
+    <div class="cov">
+      <div class="cov-h">Subject coverage this week</div>
+      <div class="cov-grid" id="covgrid"></div>
+    </div>
+  </main>
+</div>
+
+<!-- CLEAR MODAL -->
+<div class="mback" id="clrmodal">
+  <div class="modal" style="max-width:420px">
+    <div class="modal-head">
+      <h2>Clear this week?</h2>
+      <p>All planned competencies for Grade <strong id="clrg"></strong> this week will be removed. This cannot be undone.</p>
+    </div>
+    <div class="modal-foot">
+      <button class="msbtn cancel" onclick="closeMod('clrmodal')">Cancel</button>
+      <button class="msbtn danger" onclick="confirmClear()">Yes, clear week</button>
+    </div>
+  </div>
+</div>
+
+<!-- GUIDE MODAL -->
+<div class="mback" id="guide-modal">
+  <div class="modal" style="max-width:600px;max-height:90vh;overflow-y:auto">
+    <div class="modal-head">
+      <h2>Welcome to CBC Lesson Planner &#127960;</h2>
+      <p>Plan your Grade 1&ndash;9 lessons for the week in just a few steps. Here&rsquo;s how it works:</p>
+    </div>
+    <div class="modal-body">
+      <div class="guide-steps">
+
+        <div class="gs">
+          <div class="gs-num">1</div>
+          <div class="gs-body">
+            <div class="gs-title">Pick your grade</div>
+            <div class="gs-desc">At the top of the page, click your class grade (Gr 1 through Gr 9). The subject list and competencies will update automatically for that grade level.</div>
+            <div class="gs-img">
+              <span style="font-size:18px">&#127472;&#127466;</span>
+              <div>
+                <span class="gs-pill" style="background:#fff;border:1.5px solid rgba(255,255,255,.3);color:#2a5e2a;border-color:#c5e1c5">Gr 1</span>&nbsp;
+                <span class="gs-pill" style="background:#2a5e2a;color:#fff">Gr 4</span>&nbsp;
+                <span class="gs-pill" style="background:#fff;border:1.5px solid #c5e1c5;color:#2a5e2a">Gr 7</span>
+                <div style="margin-top:5px;font-size:10px;color:var(--gray400)">Green = currently selected grade</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="gs">
+          <div class="gs-num">2</div>
+          <div class="gs-body">
+            <div class="gs-title">Open a subject accordion</div>
+            <div class="gs-desc">In the left panel, click any subject name (e.g. <strong>Mathematics</strong>) to expand it and reveal all competency cards for that subject. Click it again to collapse and save space.</div>
+            <div class="gs-img">
+              <div style="width:100%">
+                <div style="display:flex;align-items:center;gap:8px;padding:7px 10px;background:var(--greenlt);border-radius:7px;border:1.5px solid var(--green4)">
+                  <span style="width:9px;height:9px;border-radius:50%;background:#2563eb;display:inline-block"></span>
+                  <span style="font-size:12px;font-weight:700;color:var(--green);flex:1">Mathematics</span>
+                  <span style="font-size:10px;font-weight:700;background:var(--green4);color:var(--green);padding:1px 7px;border-radius:20px">8</span>
+                  <span style="color:var(--green);font-size:10px">&#9650;</span>
+                </div>
+                <div style="padding:6px 8px;background:var(--gray50);border-radius:0 0 7px 7px;border:1.5px solid var(--gray200);border-top:none;font-size:10px;color:var(--gray400)">&#8595; Competency cards appear here</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="gs">
+          <div class="gs-num">3</div>
+          <div class="gs-body">
+            <div class="gs-title">Drag a competency onto a day</div>
+            <div class="gs-desc">Each card has a <strong>drag grip</strong> (&#8942;&#8942;) on the left. Click and hold any card, then drag it onto one of the five day columns (Monday &ndash; Friday) on the right. Drop it and it&rsquo;s planned!</div>
+            <div class="gs-img" style="background:var(--blue3);border-color:var(--blue4)">
+              <span style="font-size:20px">&#128203;</span>
+              <div>
+                <div style="font-size:11px;font-weight:700;color:var(--blue)">MTH.4.1.a</div>
+                <div style="font-size:11px;color:var(--gray600)">Divide numbers up to 1000&hellip;</div>
+                <div style="font-size:10px;color:var(--blue2);margin-top:3px">&#8594; drag to Tuesday column</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="gs">
+          <div class="gs-num">4</div>
+          <div class="gs-body">
+            <div class="gs-title">Navigate weeks</div>
+            <div class="gs-desc">Use <strong>Prev</strong> and <strong>Next</strong> buttons to plan ahead or look back. Each week is saved separately. Your plans are never lost when switching grades or weeks.</div>
+          </div>
+        </div>
+
+        <div class="gs">
+          <div class="gs-num">5</div>
+          <div class="gs-body">
+            <div class="gs-title">Export or print your plan</div>
+            <div class="gs-desc">Click <strong>Print / PDF</strong> to open a clean, printable version of your weekly plan. Use your browser&rsquo;s <em>Save as PDF</em> option to keep a digital copy.</div>
+          </div>
+        </div>
+
+        <div class="gs">
+          <div class="gs-num">6</div>
+          <div class="gs-body">
+            <div class="gs-title">Add your own competencies</div>
+            <div class="gs-desc">Click <strong>+ Add custom competency</strong> at the bottom of the left panel to add your own learning outcomes. They will appear in the library alongside the built-in ones.</div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="guide-tip">
+        <strong>&#128161; Quick tip</strong>
+        Use the search bar at the top of the left panel to quickly find any competency by keyword or code. Type &ldquo;fraction&rdquo; or &ldquo;MTH.5&rdquo; to filter instantly.
+      </div>
+    </div>
+    <div class="modal-foot">
+      <label class="dont-show">
+        <input type="checkbox" id="dontshow"> Don&rsquo;t show this again
+      </label>
+      <button class="start-btn" onclick="closeGuide()">Start planning &#8594;</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+var DAYS = ['Monday','Tuesday','Wednesday','Thursday','Friday'];
+
+var SLEVELS = {
+  lower:  ['Mathematics','English','Kiswahili','Environmental Activities','Creative Arts','Physical Education','Religious Education'],
+  upper:  ['Mathematics','English','Kiswahili','Science & Technology','Social Studies','Creative Arts','Physical & Health Education','Religious Education'],
+  junior: ['Mathematics','English','Kiswahili','Integrated Science','Social Studies','Creative Arts & Sports','Pre-Technical Studies','Agriculture','Religious Education']
+};
+
+var SMETA = {
+  'Mathematics':              {c:'#1a4480',bg:'#eff6ff',bd:'#bfdbfe',d:'#2563eb'},
+  'English':                  {c:'#2a5e2a',bg:'#eaf4ea',bd:'#c5e1c5',d:'#3a8c3a'},
+  'Kiswahili':                {c:'#7c5200',bg:'#fffbeb',bd:'#fde68a',d:'#f59e0b'},
+  'Environmental Activities': {c:'#0f5850',bg:'#f0fdfa',bd:'#99f6e4',d:'#0d9488'},
+  'Creative Arts':            {c:'#7c2d12',bg:'#fff7ed',bd:'#fed7aa',d:'#ea580c'},
+  'Physical Education':       {c:'#4c1d95',bg:'#f5f3ff',bd:'#ddd6fe',d:'#7c3aed'},
+  'Physical & Health Education':{c:'#4c1d95',bg:'#f5f3ff',bd:'#ddd6fe',d:'#7c3aed'},
+  'Religious Education':      {c:'#44403c',bg:'#fafaf9',bd:'#d4d2cf',d:'#78716c'},
+  'Science & Technology':     {c:'#0f5850',bg:'#f0fdfa',bd:'#99f6e4',d:'#0d9488'},
+  'Social Studies':           {c:'#1e3a5f',bg:'#f0f4ff',bd:'#c7d7f8',d:'#3b5998'},
+  'Integrated Science':       {c:'#0f5850',bg:'#f0fdfa',bd:'#99f6e4',d:'#0d9488'},
+  'Creative Arts & Sports':   {c:'#7c2d12',bg:'#fff7ed',bd:'#fed7aa',d:'#ea580c'},
+  'Pre-Technical Studies':    {c:'#1a4480',bg:'#eff6ff',bd:'#bfdbfe',d:'#2563eb'},
+  'Agriculture':              {c:'#2a5e2a',bg:'#eaf4ea',bd:'#c5e1c5',d:'#3a8c3a'}
+};
+
+var COMPS = {
+  'Mathematics': [
+    {code:'MTH.1.1.a',g:1,desc:'Count objects up to 100 using one-to-one correspondence'},
+    {code:'MTH.1.2.a',g:1,desc:'Write numbers 1 to 100 in words and figures'},
+    {code:'MTH.2.1.a',g:2,desc:'Add two-digit numbers without and with carrying'},
+    {code:'MTH.2.3.b',g:2,desc:'Subtract two-digit numbers with regrouping'},
+    {code:'MTH.3.2.a',g:3,desc:'Multiply single-digit numbers using the times table up to 10'},
+    {code:'MTH.3.4.b',g:3,desc:'Identify and describe basic 2D shapes by properties'},
+    {code:'MTH.4.1.a',g:4,desc:'Divide numbers up to 1000 with and without remainders'},
+    {code:'MTH.4.3.c',g:4,desc:'Compare and order fractions with different denominators'},
+    {code:'MTH.5.2.b',g:5,desc:'Convert fractions to decimals and percentages'},
+    {code:'MTH.5.4.a',g:5,desc:'Calculate perimeter and area of rectangles and triangles'},
+    {code:'MTH.6.1.a',g:6,desc:'Solve problems involving ratios and proportions'},
+    {code:'MTH.6.3.b',g:6,desc:'Read and plot coordinates in all four quadrants'},
+    {code:'MTH.7.2.a',g:7,desc:'Solve linear equations with one unknown variable'},
+    {code:'MTH.7.5.b',g:7,desc:'Calculate volume of cubes, cuboids and cylinders'},
+    {code:'MTH.8.3.a',g:8,desc:'Apply Pythagoras theorem to real-life problems'},
+    {code:'MTH.8.4.c',g:8,desc:'Interpret and draw scatter graphs and trend lines'},
+    {code:'MTH.9.1.a',g:9,desc:'Expand and factorise quadratic expressions'},
+    {code:'MTH.9.3.b',g:9,desc:'Solve simultaneous equations using substitution and elimination'}
+  ],
+  'English': [
+    {code:'ENG.1.1.a',g:1,desc:'Identify and blend CVC words in reading activities'},
+    {code:'ENG.1.3.b',g:1,desc:'Listen to and retell short stories in own words'},
+    {code:'ENG.2.2.a',g:2,desc:'Read simple sentences with expression and fluency'},
+    {code:'ENG.2.4.b',g:2,desc:'Write simple sentences using capital letters and full stops'},
+    {code:'ENG.3.2.a',g:3,desc:'Answer comprehension questions on a short passage'},
+    {code:'ENG.3.5.b',g:3,desc:'Use adjectives and adverbs to improve descriptive writing'},
+    {code:'ENG.4.1.a',g:4,desc:'Identify the main idea and supporting details in a text'},
+    {code:'ENG.4.3.b',g:4,desc:'Write a structured paragraph with a clear topic sentence'},
+    {code:'ENG.5.2.a',g:5,desc:'Infer meaning of unfamiliar words from context clues'},
+    {code:'ENG.5.4.c',g:5,desc:'Write a composition with introduction, body and conclusion'},
+    {code:'ENG.6.3.a',g:6,desc:'Analyse character, plot and theme in a short story'},
+    {code:'ENG.6.5.b',g:6,desc:'Distinguish between fact and opinion in informational texts'},
+    {code:'ENG.7.2.a',g:7,desc:'Write a formal letter following the correct format'},
+    {code:'ENG.7.4.b',g:7,desc:'Identify and use active and passive voice correctly'},
+    {code:'ENG.8.1.a',g:8,desc:'Evaluate arguments and evidence in persuasive writing'},
+    {code:'ENG.8.3.c',g:8,desc:'Analyse literary devices: metaphor, simile, alliteration'},
+    {code:'ENG.9.2.a',g:9,desc:'Produce a research-based essay with proper citations'},
+    {code:'ENG.9.5.b',g:9,desc:'Compare two literary texts on a shared theme critically'}
+  ],
+  'Kiswahili': [
+    {code:'KSW.1.1.a',g:1,desc:'Tambua na kutamka herufi za alfabeti ya Kiswahili'},
+    {code:'KSW.2.2.b',g:2,desc:'Soma sentensi fupi kwa usahihi na uelewa'},
+    {code:'KSW.3.3.a',g:3,desc:'Andika sentensi sahihi kwa kutumia alama za uandishi'},
+    {code:'KSW.4.2.b',g:4,desc:'Jibu maswali ya ufahamu kuhusu hadithi fupi'},
+    {code:'KSW.5.4.a',g:5,desc:'Andika insha fupi kuhusu mazingira ya nyumbani'},
+    {code:'KSW.6.3.b',g:6,desc:'Tumia viwakilishi sahihi katika sentensi'},
+    {code:'KSW.7.2.a',g:7,desc:'Changanua maudhui na dhamira katika ushairi wa Kiswahili'},
+    {code:'KSW.8.4.b',g:8,desc:'Andika barua rasmi kwa muundo unaofaa'},
+    {code:'KSW.9.3.c',g:9,desc:'Tathmini tamthilia kwa kutumia vigezo vya fasihi'}
+  ],
+  'Science & Technology': [
+    {code:'STC.4.1.a',g:4,desc:'Classify living and non-living things in the environment'},
+    {code:'STC.4.3.b',g:4,desc:'Demonstrate safe use of basic science equipment'},
+    {code:'STC.5.2.a',g:5,desc:'Describe the water cycle using labelled diagrams'},
+    {code:'STC.5.4.b',g:5,desc:'Investigate properties of matter: solid, liquid and gas'},
+    {code:'STC.6.1.a',g:6,desc:'Explain the role of photosynthesis in plant nutrition'},
+    {code:'STC.6.3.c',g:6,desc:'Design and test a simple electrical circuit'},
+    {code:'STC.7.2.b',g:7,desc:'Describe the structure of the human digestive system'},
+    {code:'STC.7.5.a',g:7,desc:'Analyse effects of human activity on local ecosystems'},
+    {code:'STC.8.3.a',g:8,desc:"Explain Newton's three laws of motion with examples"},
+    {code:'STC.9.2.b',g:9,desc:'Evaluate renewable versus non-renewable energy sources'}
+  ],
+  'Environmental Activities': [
+    {code:'ENV.1.1.a',g:1,desc:'Identify and name plants and animals in the school compound'},
+    {code:'ENV.2.2.b',g:2,desc:'Describe daily weather changes and their effects on people'},
+    {code:'ENV.3.3.a',g:3,desc:'Explain the importance of keeping our environment clean'},
+    {code:'ENV.3.4.b',g:3,desc:'Describe uses of water and ways to conserve it'}
+  ],
+  'Social Studies': [
+    {code:'SST.4.1.a',g:4,desc:'Describe the physical features of the local environment'},
+    {code:'SST.5.2.b',g:5,desc:"Identify Kenya's major economic activities and regions"},
+    {code:'SST.6.3.a',g:6,desc:'Explain causes and effects of rural to urban migration'},
+    {code:'SST.7.2.c',g:7,desc:'Analyse the structure and functions of county government'},
+    {code:'SST.8.4.a',g:8,desc:'Evaluate the role of EAC in regional integration'},
+    {code:'SST.9.3.b',g:9,desc:'Discuss challenges and opportunities of globalisation in Kenya'}
+  ,
+    {code:'SST.5.3.a',g:5,desc:'Explain the importance of national symbols and government institutions'}],
+  'Agriculture': [
+    {code:'AGR.7.1.a',g:7,desc:'Identify and prepare different types of seedbeds'},
+    {code:'AGR.7.3.b',g:7,desc:'Demonstrate correct planting of seeds and seedlings'},
+    {code:'AGR.8.2.a',g:8,desc:'Explain soil types and their suitability for different crops'},
+    {code:'AGR.9.4.b',g:9,desc:'Evaluate pest and disease control methods in crop farming'}
+  ],
+    'Creative Arts': [
+    {code:'CRA.1.1.a',g:1,desc:'Draw and colour simple objects from the local environment'},
+    {code:'CRA.3.2.b',g:3,desc:'Create a collage using locally available natural materials'},
+    {code:'CRA.5.3.a',g:5,desc:'Perform a simple musical piece using body percussion'},
+    {code:'CRA.6.4.b',g:6,desc:'Act out a short drama script with expression and confidence'}
+  ,
+    {code:'CRA.2.1.a',g:2,desc:'Model simple objects using clay and locally available materials'},
+    {code:'CRA.4.2.a',g:4,desc:'Create a pattern design using colour mixing and printing techniques'}],
+  'Creative Arts & Sports': [
+    {code:'CAS.7.1.a',g:7,desc:'Create an original artwork inspired by Kenyan cultural heritage'},
+    {code:'CAS.8.3.b',g:8,desc:'Compose and perform a short musical piece for an audience'},
+    {code:'CAS.9.2.a',g:9,desc:'Demonstrate teamwork and sportsmanship in competitive games'}
+  ],
+  'Physical Education': [
+    {code:'PHE.1.1.a',g:1,desc:'Perform basic locomotor movements: walk, run, jump and hop'},
+    {code:'PHE.3.2.b',g:3,desc:'Play simple team games while following basic rules'},
+    {code:'PHE.5.3.a',g:5,desc:'Demonstrate correct technique in athletics field events'}
+  ,
+    {code:'PHE.2.1.a',g:2,desc:'Perform catching, throwing and kicking skills with a ball'}],
+  'Physical & Health Education': [
+    {code:'PHE.4.1.a',g:4,desc:'Identify healthy foods and explain their nutritional value'},
+    {code:'PHE.6.2.b',g:6,desc:'Demonstrate correct water safety and swimming technique'},
+    {code:'PHE.7.3.a',g:7,desc:'Apply rules of volleyball correctly in a supervised game'},
+    {code:'PHE.8.4.b',g:8,desc:'Discuss puberty changes and personal hygiene practices'}
+  ,
+    {code:'PHE.5.2.a',g:5,desc:'Demonstrate correct technique for long jump and short sprint events'}],
+  'Religious Education': [
+    {code:'CRE.1.1.a',g:1,desc:'Recall the creation story and identify God as creator'},
+    {code:'IRE.4.2.b',g:4,desc:'Identify the five pillars of Islam and their importance'},
+    {code:'HRE.7.3.a',g:7,desc:'Explain Hindu teachings on dharma, karma and right action'}
+  ,
+    {code:'CRE.2.1.a',g:2,desc:'Identify ways of caring for God\'s creation in our environment'},
+    {code:'CRE.3.2.b',g:3,desc:'Describe the importance of prayer in daily life'},
+    {code:'IRE.5.3.a',g:5,desc:'Explain the significance of Ramadhan in Islamic practice'},
+    {code:'CRE.6.4.b',g:6,desc:'Discuss the importance of forgiveness and reconciliation'},
+    {code:'CRE.8.2.a',g:8,desc:'Analyse the role of faith and values in responsible decision-making'},
+    {code:'CRE.9.3.b',g:9,desc:'Evaluate the impact of Christian values on social justice issues'}],
+  'Integrated Science': [
+    {code:'ISC.7.1.a',g:7,desc:'Distinguish between elements, compounds and mixtures with examples'},
+    {code:'ISC.7.3.b',g:7,desc:'Explain cell structure and function in living organisms'},
+    {code:'ISC.7.5.a',g:7,desc:'Describe Newton\'s laws of motion and apply them to everyday situations'},
+    {code:'ISC.8.2.a',g:8,desc:'Describe chemical and physical changes with everyday examples'},
+    {code:'ISC.8.4.b',g:8,desc:'Explain reproduction in plants and animals'},
+    {code:'ISC.8.6.a',g:8,desc:'Investigate properties of waves: sound and light'},
+    {code:'ISC.9.1.a',g:9,desc:'Analyse the periodic table and properties of common elements'},
+    {code:'ISC.9.3.b',g:9,desc:'Explain the basic principles of genetics and heredity'},
+    {code:'ISC.9.5.a',g:9,desc:'Evaluate the impact of technology on health and environment'}
+  ],
+  'Pre-Technical Studies': [
+    {code:'PTS.7.1.a',g:7,desc:'Identify and safely use basic hand tools in the workshop'},
+    {code:'PTS.7.3.b',g:7,desc:'Construct a simple wooden joint using correct joinery technique'},
+    {code:'PTS.8.2.a',g:8,desc:'Draw and interpret simple engineering and workshop drawings'},
+    {code:'PTS.8.4.b',g:8,desc:'Demonstrate basic electrical installation skills safely'},
+    {code:'PTS.9.1.a',g:9,desc:'Apply principles of measurement and marking out in metalwork'},
+    {code:'PTS.9.4.c',g:9,desc:'Design and build a functional model structure from given materials'}
+  ]
+};
+
+// ---- STATE ----
+var grade = 1;
+var weekOff = 0;
+var dragging = null;
+var custom = {};
+var openSubjects = {};
+var searchQ = '';
+var toastT;
+
+function sm(s){ return SMETA[s] || {c:'#1a4480',bg:'#eff6ff',bd:'#bfdbfe',d:'#2563eb'}; }
+function level(g){ return g<=3?'lower':g<=6?'upper':'junior'; }
+function subs(g){ return SLEVELS[level(g)]; }
+
+function planKey(){ return 'cbcp_g'+grade+'_w'+weekOff; }
+function emptyPlan(){ var p={}; DAYS.forEach(function(d){p[d]=[];}); return p; }
+function loadPlan(){
+  try{ var v=localStorage.getItem(planKey()); return v?JSON.parse(v):emptyPlan(); }
+  catch(e){ return emptyPlan(); }
+}
+function savePlan(p){
+  localStorage.setItem(planKey(),JSON.stringify(p));
+  var ts=new Date().toLocaleTimeString('en-KE',{hour:'2-digit',minute:'2-digit'});
+  var el=document.getElementById('lastsaved');
+  if(el) el.textContent='Saved '+ts;
+}
+function getPlan(){ return loadPlan(); }
+
+function monday(off){
+  var n=new Date(); var dw=n.getDay(); var d=(dw+6)%7;
+  var m=new Date(n); m.setDate(n.getDate()-d+off*7); m.setHours(0,0,0,0); return m;
+}
+function fmtDate(d){ return d.toLocaleDateString('en-KE',{day:'numeric',month:'short',year:'numeric'}); }
+function fmtShort(d){ return d.toLocaleDateString('en-KE',{day:'numeric',month:'short'}); }
+
+function getComps(s){
+  var base=(COMPS[s]||[]).filter(function(c){return !c.g||c.g===grade;});
+  var cu=((custom[grade]||{})[s])||[];
+  return base.concat(cu).map(function(c){ return Object.assign({},c,{subject:s}); });
+}
+
+function matchSearch(c){
+  if(!searchQ) return true;
+  var q=searchQ.toLowerCase();
+  return (c.code&&c.code.toLowerCase().indexOf(q)>=0)||(c.desc&&c.desc.toLowerCase().indexOf(q)>=0);
+}
+
+// ---- RENDER ----
+function renderAll(){
+  renderGrades(); renderAccordion(); renderMeta();
+  renderStats(); renderGrid(); renderCov(); updateSubSelect();
+}
+
+function renderGrades(){
+  document.getElementById('gpills').innerHTML=
+    [1,2,3,4,5,6,7,8,9].map(function(g){
+      return '<button class="gp'+(g===grade?' on':'')+'" onclick="swGrade('+g+')">Gr '+g+'</button>';
+    }).join('');
+}
+
+function renderAccordion(){
+  var ss=subs(grade);
+  var html='';
+  ss.forEach(function(s){
+    var m=sm(s);
+    var cs=getComps(s).filter(matchSearch);
+    var isOpen=!!openSubjects[s];
+    html+='<div class="acc-item">';
+    html+='<button class="acc-header'+(isOpen?' open':'')+'" onclick="toggleSubject(''+s+'')">';
+    html+='<span class="acc-dot" style="background:'+m.d+'"></span>';
+    html+='<span class="acc-name">'+s+'</span>';
+    html+='<span class="acc-cnt">'+cs.length+'</span>';
+    html+='<span class="acc-arrow">&#9660;</span>';
+    html+='</button>';
+    html+='<div class="acc-body'+(isOpen?' open':'')+'" id="accbody-'+s.replace(/[^a-z0-9]/gi,'_')+'">';
+    if(isOpen){
+      if(cs.length){
+        cs.forEach(function(c,i){
+          html+='<div class="cc" draggable="true" ondragstart="dstart(event,''+s+'','+i+')" ondragend="dend(event)">';
+          html+='<div class="cc-left">';
+          html+='<div class="cc-grip-icon"><span></span><span></span><span></span><span></span></div>';
+          html+='<span class="cc-dot-sm" style="background:'+m.d+'"></span>';
+          html+='</div>';
+          html+='<div class="cc-body">';
+          html+='<div class="cc-code" style="color:'+m.c+'">'+c.code+'</div>';
+          html+='<div class="cc-desc">'+c.desc+'</div>';
+          html+='</div>';
+          html+='<span class="cc-drag-hint">drag</span>';
+          html+='</div>';
+        });
+      } else {
+        html+='<div style="text-align:center;padding:20px 12px;color:var(--gray400);font-size:11px">No results for "'+searchQ+'"</div>';
+      }
+    }
+    html+='</div></div>';
+  });
+  document.getElementById('accordion').innerHTML=html;
+}
+
+function renderMeta(){
+  var mon=monday(weekOff);
+  var fri=new Date(mon); fri.setDate(mon.getDate()+4);
+  document.getElementById('wdate').textContent=fmtDate(mon);
+  var lv=level(grade);
+  var lvn=lv==='lower'?'Lower Primary':lv==='upper'?'Upper Primary':'Junior Secondary';
+  document.getElementById('lvbadge').textContent='Gr '+grade+' - '+lvn;
+  var m=mon.getMonth()+1;
+  document.getElementById('termbadge').textContent=m<=3?'Term 1':m<=7?'Term 2':'Term 3';
+  var jan4=new Date(Date.UTC(mon.getFullYear(),0,4));
+  var wn=Math.ceil((((mon-jan4)/86400000)+jan4.getUTCDay()+1)/7);
+  document.getElementById('wkbadge').textContent='Week '+Math.max(1,wn);
+}
+
+function renderStats(){
+  var plan=getPlan();
+  document.getElementById('stats').innerHTML=DAYS.map(function(day){
+    var its=plan[day]||[];
+    var ss=[]; its.forEach(function(c){if(ss.indexOf(c.subject)<0)ss.push(c.subject);});
+    var col=its.length>0?'var(--green)':'var(--gray400)';
+    var dots=ss.slice(0,4).map(function(s){
+      return '<span class="sc-dot" style="background:'+sm(s).d+'"></span>';
+    }).join('');
+    return '<div class="scard">'
+      +'<div class="sc-day">'+day.substring(0,3)+'</div>'
+      +'<div class="sc-n" style="color:'+col+'">'+its.length+'</div>'
+      +'<div class="sc-s">'+dots+'</div>'
+      +'</div>';
+  }).join('');
+}
+
+function renderGrid(){
+  var plan=getPlan(); var mon=monday(weekOff);
+  var dayColors=['#2a5e2a','#1a4480','#7c5200','#0f5850','#4c1d95'];
+  document.getElementById('pgrid').innerHTML=DAYS.map(function(day,di){
+    var d=new Date(mon); d.setDate(mon.getDate()+di);
+    var its=plan[day]||[];
+    var bc=dayColors[di];
+    var chips=its.map(function(c,i){
+      var m=sm(c.subject);
+      return '<div class="aitem" style="background:'+m.bg+';border-color:'+m.bd+'">'
+        +'<div class="aitem-body"><span class="acode" style="color:'+m.c+'">'+c.code+'</span>'
+        +'<span class="adesc">'+c.desc+'</span></div>'
+        +'<span class="arm" onclick="rmItem(''+day+'','+i+')" title="Remove">&times;</span></div>';
+    }).join('');
+    var emp=its.length===0?'<div class="emp"><div class="emp-icon">&#128203;</div>'
+      +'<div class="emp-txt">Open a subject<br>then drag a card here</div></div>':'';
+    return '<div class="dcol">'
+      +'<div class="dhead" style="border-left:3px solid '+bc+'">'
+        +'<span class="dname" style="color:'+bc+'">'+day+'</span>'
+        +'<span class="ddate">'+fmtShort(d)+'</span></div>'
+      +'<div class="dzone" data-day="'+day
+        +'" ondragover="dov(event)" ondragleave="dlv(event)" ondrop="dp(event,''+day+'')">'
+        +emp+chips+'</div></div>';
+  }).join('');
+}
+
+function renderCov(){
+  var plan=getPlan(); var ss=subs(grade);
+  var cnt={}; ss.forEach(function(s){cnt[s]=0;});
+  DAYS.forEach(function(d){(plan[d]||[]).forEach(function(c){if(cnt[c.subject]!==undefined)cnt[c.subject]++;});});
+  var total=0; ss.forEach(function(s){total+=cnt[s];}); if(!total)total=1;
+  var has=ss.filter(function(s){return cnt[s]>0;});
+  document.getElementById('covgrid').innerHTML=has.length?has.map(function(s){
+    var m=sm(s); var pct=Math.round(cnt[s]/total*100);
+    return '<div class="ci"><div class="ci-lbl"><span class="ci-nm">'+s+'</span>'
+      +'<span class="ci-n" style="color:'+m.c+'">'+cnt[s]+' lesson'+(cnt[s]!==1?'s':'')+'</span></div>'
+      +'<div class="ci-track"><div class="ci-fill" style="width:'+pct+'%;background:'+m.d+'"></div></div></div>';
+  }).join(''):'<div class="cov-empty">No lessons planned yet. Open a subject and drag competency cards onto the days above.</div>';
+}
+
+function updateSubSelect(){
+  var ss=subs(grade); var sel=document.getElementById('nsubj');
+  sel.innerHTML=ss.map(function(s){return '<option value="'+s+'">'+s+'</option>';}).join('');
+}
+
+// ---- INTERACTIONS ----
+function swGrade(g){
+  grade=g;
+  openSubjects={};
+  renderAll();
+  toast('Grade '+g+' loaded');
+}
+
+function toggleSubject(s){
+  openSubjects[s]=!openSubjects[s];
+  renderAccordion();
+}
+
+function filterCards(){
+  searchQ=document.getElementById('sbsearch').value.trim();
+  // auto-open subjects that have matches
+  if(searchQ){
+    subs(grade).forEach(function(s){
+      var cs=getComps(s).filter(matchSearch);
+      if(cs.length>0) openSubjects[s]=true;
+    });
+  }
+  renderAccordion();
+}
+
+function toggleAddForm(){
+  var fields=document.getElementById('addfields');
+  var toggle=document.getElementById('addtoggle');
+  var isOpen=fields.classList.contains('open');
+  if(isOpen){ fields.classList.remove('open'); toggle.classList.remove('open'); }
+  else { fields.classList.add('open'); toggle.classList.add('open'); }
+}
+
+function dstart(e,sub,idx){
+  var cs=getComps(sub).filter(matchSearch);
+  dragging=cs[idx];
+  e.dataTransfer.effectAllowed='copy';
+  try{e.dataTransfer.setData('text/plain',JSON.stringify(dragging));}catch(x){}
+  e.currentTarget.classList.add('dragging');
+}
+function dend(e){ e.currentTarget.classList.remove('dragging'); dragging=null; }
+function dov(e){ e.preventDefault(); e.currentTarget.classList.add('over'); }
+function dlv(e){ e.currentTarget.classList.remove('over'); }
+function dp(e,day){
+  e.preventDefault(); e.currentTarget.classList.remove('over');
+  var comp=dragging;
+  if(!comp){ try{comp=JSON.parse(e.dataTransfer.getData('text/plain'));}catch(x){} }
+  if(!comp) return;
+  var plan=getPlan();
+  if(!(plan[day]||[]).some(function(c){return c.code===comp.code;})){
+    if(!plan[day]) plan[day]=[];
+    plan[day].push(comp); savePlan(plan);
+    renderStats(); renderGrid(); renderCov();
+    toast(comp.code+' added to '+day);
+  } else {
+    toast('Already on '+day);
+  }
+  dragging=null;
+}
+
+function rmItem(day,idx){
+  var plan=getPlan(); plan[day].splice(idx,1);
+  savePlan(plan); renderStats(); renderGrid(); renderCov();
+}
+
+function prevWeek(){ weekOff--; renderAll(); }
+function nextWeek(){ weekOff++; renderAll(); }
+function goToday(){ weekOff=0; renderAll(); }
+
+function clearWeek(){
+  document.getElementById('clrg').textContent=grade;
+  document.getElementById('clrmodal').classList.add('open');
+}
+function closeMod(id){ document.getElementById(id).classList.remove('open'); }
+function confirmClear(){
+  savePlan(emptyPlan()); closeMod('clrmodal'); renderAll(); toast('Week cleared');
+}
+
+function addComp(){
+  var code=document.getElementById('ncode').value.trim();
+  var desc=document.getElementById('ndesc').value.trim();
+  var subj=document.getElementById('nsubj').value;
+  if(!desc){ toast('Please enter a description'); return; }
+  if(!custom[grade]) custom[grade]={};
+  if(!custom[grade][subj]) custom[grade][subj]=[];
+  custom[grade][subj].push({code:code||'CUST.001',desc:desc});
+  openSubjects[subj]=true;
+  document.getElementById('ncode').value='';
+  document.getElementById('ndesc').value='';
+  toast('Competency added to '+subj);
+  renderAccordion();
+}
+
+function printPlan(){
+  var plan=getPlan(); var mon=monday(weekOff);
+  var fmt2=function(d){return d.toLocaleDateString('en-KE',{weekday:'long',year:'numeric',month:'long',day:'numeric'});};
+  var rows=DAYS.map(function(day,di){
+    var d=new Date(mon); d.setDate(mon.getDate()+di);
+    var its=plan[day]||[];
+    return '<tr><td style="font-weight:700;padding:10px 14px;background:#f0f4f0;border:1px solid #ddd;vertical-align:top;white-space:nowrap">'
+      +day+'<br><small style="font-weight:400;color:#666">'+fmtShort(d)+'</small></td>'
+      +'<td style="padding:10px 14px;border:1px solid #ddd;vertical-align:top">'
+      +(its.length?its.map(function(c){
+        var m=sm(c.subject);
+        return '<div style="margin-bottom:8px;padding:6px 8px;border-left:3px solid '+m.d+';background:#f9f9f9;border-radius:0 4px 4px 0">'
+          +'<strong style="font-size:11px;color:'+m.c+'">'+c.code+'</strong>'
+          +' <span style="font-size:11px;color:#666">['+c.subject+']</span><br>'
+          +'<span style="font-size:13px">'+c.desc+'</span></div>';
+      }).join(''):'<span style="color:#999;font-size:13px;font-style:italic">No lessons planned</span>')
+      +'</td></tr>';
+  }).join('');
+  var w=window.open('','_blank');
+  if(!w){toast('Please allow pop-ups to export PDF');return;}
+  w.document.write('<!DOCTYPE html><html><head><title>CBC Lesson Plan Grade '+grade+'</title>'
+    +'<style>body{font-family:Segoe UI,sans-serif;padding:32px;color:#111;max-width:900px;margin:0 auto}'
+    +'h1{font-size:20px;margin-bottom:4px;color:#2a5e2a}.sub{font-size:12px;color:#666;margin-bottom:20px}'
+    +'table{border-collapse:collapse;width:100%}@media print{body{padding:0}@page{margin:1.5cm}}'
+    +'</style></head><body>'
+    +'<h1>CBC Weekly Lesson Plan &mdash; Grade '+grade+'</h1>'
+    +'<div class="sub">Week of '+fmt2(mon)+' &middot; Printed: '+fmt2(new Date())+'</div>'
+    +'<table>'+rows+'</table>'
+    +'<script>setTimeout(function(){window.print();},300);<\/script>'
+    +'</body></html>');
+}
+
+function toast(msg){
+  var el=document.getElementById('toast');
+  el.textContent=msg; el.classList.add('on');
+  clearTimeout(toastT);
+  toastT=setTimeout(function(){el.classList.remove('on');},2400);
+}
+
+// ---- GUIDE ----
+function openGuide(){ document.getElementById('guide-modal').classList.add('open'); }
+function closeGuide(){
+  if(document.getElementById('dontshow').checked){
+    localStorage.setItem('cbcp_guide_seen','1');
+  }
+  document.getElementById('guide-modal').classList.remove('open');
+}
+
+// Close modals on backdrop click
+document.addEventListener('click',function(e){
+  if(e.target.id==='clrmodal') closeMod('clrmodal');
+  if(e.target.id==='guide-modal') closeGuide();
+});
+
+// ---- INIT ----
+(function(){
+  var seen=localStorage.getItem('cbcp_guide_seen');
+  if(!seen) openGuide();
+  var v=localStorage.getItem(planKey());
+  if(v){ var el=document.getElementById('lastsaved'); if(el) el.textContent='Plan loaded'; }
+})();
+
+renderAll();
+</script>
+</body>
+</html>
